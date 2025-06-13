@@ -1,0 +1,1118 @@
+[
+    {
+        "id": "r4s5t6u7-v8w9-70x1-y2z3-a4b5c6d7e8f9",
+        "EspacioId": "a1b2c3d4-e5f6-47h8-i9j0-k1l2m3n4o5p6",
+        "Nombre": "Aire 18,000 Btu",
+        "Potencia": 2200,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "s5t6u7v8-w9x0-81y2-z3a4-b5c6d7e8f9g0",
+        "EspacioId": "a1b2c3d4-e5f6-47h8-i9j0-k1l2m3n4o5p6",
+        "Nombre": "Bocinas",
+        "Potencia": 60,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "t6u7v8w9-x0y1-92z3-a4b5-c6d7e8f9g0h1",
+        "EspacioId": "a1b2c3d4-e5f6-47h8-i9j0-k1l2m3n4o5p6",
+        "Nombre": "Luz LED (Combinada)",
+        "Potencia": 75,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "u7v8w9x0-y1z2-03a4-b5c6-d7e8f9g0h1i2",
+        "EspacioId": "a1b2c3d4-e5f6-47h8-i9j0-k1l2m3n4o5p6",
+        "Nombre": "TV LED 55'",
+        "Potencia": 275,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "v8w9x0y1-z2a3-14b5-c6d7-e8f9g0h1i2j3",
+        "EspacioId": "a1b2c3d4-e5f6-47h8-i9j0-k1l2m3n4o5p6",
+        "Nombre": "Abanico",
+        "Potencia": 80,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "w9x0y1z2-a3b4-25c6-d7e8-f9g0h1i2j3k4",
+        "EspacioId": "a1b2c3d4-e5f6-47h8-i9j0-k1l2m3n4o5p6",
+        "Nombre": "Estufa de Cuarzo",
+        "Potencia": 1200,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "x0y1z2a3-b4c5-36d7-e8f9-g0h1i2j3k4l5",
+        "EspacioId": "b2c3d4e5-f6g7-58i9-j0k1-l2m3n4o5p6q7",
+        "Nombre": "Luz Fluorescente (Tubo)",
+        "Potencia": 75,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "y1z2a3b4-c5d6-47e8-f9g0-h1i2j3k4l5m6",
+        "EspacioId": "b2c3d4e5-f6g7-58i9-j0k1-l2m3n4o5p6q7",
+        "Nombre": "Ventilador de Techo",
+        "Potencia": 80,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "z2a3b4c5-d6e7-58f9-g0h1-i2j3k4l5m6n7",
+        "EspacioId": "c3d4e5f6-g7h8-69j0-k1l2-m3n4o5p6q7r8",
+        "Nombre": "Batidora",
+        "Potencia": 600,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "a3b4c5d6-e7f8-69g0-h1i2-j3k4l5m6n7o8",
+        "EspacioId": "c3d4e5f6-g7h8-69j0-k1l2-m3n4o5p6q7r8",
+        "Nombre": "Bebedero",
+        "Potencia": 550,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "b4c5d6e7-f8g9-70h1-i2j3-k4l5m6n7o8p9",
+        "EspacioId": "c3d4e5f6-g7h8-69j0-k1l2-m3n4o5p6q7r8",
+        "Nombre": "Extractor de Grasa",
+        "Potencia": 100,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "c5d6e7f8-g9h0-81i2-j3k4-l5m6n7o8p9q0",
+        "EspacioId": "c3d4e5f6-g7h8-69j0-k1l2-m3n4o5p6q7r8",
+        "Nombre": "Freidora de Aire",
+        "Potencia": 1700,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "d6e7f8g9-h0i1-92j3-k4l5-m6n7o8p9q0r1",
+        "EspacioId": "c3d4e5f6-g7h8-69j0-k1l2-m3n4o5p6q7r8",
+        "Nombre": "Microondas",
+        "Potencia": 900,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "e7f8g9h0-i1j2-03k4-l5m6-n7o8p9q0r1s2",
+        "EspacioId": "c3d4e5f6-g7h8-69j0-k1l2-m3n4o5p6q7r8",
+        "Nombre": "Nevera",
+        "Potencia": 400,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "f8g9h0i1-j2k3-14l5-m6n7-o8p9q0r1s2t3",
+        "EspacioId": "c3d4e5f6-g7h8-69j0-k1l2-m3n4o5p6q7r8",
+        "Nombre": "Tostadora",
+        "Potencia": 750,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "g9h0i1j2-k3l4-25m6-n7o8-p9q0r1s2t3u4",
+        "EspacioId": "c3d4e5f6-g7h8-69j0-k1l2-m3n4o5p6q7r8",
+        "Nombre": "Cafetera",
+        "Potencia": 800,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "h0i1j2k3-l4m5-36n7-o8p9-q0r1s2t3u4v5",
+        "EspacioId": "c3d4e5f6-g7h8-69j0-k1l2-m3n4o5p6q7r8",
+        "Nombre": "Luz LED (Bajo Gabinete)",
+        "Potencia": 15,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "i1j2k3l4-m5n6-47o8-p9q0-r1s2t3u4v5w6",
+        "EspacioId": "d4e5f6g7-h8i9-70j1-k2l3-m4n5o6p7q8r9",
+        "Nombre": "Abanico",
+        "Potencia": 80,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "j2k3l4m5-n6o7-58p9-q0r1-s2t3u4v5w6x7",
+        "EspacioId": "d4e5f6g7-h8i9-70j1-k2l3-m4n5o6p7q8r9",
+        "Nombre": "Aire 12,000 Btu",
+        "Potencia": 1200,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "k3l4m5n6-o7p8-69q0-r1s2-t3u4v5w6x7y8",
+        "EspacioId": "d4e5f6g7-h8i9-70j1-k2l3-m4n5o6p7q8r9",
+        "Nombre": "Bocinas",
+        "Potencia": 60,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "l4m5n6o7-p8q9-70r1-s2t3-u4v5w6x7y8z9",
+        "EspacioId": "d4e5f6g7-h8i9-70j1-k2l3-m4n5o6p7q8r9",
+        "Nombre": "Luz LED (Techo)",
+        "Potencia": 50,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "m5n6o7p8-q9r0-81s2-t3u4-v5w6x7y8z9a0",
+        "EspacioId": "d4e5f6g7-h8i9-70j1-k2l3-m4n5o6p7q8r9",
+        "Nombre": "TV LED 50'",
+        "Potencia": 265,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "n6o7p8q9-r0s1-92t3-u4v5-w6x7y8z9a0b1",
+        "EspacioId": "d4e5f6g7-h8i9-70j1-k2l3-m4n5o6p7q8r9",
+        "Nombre": "Caloventor",
+        "Potencia": 2000,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "o7p8q9r0-s1t2-03u4-v5w6-x7y8z9a0b1c2",
+        "EspacioId": "d4e5f6g7-h8i9-70j1-k2l3-m4n5o6p7q8r9",
+        "Nombre": "Cargadores",
+        "Potencia": 5,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "p8q9r0s1-t2u3-14v5-w6x7-y8z9a0b1c2d3",
+        "EspacioId": "e5f6g7h8-i9j0-81k2-l3m4-n5o6p7q8r9s0",
+        "Nombre": "Abanico",
+        "Potencia": 80,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "q9r0s1t2-u3v4-25w6-x7y8-z9a0b1c2d3e4",
+        "EspacioId": "e5f6g7h8-i9j0-81k2-l3m4-n5o6p7q8r9s0",
+        "Nombre": "Aire 12,000 Btu",
+        "Potencia": 1200,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "r0s1t2u3-v4w5-36x7-y8z9-a0b1c2d3e4f5",
+        "EspacioId": "e5f6g7h8-i9j0-81k2-l3m4-n5o6p7q8r9s0",
+        "Nombre": "Luz Fluorescente Compacta",
+        "Potencia": 25,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "s1t2u3v4-w5x6-47y8-z9a0-b1c2d3e4f5g6",
+        "EspacioId": "e5f6g7h8-i9j0-81k2-l3m4-n5o6p7q8r9s0",
+        "Nombre": "Laptop",
+        "Potencia": 300,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "t2u3v4w5-x6y7-58z9-a0b1-c2d3e4f5g6h7",
+        "EspacioId": "e5f6g7h8-i9j0-81k2-l3m4-n5o6p7q8r9s0",
+        "Nombre": "TV LED 32'",
+        "Potencia": 75,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "u3v4w5x6-y7z8-69a0-b1c2-d3e4f5g6h7i8",
+        "EspacioId": "e5f6g7h8-i9j0-81k2-l3m4-n5o6p7q8r9s0",
+        "Nombre": "Estufa Halógena",
+        "Potencia": 1200,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "v4w5x6y7-z8a9-70b1-c2d3-e4f5g6h7i8j9",
+        "EspacioId": "f6g7h8i9-j0k1-92l3-m4n5-o6p7q8r9s0t1",
+        "Nombre": "Luz Fluorescente Compacta",
+        "Potencia": 25,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "w5x6y7z8-a9b0-81c2-d3e4-f5g6h7i8j9k0",
+        "EspacioId": "f6g7h8i9-j0k1-92l3-m4n5-o6p7q8r9s0t1",
+        "Nombre": "Afeitadora",
+        "Potencia": 100,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "x6y7z8a9-b0c1-92d3-e4f5-g6h7i8j9k0l1",
+        "EspacioId": "f6g7h8i9-j0k1-92l3-m4n5-o6p7q8r9s0t1",
+        "Nombre": "Secador de Pelo",
+        "Potencia": 1200,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "y7z8a9b0-c1d2-03e4-f5g6-h7i8j9k0l1m2",
+        "EspacioId": "g7h8i9j0-k1l2-03m4-n5o6-p7q8r9s0t1u2",
+        "Nombre": "Luz Fluorescente Compacta",
+        "Potencia": 25,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "z8a9b0c1-d2e3-14f5-g6h7-i8j9k0l1m2n3",
+        "EspacioId": "g7h8i9j0-k1l2-03m4-n5o6-p7q8r9s0t1u2",
+        "Nombre": "Afeitadora",
+        "Potencia": 100,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "a9b0c1d2-e3f4-25g6-h7i8-j9k0l1m2n3o4",
+        "EspacioId": "h8i9j0k1-l2m3-14n5-o6p7-q8r9s0t1u2v3",
+        "Nombre": "Luz LED (Escritorio)",
+        "Potencia": 25,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "b0c1d2e3-f4g5-36h7-i8j9-k0l1m2n3o4p5",
+        "EspacioId": "h8i9j0k1-l2m3-14n5-o6p7-q8r9s0t1u2v3",
+        "Nombre": "Laptop",
+        "Potencia": 300,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "c1d2e3f4-g5h6-47i8-j9k0-l1m2n3o4p5q6",
+        "EspacioId": "h8i9j0k1-l2m3-14n5-o6p7-q8r9s0t1u2v3",
+        "Nombre": "Impresora",
+        "Potencia": 100,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "d2e3f4g5-h6i7-58j9-k0l1-m2n3o4p5q6r7",
+        "EspacioId": "h8i9j0k1-l2m3-14n5-o6p7-q8r9s0t1u2v3",
+        "Nombre": "Monitor",
+        "Potencia": 50,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "e3f4g5h6-i7j8-69k0-l1m2-n3o4p5q6r7s8",
+        "EspacioId": "i9j0k1l2-m3n4-25o6-p7q8-r9s0t1u2v3w4",
+        "Nombre": "Proyector",
+        "Potencia": 500,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "f4g5h6i7-j8k9-70l1-m2n3-o4p5q6r7s8t9",
+        "EspacioId": "i9j0k1l2-m3n4-25o6-p7q8-r9s0t1u2v3w4",
+        "Nombre": "Bocinas",
+        "Potencia": 60,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "g5h6i7j8-k9l0-81m2-n3o4-p5q6r7s8t9u0",
+        "EspacioId": "i9j0k1l2-m3n4-25o6-p7q8-r9s0t1u2v3w4",
+        "Nombre": "Equipo de Sonido",
+        "Potencia": 80,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "h6i7j8k9-l0m1-92n3-o4p5-q6r7s8t9u0v1",
+        "EspacioId": "i9j0k1l2-m3n4-25o6-p7q8-r9s0t1u2v3w4",
+        "Nombre": "Luz LED (Decorativa)",
+        "Potencia": 50,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "i7j8k9l0-m1n2-03o4-p5q6-r7s8t9u0v1w2",
+        "EspacioId": "j0k1l2m3-n4o5-36p7-q8r9-s0t1u2v3w4x5",
+        "Nombre": "Luz LED (Techo)",
+        "Potencia": 25,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "j8k9l0m1-n2o3-14p5-q6r7-s8t9u0v1w2x3",
+        "EspacioId": "j0k1l2m3-n4o5-36p7-q8r9-s0t1u2v3w4x5",
+        "Nombre": "Lavadora/Secadora",
+        "Potencia": 610,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "k9l0m1n2-o3p4-25q6-r7s8-t9u0v1w2x3y4",
+        "EspacioId": "j0k1l2m3-n4o5-36p7-q8r9-s0t1u2v3w4x5",
+        "Nombre": "Plancha",
+        "Potencia": 1000,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "l0m1n2o3-p4q5-36r7-s8t9-u0v1w2x3y4z5",
+        "EspacioId": "k1l2m3n4-o5p6-47q8-r9s0-t1u2v3w4x5y6",
+        "Nombre": "Aspiradora",
+        "Potencia": 800,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "m1n2o3p4-q5r6-47s8-t9u0-v1w2x3y4z5a6",
+        "EspacioId": "k1l2m3n4-o5p6-47q8-r9s0-t1u2v3w4x5y6",
+        "Nombre": "Luz Halógena (Exterior)",
+        "Potencia": 50,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "n2o3p4q5-r6s7-58t9-u0v1-w2x3y4z5a6b7",
+        "EspacioId": "k1l2m3n4-o5p6-47q8-r9s0-t1u2v3w4x5y6",
+        "Nombre": "Abridor de Puerta",
+        "Potencia": 400,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "o3p4q5r6-s7t8-69u0-v1w2-x3y4z5a6b7c8",
+        "EspacioId": "l2m3n4o5-p6q7-58r9-s0t1-u2v3w4x5y6z7",
+        "Nombre": "Luz LED (Exterior)",
+        "Potencia": 50,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "p4q5r6s7-t8u9-70v1-w2x3-y4z5a6b7c8d9",
+        "EspacioId": "l2m3n4o5-p6q7-58r9-s0t1-u2v3w4x5y6z7",
+        "Nombre": "Cortadora de Césped Eléctrica",
+        "Potencia": 1200,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "q5r6s7t8-u9v0-81w2-x3y4-z5a6b7c8d9e0",
+        "EspacioId": "m3n4o5p6-q7r8-69s0-t1u2-v3w4x5y6z7a8",
+        "Nombre": "Luz LED (Exterior)",
+        "Potencia": 50,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "r6s7t8u9-v0w1-92x3-y4z5-a6b7c8d9e0f1",
+        "EspacioId": "m3n4o5p6-q7r8-69s0-t1u2-v3w4x5y6z7a8",
+        "Nombre": "Parrilla Eléctrica",
+        "Potencia": 1500,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "s7t8u9v0-w1x2-03y4-z5a6-b7c8d9e0f1g2",
+        "EspacioId": "n4o5p6q7-r8s9-70t1-u2v3-w4x5y6z7a8b9",
+        "Nombre": "Abanicos",
+        "Potencia": 80,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "t8u9v0w1-x2y3-14z5-a6b7-c8d9e0f1g2h3",
+        "EspacioId": "n4o5p6q7-r8s9-70t1-u2v3-w4x5y6z7a8b9",
+        "Nombre": "Luz LED (Exterior)",
+        "Potencia": 50,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "u9v0w1x2-y3z4-25a6-b7c8-d9e0f1g2h3i4",
+        "EspacioId": "n4o5p6q7-r8s9-70t1-u2v3-w4x5y6z7a8b9",
+        "Nombre": "Bocinas",
+        "Potencia": 60,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "v0w1x2y3-z4a5-36b7-c8d9-e0f1g2h3i4j5",
+        "EspacioId": "o5p6q7r8-s9t0-81u2-v3w4-x5y6z7a8b9c0",
+        "Nombre": "Luz LED (Exterior)",
+        "Potencia": 50,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "w1x2y3z4-a5b6-47c8-d9e0-f1g2h3i4j5k6",
+        "EspacioId": "o5p6q7r8-s9t0-81u2-v3w4-x5y6z7a8b9c0",
+        "Nombre": "Cargadores",
+        "Potencia": 5,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "x2y3z4a5-b6c7-58d9-e0f1-g2h3i4j5k6l7",
+        "EspacioId": "p6q7r8s9-t0u1-92v3-w4x5-y6z7a8b9c0d1",
+        "Nombre": "Luz LED (Techo)",
+        "Potencia": 25,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "y3z4a5b6-c7d8-69e0-f1g2-h3i4j5k6l7m8",
+        "EspacioId": "p6q7r8s9-t0u1-92v3-w4x5-y6z7a8b9c0d1",
+        "Nombre": "Deshumidificador",
+        "Potencia": 500,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "z4a5b6c7-d8e9-70f1-g2h3-i4j5k6l7m8n9",
+        "EspacioId": "q7r8s9t0-u1v2-03w4-x5y6-z7a8b9c0d1e2",
+        "Nombre": "Luz LED (Techo)",
+        "Potencia": 25,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "a5b6c7d8-e9f0-81g2-h3i4-j5k6l7m8n9o0",
+        "EspacioId": "q7r8s9t0-u1v2-03w4-x5y6-z7a8b9c0d1e2",
+        "Nombre": "Ventilador de Techo",
+        "Potencia": 80,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "b6c7d8e9-f0g1-92h3-i4j5-k6l7m8n9o0p1",
+        "EspacioId": "r8s9t0u1-v2w3-14x5-y6z7-a8b9c0d1e2f3",
+        "Nombre": "Luz LED (Escritorio)",
+        "Potencia": 25,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "c7d8e9f0-g1h2-03i4-j5k6-l7m8n9o0p1q2",
+        "EspacioId": "r8s9t0u1-v2w3-14x5-y6z7-a8b9c0d1e2f3",
+        "Nombre": "Laptop",
+        "Potencia": 300,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "d8e9f0g1-h2i3-14j5-k6l7-m8n9o0p1q2r3",
+        "EspacioId": "r8s9t0u1-v2w3-14x5-y6z7-a8b9c0d1e2f3",
+        "Nombre": "Impresora",
+        "Potencia": 100,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "e9f0g1h2-i3j4-25k6-l7m8-n9o0p1q2r3s4",
+        "EspacioId": "r8s9t0u1-v2w3-14x5-y6z7-a8b9c0d1e2f3",
+        "Nombre": "Monitor",
+        "Potencia": 50,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "f0g1h2i3-j4k5-36l7-m8n9-o0p1q2r3s4t5",
+        "EspacioId": "r8s9t0u1-v2w3-14x5-y6z7-a8b9c0d1e2f3",
+        "Nombre": "Cargadores",
+        "Potencia": 5,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "g1h2i3j4-k5l6-47m8-n9o0-p1q2r3s4t5u6",
+        "EspacioId": "r8s9t0u1-v2w3-14x5-y6z7-a8b9c0d1e2f3",
+        "Nombre": "Docking Station",
+        "Potencia": 85,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "h2i3j4k5-l6m7-58n9-o0p1-q2r3s4t5u6v7",
+        "EspacioId": "s9t0u1v2-w3x4-25y6-z7a8-b9c0d1e2f3g4",
+        "Nombre": "Luz Halógena (Techo)",
+        "Potencia": 50,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "i3j4k5l6-m7n8-69o0-p1q2-r3s4t5u6v7w8",
+        "EspacioId": "s9t0u1v2-w3x4-25y6-z7a8-b9c0d1e2f3g4",
+        "Nombre": "Bomba de Agua",
+        "Potencia": 800,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "j4k5l6m7-n8o9-70p1-q2r3-s4t5u6v7w8x9",
+        "EspacioId": "t0u1v2w3-x4y5-36z7-a8b9-c0d1e2f3g4h5",
+        "Nombre": "Luz LED (Exterior)",
+        "Potencia": 50,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "k5l6m7n8-o9p0-81q2-r3s4-t5u6v7w8x9y0",
+        "EspacioId": "u1v2w3x4-y5z6-47a8-b9c0-d1e2f3g4h5i6",
+        "Nombre": "Luz LED (Techo)",
+        "Potencia": 25,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "l6m7n8o9-p0q1-92r3-s4t5-u6v7w8x9y0z1",
+        "EspacioId": "u1v2w3x4-y5z6-47a8-b9c0-d1e2f3g4h5i6",
+        "Nombre": "Ventilador de Pie",
+        "Potencia": 100,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "m7n8o9p0-q1r2-03s4-t5u6-v7w8x9y0z1a2",
+        "EspacioId": "v2w3x4y5-z6a7-58b9-c0d1-e2f3g4h5i6j7",
+        "Nombre": "Luz LED (Combinada)",
+        "Potencia": 75,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "n8o9p0q1-r2s3-14t5-u6v7-w8x9y0z1a2b3",
+        "EspacioId": "v2w3x4y5-z6a7-58b9-c0d1-e2f3g4h5i6j7",
+        "Nombre": "TV LED 50'",
+        "Potencia": 265,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "o9p0q1r2-s3t4-25u6-v7w8-x9y0z1a2b3c4",
+        "EspacioId": "v2w3x4y5-z6a7-58b9-c0d1-e2f3g4h5i6j7",
+        "Nombre": "Abanico",
+        "Potencia": 80,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "p9q0r1s2-t3u4-36v7-w8x9-y0z1a2b3c4d5",
+        "EspacioId": "w3x4y5z6-a7b8-69c0-d1e2-f3g4h5i6j7k8",
+        "Nombre": "Luz LED (Techo)",
+        "Potencia": 40,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "q0r1s2t3-u4v5-47w8-x9y0-z1a2b3c4d5e6",
+        "EspacioId": "w3x4y5z6-a7b8-69c0-d1e2-f3g4h5i6j7k8",
+        "Nombre": "Computadora de Escritorio",
+        "Potencia": 200,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "r1s2t3u4-v5w6-58x9-y0z1-a2b3c4d5e6f7",
+        "EspacioId": "w3x4y5z6-a7b8-69c0-d1e2-f3g4h5i6j7k8",
+        "Nombre": "Monitor",
+        "Potencia": 50,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "s2t3u4v5-w6x7-69y0-z1a2-b3c4d5e6f7g8",
+        "EspacioId": "w3x4y5z6-a7b8-69c0-d1e2-f3g4h5i6j7k8",
+        "Nombre": "Teléfono IP",
+        "Potencia": 15,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "t3u4v5w6-x7y8-70z1-a2b3-c4d5e6f7g8h9",
+        "EspacioId": "x4y5z6a7-b8c9-70d1-e2f3-g4h5i6j7k8l9",
+        "Nombre": "Luz LED (Techo)",
+        "Potencia": 40,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "u4v5w6x7-y8z9-81a2-b3c4-d5e6f7g8h9i0",
+        "EspacioId": "x4y5z6a7-b8c9-70d1-e2f3-g4h5i6j7k8l9",
+        "Nombre": "Proyector",
+        "Potencia": 500,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "v5w6x7y8-z9a0-92b3-c4d5-e6f7g8h9i0j1",
+        "EspacioId": "x4y5z6a7-b8c9-70d1-e2f3-g4h5i6j7k8l9",
+        "Nombre": "Pantalla LED",
+        "Potencia": 200,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "w6x7y8z9-a0b1-03c4-d5e6-f7g8h9i0j1k2",
+        "EspacioId": "y5z6a7b8-c9d0-81e2-f3g4-h5i6j7k8l9m0",
+        "Nombre": "Luz LED (Escritorio)",
+        "Potencia": 25,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "x7y8z9a0-b1c2-14d5-e6f7-g8h9i0j1k2l3",
+        "EspacioId": "y5z6a7b8-c9d0-81e2-f3g4-h5i6j7k8l9m0",
+        "Nombre": "Laptop",
+        "Potencia": 300,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "y8z9a0b1-c2d3-25e6-f7g8-h9i0j1k2l3m4",
+        "EspacioId": "y5z6a7b8-c9d0-81e2-f3g4-h5i6j7k8l9m0",
+        "Nombre": "Impresora",
+        "Potencia": 100,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "z9a0b1c2-d3e4-36f7-g8h9-i0j1k2l3m4n5",
+        "EspacioId": "y5z6a7b8-c9d0-81e2-f3g4-h5i6j7k8l9m0",
+        "Nombre": "Monitor",
+        "Potencia": 50,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "a0b1c2d3-e4f5-47g8-h9i0-j1k2l3m4n5o6",
+        "EspacioId": "z6a7b8c9-d0e1-92f3-g4h5-i6j7k8l9m0n1",
+        "Nombre": "Luz LED (Techo)",
+        "Potencia": 40,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "b1c2d3e4-f5g6-58h9-i0j1-k2l3m4n5o6p7",
+        "EspacioId": "z6a7b8c9-d0e1-92f3-g4h5-i6j7k8l9m0n1",
+        "Nombre": "Laptops x2",
+        "Potencia": 165,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "c2d3e4f5-g6h7-69i0-j1k2-l3m4n5o6p7q8",
+        "EspacioId": "z6a7b8c9-d0e1-92f3-g4h5-i6j7k8l9m0n1",
+        "Nombre": "Cargadores",
+        "Potencia": 5,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "d3e4f5g6-h7i8-70j1-k2l3-m4n5o6p7q8r9",
+        "EspacioId": "z6a7b8c9-d0e1-92f3-g4h5-i6j7k8l9m0n1",
+        "Nombre": "Docking Station",
+        "Potencia": 85,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "e4f5g6h7-i8j9-81k2-l3m4-n5o6p7q8r9s0",
+        "EspacioId": "a7b8c9d0-e1f2-03g4-h5i6-j7k8l9m0n1o2",
+        "Nombre": "Luz LED (Ambiente)",
+        "Potencia": 30,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "f5g6h7i8-j9k0-92l3-m4n5-o6p7q8r9s0t1",
+        "EspacioId": "a7b8c9d0-e1f2-03g4-h5i6-j7k8l9m0n1o2",
+        "Nombre": "Máquina de Café",
+        "Potencia": 800,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "g6h7i8j9-k0l1-03m4-n5o6-p7q8r9s0t1u2",
+        "EspacioId": "a7b8c9d0-e1f2-03g4-h5i6-j7k8l9m0n1o2",
+        "Nombre": "Refrigerador Pequeño",
+        "Potencia": 100,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "h7i8j9k0-l1m2-14n5-o6p7-q8r9s0t1u2v3",
+        "EspacioId": "b8c9d0e1-f2g3-14h5-i6j7-k8l9m0n1o2p3",
+        "Nombre": "Luz LED (Techo)",
+        "Potencia": 25,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "i8j9k0l1-m2n3-25o6-p7q8-r9s0t1u2v3w4",
+        "EspacioId": "b8c9d0e1-f2g3-14h5-i6j7-k8l9m0n1o2p3",
+        "Nombre": "Microondas",
+        "Potencia": 900,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "j9k0l1m2-n3o4-36p7-q8r9-s0t1u2v3w4x5",
+        "EspacioId": "b8c9d0e1-f2g3-14h5-i6j7-k8l9m0n1o2p3",
+        "Nombre": "Cafetera",
+        "Potencia": 800,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "k0l1m2n3-o4p5-47q8-r9s0-t1u2v3w4x5y6",
+        "EspacioId": "c9d0e1f2-g3h4-25i6-j7k8-l9m0n1o2p3q4",
+        "Nombre": "Luz Fluorescente Compacta",
+        "Potencia": 25,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "l1m2n3o4-p5q6-58r9-s0t1-u2v3w4x5y6z7",
+        "EspacioId": "c9d0e1f2-g3h4-25i6-j7k8-l9m0n1o2p3q4",
+        "Nombre": "Extractor de Aire",
+        "Potencia": 100,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "m2n3o4p5-q6r7-69s0-t1u2-v3w4x5y6z7a8",
+        "EspacioId": "d0e1f2g3-h4i5-36j7-k8l9-m0n1o2p3q4r5",
+        "Nombre": "Luz LED (Techo)",
+        "Potencia": 25,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "n3o4p5q6-r7s8-70t1-u2v3-w4x5y6z7a8b9",
+        "EspacioId": "d0e1f2g3-h4i5-36j7-k8l9-m0n1o2p3q4r5",
+        "Nombre": "Deshumidificador",
+        "Potencia": 500,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "o4p5q6r7-s8t9-81u2-v3w4-x5y6z7a8b9c0",
+        "EspacioId": "e1f2g3h4-i5j6-47k8-l9m0-n1o2p3q4r5s6",
+        "Nombre": "Luz LED (Industrial)",
+        "Potencia": 60,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "p5q6r7s8-t9u0-92v3-w4x5-y6z7a8b9c0d1",
+        "EspacioId": "e1f2g3h4-i5j6-47k8-l9m0-n1o2p3q4r5s6",
+        "Nombre": "Servidor",
+        "Potencia": 500,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "q6r7s8t9-u0v1-03w4-x5y6-z7a8b9c0d1e2",
+        "EspacioId": "e1f2g3h4-i5j6-47k8-l9m0-n1o2p3q4r5s6",
+        "Nombre": "Aire Acondicionado",
+        "Potencia": 1200,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "r7s8t9u0-v1w2-14x5-y6z7-a8b9c0d1e2f3",
+        "EspacioId": "f2g3h4i5-j6k7-58l9-m0n1-o2p3q4r5s6t7",
+        "Nombre": "Luz LED (Industrial)",
+        "Potencia": 60,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "s8t9u0v1-w2x3-25y6-z7a8-b9c0d1e2f3g4",
+        "EspacioId": "f2g3h4i5-j6k7-58l9-m0n1-o2p3q4r5s6t7",
+        "Nombre": "Ventilador Industrial",
+        "Potencia": 150,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "t9u0v1w2-x3y4-36z7-a8b9-c0d1e2f3g4h5",
+        "EspacioId": "g3h4i5j6-k7l8-69m0-n1o2-p3q4r5s6t7u8",
+        "Nombre": "Luz LED (Techo)",
+        "Potencia": 40,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "u0v1w2x3-y4z5-47a8-b9c0-d1e2f3g4h5i6",
+        "EspacioId": "g3h4i5j6-k7l8-69m0-n1o2-p3q4r5s6t7u8",
+        "Nombre": "Refrigerador",
+        "Potencia": 150,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "v1w2x3y4-z5a6-58b9-c0d1-e2f3g4h5i6j7",
+        "EspacioId": "g3h4i5j6-k7l8-69m0-n1o2-p3q4r5s6t7u8",
+        "Nombre": "Microondas",
+        "Potencia": 900,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "w2x3y4z5-a6b7-69c0-d1e2-f3g4h5i6j7k8",
+        "EspacioId": "h4i5j6k7-l8m9-70n1-o2p3-q4r5s6t7u8v9",
+        "Nombre": "Luz LED (Techo)",
+        "Potencia": 40,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "x3y4z5a6-b7c8-70d1-e2f3-g4h5i6j7k8l9",
+        "EspacioId": "h4i5j6k7-l8m9-70n1-o2p3-q4r5s6t7u8v9",
+        "Nombre": "Proyector",
+        "Potencia": 500,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "y4z5a6b7-c8d9-81e2-f3g4-h5i6j7k8l9m0",
+        "EspacioId": "h4i5j6k7-l8m9-70n1-o2p3-q4r5s6t7u8v9",
+        "Nombre": "Pantalla LED",
+        "Potencia": 200,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "z5a6b7c8-d9e0-92f3-g4h5-i6j7k8l9m0n1",
+        "EspacioId": "i5j6k7l8-m9n0-81o2-p3q4-r5s6t7u8v9w0",
+        "Nombre": "Luz LED (Techo)",
+        "Potencia": 25,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "a6b7c8d9-e0f1-03g4-h5i6-j7k8l9m0n1o2",
+        "EspacioId": "i5j6k7l8-m9n0-81o2-p3q4-r5s6t7u8v9w0",
+        "Nombre": "Impresora Láser",
+        "Potencia": 400,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "b7c8d9e0-f1g2-14h5-i6j7-k8l9m0n1o2p3",
+        "EspacioId": "i5j6k7l8-m9n0-81o2-p3q4-r5s6t7u8v9w0",
+        "Nombre": "Escáner",
+        "Potencia": 50,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "c8d9e0f1-g2h3-25i6-j7k8-l9m0n1o2p3q4",
+        "EspacioId": "j6k7l8m9-n0o1-92p3-q4r5-s6t7u8v9w0x1",
+        "Nombre": "Luz LED (Ambiente)",
+        "Potencia": 30,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "d9e0f1g2-h3i4-36j7-k8l9-m0n1o2p3q4r5",
+        "EspacioId": "j6k7l8m9-n0o1-92p3-q4r5-s6t7u8v9w0x1",
+        "Nombre": "Pantalla Informativa",
+        "Potencia": 150,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "e0f1g2h3-i4j5-47k8-l9m0-n1o2p3q4r5s6",
+        "EspacioId": "k7l8m9n0-o1p2-03q4-r5s6-t7u8v9w0x1y2",
+        "Nombre": "Luz LED (Exterior)",
+        "Potencia": 50,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "f1g2h3i4-j5k6-58l9-m0n1-o2p3q4r5s6t7",
+        "EspacioId": "k7l8m9n0-o1p2-03q4-r5s6-t7u8v9w0x1y2",
+        "Nombre": "Ventilador de Exterior",
+        "Potencia": 100,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "g2h3i4j5-k6l7-69m0-n1o2-p3q4r5s6t7u8",
+        "EspacioId": "l8m9n0o1-p2q3-14r5-s6t7-u8v9w0x1y2z3",
+        "Nombre": "Luz LED (Ambiente)",
+        "Potencia": 40,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "h3i4j5k6-l7m8-70n1-o2p3-q4r5s6t7u8v9",
+        "EspacioId": "l8m9n0o1-p2q3-14r5-s6t7-u8v9w0x1y2z3",
+        "Nombre": "Refrigerador Comercial",
+        "Potencia": 600,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "i4j5k6l7-m8n9-81o2-p3q4-r5s6t7u8v9w0",
+        "EspacioId": "l8m9n0o1-p2q3-14r5-s6t7-u8v9w0x1y2z3",
+        "Nombre": "Horno Eléctrico",
+        "Potencia": 2000,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "j5k6l7m8-n9o0-92p3-q4r5-s6t7u8v9w0x1",
+        "EspacioId": "l8m9n0o1-p2q3-14r5-s6t7-u8v9w0x1y2z3",
+        "Nombre": "Caja Registradora",
+        "Potencia": 50,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "k6l7m8n9-o0p1-03q4-r5s6-t7u8v9w0x1y2",
+        "EspacioId": "l8m9n0o1-p2q3-14r5-s6t7-u8v9w0x1y2z3",
+        "Nombre": "Máquina de Hielo",
+        "Potencia": 400,
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    }
+]

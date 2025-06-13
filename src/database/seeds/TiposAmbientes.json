@@ -1,0 +1,346 @@
+[
+    {
+        "id": "a1b2c3d4-e5f6-41d4-a716-446655440001",
+        "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
+        "nombre": "Sala",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "b2c3d4e5-f6g7-41d4-a716-446655440002",
+        "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
+        "nombre": "Comedor",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "c3d4e5f6-g7h8-41d4-a716-446655440003",
+        "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
+        "nombre": "Cocina",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "d4e5f6g7-h8i9-41d4-a716-446655440004",
+        "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
+        "nombre": "Dormitorio Principal",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "e5f6g7h8-i9j0-41d4-a716-446655440005",
+        "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
+        "nombre": "Dormitorio Secundario",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "f6g7h8i9-j0k1-41d4-a716-446655440006",
+        "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
+        "nombre": "Baño",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "g7h8i9j0-k1l2-41d4-a716-446655440007",
+        "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
+        "nombre": "Baño de Invitados",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "h8i9j0k1-l2m3-41d4-a716-446655440008",
+        "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
+        "nombre": "Estudio",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "i9j0k1l2-m3n4-41d4-a716-446655440009",
+        "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
+        "nombre": "Sala de Juegos",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "j0k1l2m3-n4o5-41d4-a716-446655440010",
+        "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
+        "nombre": "Lavadero",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "k1l2m3n4-o5p6-41d4-a716-446655440011",
+        "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
+        "nombre": "Garaje",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "l2m3n4o5-p6q7-41d4-a716-446655440012",
+        "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
+        "nombre": "Jardín",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "m3n4o5p6-q7r8-41d4-a716-446655440013",
+        "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
+        "nombre": "Patio",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "n4o5p6q7-r8s9-41d4-a716-446655440014",
+        "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
+        "nombre": "Terraza",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "o5p6q7r8-s9t0-41d4-a716-446655440015",
+        "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
+        "nombre": "Balcón",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "p6q7r8s9-t0u1-41d4-a716-446655440016",
+        "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
+        "nombre": "Sótano",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "q7r8s9t0-u1v2-41d4-a716-446655440017",
+        "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
+        "nombre": "Ático",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "r8s9t0u1-v2w3-41d4-a716-446655440018",
+        "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
+        "nombre": "Oficina",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "s9t0u1v2-w3x4-41d4-a716-446655440019",
+        "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
+        "nombre": "Escalera Interior",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "t0u1v2w3-x4y5-41d4-a716-446655440020",
+        "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
+        "nombre": "Escalera Exterior",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "u1v2w3x4-y5z6-41d4-a716-446655440021",
+        "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
+        "nombre": "Cuarto de Servicio",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "v2w3x4y5-z6a7-41d4-a716-446655440022",
+        "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
+        "nombre": "Sala de Estar",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "w3x4y5z6-a7b8-41d4-a716-446655440023",
+        "tipoInstalacion_Id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "nombre": "Recepción",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "x4y5z6a7-b8c9-41d4-a716-446655440024",
+        "tipoInstalacion_Id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "nombre": "Sala de Reuniones",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "y5z6a7b8-c9d0-41d4-a716-446655440025",
+        "tipoInstalacion_Id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "nombre": "Oficina Privada",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "z6a7b8c9-d0e1-41d4-a716-446655440026",
+        "tipoInstalacion_Id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "nombre": "Espacio de Coworking",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "a7b8c9d0-e1f2-41d4-a716-446655440027",
+        "tipoInstalacion_Id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "nombre": "Área de Descanso",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "b8c9d0e1-f2g3-41d4-a716-446655440028",
+        "tipoInstalacion_Id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "nombre": "Cocina/Office",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "c9d0e1f2-g3h4-41d4-a716-446655440029",
+        "tipoInstalacion_Id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "nombre": "Baño",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "d0e1f2g3-h4i5-41d4-a716-446655440030",
+        "tipoInstalacion_Id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "nombre": "Archivo",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "e1f2g3h4-i5j6-41d4-a716-446655440031",
+        "tipoInstalacion_Id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "nombre": "Sala de Servidores",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "f2g3h4i5-j6k7-58l9-m0n1-o2p3q4r5s6t7",
+        "tipoInstalacion_Id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "nombre": "Almacén",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "g3h4i5j6-k7l8-69m0-n1o2-p3q4r5s6t7u8",
+        "tipoInstalacion_Id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "nombre": "Comedor de Empleados",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "h4i5j6k7-l8m9-70n1-o2p3-q4r5s6t7u8v9",
+        "tipoInstalacion_Id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "nombre": "Sala de Capacitación",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "i5j6k7l8-m9n0-81o2-p3q4-r5s6t7u8v9w0",
+        "tipoInstalacion_Id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "nombre": "Zona de Impresión",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "j6k7l8m9-n0o1-92p3-q4r5-s6t7u8v9w0x1",
+        "tipoInstalacion_Id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "nombre": "Vestíbulo",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "k7l8m9n0-o1p2-03q4-r5s6-t7u8v9w0x1y2",
+        "tipoInstalacion_Id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "nombre": "Terraza",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "l8m9n0o1-p2q3-14r5-s6t7-u8v9w0x1y2z3",
+        "tipoInstalacion_Id": "7d9c3e20-4e5f-11e2-beb8-0800200c9a66",
+        "nombre": "Restaurante",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "m9n0o1p2-q3r4-25s6-t7u8-v9w0x1y2z3a4",
+        "tipoInstalacion_Id": "7d9c3e20-4e5f-11e2-beb8-0800200c9a66",
+        "nombre": "Zona de Exhibición",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "n0o1p2q3-r4s5-36t7-u8v9-w0x1y2z3a4b5",
+        "tipoInstalacion_Id": "7d9c3e20-4e5f-11e2-beb8-0800200c9a66",
+        "nombre": "Oficina Comercial",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "o1p2q3r4-s5t6-47u8-v9w0-x1y2z3a4b5c6",
+        "tipoInstalacion_Id": "8e7d4f30-5f60-12f3-8ec9-0900211d8b77",
+        "nombre": "Gimnasio",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "p2q3r4s5-t6u7-58v9-w0x1-y2z3a4b5c6d7",
+        "tipoInstalacion_Id": "8e7d4f30-5f60-12f3-8ec9-0900211d8b77",
+        "nombre": "Sala de Mantenimiento",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    },
+    {
+        "id": "q3r4s5t6-u7v8-69w0-x1y2-z3a4b5c6d7e8",
+        "tipoInstalacion_Id": "8e7d4f30-5f60-12f3-8ec9-0900211d8b77",
+        "nombre": "Cuarto de Almacenamiento",
+        "activo": true,
+        "creadoPor": "SEED",
+        "actualizadoPor": "SEED"
+    }
+]

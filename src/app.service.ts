@@ -28,8 +28,8 @@ export class AppService {
       uptimeFormatted: this.formatUptime(uptime),
       database: {
         status: 'connected',
-        type: 'SQLite',
-        file: 'calculadora_electrica.db',
+        type: 'mariadb',
+        database: 'calculadora-electrica',
       },
       memory: {
         used: Math.round(process.memoryUsage().heapUsed / 1024 / 1024),
