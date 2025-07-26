@@ -2,7 +2,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { ConfigService } from '@nestjs/config';
-import { UsersService } from '../../modules/users/users.service';
+import { UsersService } from '../../modules/users/services/users.service';
 import { User } from '../../modules/users/entities/user.entity';
 
 export interface JwtPayload {
@@ -32,12 +32,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: JwtPayload): Promise<Omit<User, 'password'>> {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const user = await this.usersService.findById(payload.sub.toString());
 
     if (!user) {
       throw new UnauthorizedException('Usuario no encontrado');
     }
 
-    return user;
+    return user as Omit<User, 'password'>;
   }
 }

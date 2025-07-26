@@ -1,6 +1,6 @@
 [
     {
-        "id": "a1b2c3d4-e5f6-41d4-a716-446655440001",
+        "id": "3a82b3e4-498b-41bf-a522-71860764d933",
         "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
         "nombre": "Sala",
         "activo": true,
@@ -8,7 +8,7 @@
         "actualizadoPor": "SEED"
     },
     {
-        "id": "b2c3d4e5-f6g7-41d4-a716-446655440002",
+        "id": "d685c900-d133-49ac-82a8-adb39191d2c8",
         "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
         "nombre": "Comedor",
         "activo": true,
@@ -16,7 +16,7 @@
         "actualizadoPor": "SEED"
     },
     {
-        "id": "c3d4e5f6-g7h8-41d4-a716-446655440003",
+        "id": "fdc18c97-c7da-42ae-9e4d-b6305051e53a",
         "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
         "nombre": "Cocina",
         "activo": true,
@@ -24,7 +24,7 @@
         "actualizadoPor": "SEED"
     },
     {
-        "id": "d4e5f6g7-h8i9-41d4-a716-446655440004",
+        "id": "f44291b3-0557-4f2e-8c8a-c67a563bce93",
         "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
         "nombre": "Dormitorio Principal",
         "activo": true,
@@ -32,7 +32,7 @@
         "actualizadoPor": "SEED"
     },
     {
-        "id": "e5f6g7h8-i9j0-41d4-a716-446655440005",
+        "id": "45614056-fa99-44b3-894b-1eec7f4f5ed5",
         "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
         "nombre": "Dormitorio Secundario",
         "activo": true,
@@ -40,7 +40,7 @@
         "actualizadoPor": "SEED"
     },
     {
-        "id": "f6g7h8i9-j0k1-41d4-a716-446655440006",
+        "id": "e74aeec0-d8bf-4280-a29c-137071c7f859",
         "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
         "nombre": "Baño",
         "activo": true,
@@ -48,7 +48,7 @@
         "actualizadoPor": "SEED"
     },
     {
-        "id": "g7h8i9j0-k1l2-41d4-a716-446655440007",
+        "id": "18a3933d-fa27-41ad-8b2c-a6b7deaafd65",
         "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
         "nombre": "Baño de Invitados",
         "activo": true,
@@ -56,7 +56,7 @@
         "actualizadoPor": "SEED"
     },
     {
-        "id": "h8i9j0k1-l2m3-41d4-a716-446655440008",
+        "id": "5ecb092c-1d27-4e11-8675-8b37e2994787",
         "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
         "nombre": "Estudio",
         "activo": true,
@@ -64,7 +64,7 @@
         "actualizadoPor": "SEED"
     },
     {
-        "id": "i9j0k1l2-m3n4-41d4-a716-446655440009",
+        "id": "68283493-3467-4f11-aaa4-87bf92e14ed4",
         "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
         "nombre": "Sala de Juegos",
         "activo": true,
@@ -72,7 +72,7 @@
         "actualizadoPor": "SEED"
     },
     {
-        "id": "j0k1l2m3-n4o5-41d4-a716-446655440010",
+        "id": "d48d7fdf-dad0-4b45-9917-7b55fa49de83",
         "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
         "nombre": "Lavadero",
         "activo": true,
@@ -80,7 +80,7 @@
         "actualizadoPor": "SEED"
     },
     {
-        "id": "k1l2m3n4-o5p6-41d4-a716-446655440011",
+        "id": "d5fd93f2-c281-4511-abeb-e2b3af2a5f42",
         "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
         "nombre": "Garaje",
         "activo": true,
@@ -88,7 +88,7 @@
         "actualizadoPor": "SEED"
     },
     {
-        "id": "l2m3n4o5-p6q7-41d4-a716-446655440012",
+        "id": "e79da5e1-a324-43ce-baef-9eb40392bafb",
         "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
         "nombre": "Jardín",
         "activo": true,
@@ -96,7 +96,7 @@
         "actualizadoPor": "SEED"
     },
     {
-        "id": "m3n4o5p6-q7r8-41d4-a716-446655440013",
+        "id": "99ac9e4c-be1c-48a6-9ac7-d4c6f61d873c",
         "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
         "nombre": "Patio",
         "activo": true,
@@ -104,7 +104,7 @@
         "actualizadoPor": "SEED"
     },
     {
-        "id": "n4o5p6q7-r8s9-41d4-a716-446655440014",
+        "id": "ae59b19b-1182-4f42-8099-baacbba53d3d",
         "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
         "nombre": "Terraza",
         "activo": true,
@@ -112,7 +112,7 @@
         "actualizadoPor": "SEED"
     },
     {
-        "id": "o5p6q7r8-s9t0-41d4-a716-446655440015",
+        "id": "7d1f0441-4127-4b35-9b92-d6b4d3deaec5",
         "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
         "nombre": "Balcón",
         "activo": true,
@@ -120,7 +120,7 @@
         "actualizadoPor": "SEED"
     },
     {
-        "id": "p6q7r8s9-t0u1-41d4-a716-446655440016",
+        "id": "412965cc-08c7-4f9d-a0d8-2b5abb1cd557",
         "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
         "nombre": "Sótano",
         "activo": true,
@@ -128,7 +128,7 @@
         "actualizadoPor": "SEED"
     },
     {
-        "id": "q7r8s9t0-u1v2-41d4-a716-446655440017",
+        "id": "b65fe3dc-1d6a-40e5-9610-ea7712aebdde",
         "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
         "nombre": "Ático",
         "activo": true,
@@ -136,15 +136,15 @@
         "actualizadoPor": "SEED"
     },
     {
-        "id": "r8s9t0u1-v2w3-41d4-a716-446655440018",
-        "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
+        "id": "d19f1876-ce8a-4cc7-a1ec-d3e993b20740",
+        "tipoInstalacion_Id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
         "nombre": "Oficina",
         "activo": true,
         "creadoPor": "SEED",
         "actualizadoPor": "SEED"
     },
     {
-        "id": "s9t0u1v2-w3x4-41d4-a716-446655440019",
+        "id": "a30a0d3b-83e7-4eb0-a007-6ba986ea69af",
         "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
         "nombre": "Escalera Interior",
         "activo": true,
@@ -152,7 +152,7 @@
         "actualizadoPor": "SEED"
     },
     {
-        "id": "t0u1v2w3-x4y5-41d4-a716-446655440020",
+        "id": "1581b314-8ed4-49a2-be84-d05a2ac74bc2",
         "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
         "nombre": "Escalera Exterior",
         "activo": true,
@@ -160,7 +160,7 @@
         "actualizadoPor": "SEED"
     },
     {
-        "id": "u1v2w3x4-y5z6-41d4-a716-446655440021",
+        "id": "af4914eb-fdc1-4eeb-846f-8abd4aacf79f",
         "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
         "nombre": "Cuarto de Servicio",
         "activo": true,
@@ -168,7 +168,7 @@
         "actualizadoPor": "SEED"
     },
     {
-        "id": "v2w3x4y5-z6a7-41d4-a716-446655440022",
+        "id": "027e5f26-f9b4-4305-9402-12c5fbca3e54",
         "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
         "nombre": "Sala de Estar",
         "activo": true,
@@ -176,7 +176,7 @@
         "actualizadoPor": "SEED"
     },
     {
-        "id": "w3x4y5z6-a7b8-41d4-a716-446655440023",
+        "id": "af014b5d-9b93-4bf1-81ca-fd3d31109d7e",
         "tipoInstalacion_Id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
         "nombre": "Recepción",
         "activo": true,
@@ -184,15 +184,15 @@
         "actualizadoPor": "SEED"
     },
     {
-        "id": "x4y5z6a7-b8c9-41d4-a716-446655440024",
-        "tipoInstalacion_Id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "id": "c1ff0790-27a3-4b23-90e4-29915ab2bc6a",
+        "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
         "nombre": "Sala de Reuniones",
         "activo": true,
         "creadoPor": "SEED",
         "actualizadoPor": "SEED"
     },
     {
-        "id": "y5z6a7b8-c9d0-41d4-a716-446655440025",
+        "id": "9bf703d2-ffa8-4ca1-a9d6-c5d6bfdcd658",
         "tipoInstalacion_Id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
         "nombre": "Oficina Privada",
         "activo": true,
@@ -200,7 +200,7 @@
         "actualizadoPor": "SEED"
     },
     {
-        "id": "z6a7b8c9-d0e1-41d4-a716-446655440026",
+        "id": "7919120e-039e-4305-b0de-77b4b07b9d27",
         "tipoInstalacion_Id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
         "nombre": "Espacio de Coworking",
         "activo": true,
@@ -208,7 +208,7 @@
         "actualizadoPor": "SEED"
     },
     {
-        "id": "a7b8c9d0-e1f2-41d4-a716-446655440027",
+        "id": "1497b803-b8e0-406d-acf1-c673689c6fb5",
         "tipoInstalacion_Id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
         "nombre": "Área de Descanso",
         "activo": true,
@@ -216,23 +216,23 @@
         "actualizadoPor": "SEED"
     },
     {
-        "id": "b8c9d0e1-f2g3-41d4-a716-446655440028",
-        "tipoInstalacion_Id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "id": "b6d4c469-2b89-47a5-8c4a-a819dd460cba",
+        "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
         "nombre": "Cocina/Office",
         "activo": true,
         "creadoPor": "SEED",
         "actualizadoPor": "SEED"
     },
     {
-        "id": "c9d0e1f2-g3h4-41d4-a716-446655440029",
-        "tipoInstalacion_Id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "id": "99edb5eb-5d89-4512-b808-b527793c6c0b",
+        "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
         "nombre": "Baño",
         "activo": true,
         "creadoPor": "SEED",
         "actualizadoPor": "SEED"
     },
     {
-        "id": "d0e1f2g3-h4i5-41d4-a716-446655440030",
+        "id": "a3234607-a4cc-4ca5-ac95-93a43f641500",
         "tipoInstalacion_Id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
         "nombre": "Archivo",
         "activo": true,
@@ -240,15 +240,15 @@
         "actualizadoPor": "SEED"
     },
     {
-        "id": "e1f2g3h4-i5j6-41d4-a716-446655440031",
-        "tipoInstalacion_Id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "id": "069d45ad-2d37-4bf4-9286-240ce5b1fc95",
+        "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
         "nombre": "Sala de Servidores",
         "activo": true,
         "creadoPor": "SEED",
         "actualizadoPor": "SEED"
     },
     {
-        "id": "f2g3h4i5-j6k7-58l9-m0n1-o2p3q4r5s6t7",
+        "id": "5e9efcb3-4507-433d-a62e-6fc9a596bbf9",
         "tipoInstalacion_Id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
         "nombre": "Almacén",
         "activo": true,
@@ -256,23 +256,23 @@
         "actualizadoPor": "SEED"
     },
     {
-        "id": "g3h4i5j6-k7l8-69m0-n1o2-p3q4r5s6t7u8",
-        "tipoInstalacion_Id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "id": "b772beea-2f64-47c7-80ca-985cd425e08b",
+        "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
         "nombre": "Comedor de Empleados",
         "activo": true,
         "creadoPor": "SEED",
         "actualizadoPor": "SEED"
     },
     {
-        "id": "h4i5j6k7-l8m9-70n1-o2p3-q4r5s6t7u8v9",
-        "tipoInstalacion_Id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "id": "2f874203-0a87-4d45-8025-73c86f76c8e6",
+        "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
         "nombre": "Sala de Capacitación",
         "activo": true,
         "creadoPor": "SEED",
         "actualizadoPor": "SEED"
     },
     {
-        "id": "i5j6k7l8-m9n0-81o2-p3q4-r5s6t7u8v9w0",
+        "id": "9f499a0a-10e0-488c-b9c3-b90dce950d57",
         "tipoInstalacion_Id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
         "nombre": "Zona de Impresión",
         "activo": true,
@@ -280,7 +280,7 @@
         "actualizadoPor": "SEED"
     },
     {
-        "id": "j6k7l8m9-n0o1-92p3-q4r5-s6t7u8v9w0x1",
+        "id": "d8a64e50-392c-48ad-b762-3c4314dd34b3",
         "tipoInstalacion_Id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
         "nombre": "Vestíbulo",
         "activo": true,
@@ -288,15 +288,15 @@
         "actualizadoPor": "SEED"
     },
     {
-        "id": "k7l8m9n0-o1p2-03q4-r5s6-t7u8v9w0x1y2",
-        "tipoInstalacion_Id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+        "id": "1640e1eb-5147-4493-b90c-18121f0f119d",
+        "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
         "nombre": "Terraza",
         "activo": true,
         "creadoPor": "SEED",
         "actualizadoPor": "SEED"
     },
     {
-        "id": "l8m9n0o1-p2q3-14r5-s6t7-u8v9w0x1y2z3",
+        "id": "944b49a8-effc-4745-96bf-d98ecf0c8d73",
         "tipoInstalacion_Id": "7d9c3e20-4e5f-11e2-beb8-0800200c9a66",
         "nombre": "Restaurante",
         "activo": true,
@@ -304,7 +304,7 @@
         "actualizadoPor": "SEED"
     },
     {
-        "id": "m9n0o1p2-q3r4-25s6-t7u8-v9w0x1y2z3a4",
+        "id": "f5f59371-8e9f-4523-9f37-bb4b649ed61f",
         "tipoInstalacion_Id": "7d9c3e20-4e5f-11e2-beb8-0800200c9a66",
         "nombre": "Zona de Exhibición",
         "activo": true,
@@ -312,35 +312,35 @@
         "actualizadoPor": "SEED"
     },
     {
-        "id": "n0o1p2q3-r4s5-36t7-u8v9-w0x1y2z3a4b5",
-        "tipoInstalacion_Id": "7d9c3e20-4e5f-11e2-beb8-0800200c9a66",
+        "id": "1a815897-b851-461c-ae7b-547b5c2d90de",
+        "tipoInstalacion_Id": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
         "nombre": "Oficina Comercial",
         "activo": true,
         "creadoPor": "SEED",
         "actualizadoPor": "SEED"
     },
     {
-        "id": "o1p2q3r4-s5t6-47u8-v9w0-x1y2z3a4b5c6",
-        "tipoInstalacion_Id": "8e7d4f30-5f60-12f3-8ec9-0900211d8b77",
+        "id": "bdb116c2-fabc-4fc9-abaa-f4678a57b29e",
         "nombre": "Gimnasio",
         "activo": true,
         "creadoPor": "SEED",
-        "actualizadoPor": "SEED"
+        "actualizadoPor": "SEED",
+        "tipoInstalacion_Id": "8e7d4f30-5f60-12f3-8ec9-0900211d8b77"
     },
     {
-        "id": "p2q3r4s5-t6u7-58v9-w0x1-y2z3a4b5c6d7",
-        "tipoInstalacion_Id": "8e7d4f30-5f60-12f3-8ec9-0900211d8b77",
+        "id": "d9eea804-d23a-498d-a4ba-99497437a814",
+        "tipoInstalacion_Id": "550e8400-e29b-41d4-a716-446655440000",
         "nombre": "Sala de Mantenimiento",
         "activo": true,
         "creadoPor": "SEED",
         "actualizadoPor": "SEED"
     },
     {
-        "id": "q3r4s5t6-u7v8-69w0-x1y2-z3a4b5c6d7e8",
-        "tipoInstalacion_Id": "8e7d4f30-5f60-12f3-8ec9-0900211d8b77",
+        "id": "9be048bf-6638-4d38-9564-7ac90f549566",
         "nombre": "Cuarto de Almacenamiento",
         "activo": true,
         "creadoPor": "SEED",
-        "actualizadoPor": "SEED"
+        "actualizadoPor": "SEED",
+        "tipoInstalacion_Id": "8e7d4f30-5f60-12f3-8ec9-0900211d8b77"
     }
 ]

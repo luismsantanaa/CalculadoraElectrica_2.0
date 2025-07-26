@@ -1,56 +1,231 @@
 ├── src/
 │   ├── common/                    # Recursos compartidos (utilidades, decoradores, etc.)
 │   │   ├── decorators/            # Decoradores personalizados
+│   │   │   ├── current-user.decorator.ts
+│   │   │   ├── paginate.decorator.ts
+│   │   │   ├── public.decorator.ts
+│   │   │   ├── roles.decorator.ts
+│   │   │   └── index.ts
 │   │   ├── dtos/                  # DTOs (Data Transfer Objects) reutilizables
+│   │   │   ├── enums.ts
+│   │   │   ├── paginated-result.dto.ts
+│   │   │   └── result.dto.ts
 │   │   ├── filters/               # Filtros de excepciones globales
+│   │   │   └── http-exception.filter.ts
 │   │   ├── guards/                # Guards personalizados
+│   │   │   ├── __tests__/
+│   │   │   │   ├── jwt-auth.guard.spec.ts
+│   │   │   │   ├── local-auth.guard.spec.ts
+│   │   │   │   └── roles.guard.spec.ts
+│   │   │   ├── jwt-auth.guard.ts
+│   │   │   ├── local-auth.guard.ts
+│   │   │   ├── roles.guard.ts
+│   │   │   └── index.ts
 │   │   ├── interceptors/           # Interceptors personalizados
+│   │   │   ├── error.interceptor.ts
+│   │   │   └── transform.interceptor.ts
 │   │   ├── interfaces/            # Interfaces y tipos compartidos
+│   │   │   └── error.interface.ts
 │   │   ├── pipes/                 # Pipes personalizados
+│   │   │   ├── ordinar-number.pipe.ts
+│   │   │   └── square-meter.pipe.ts
+│   │   ├── specifications/        # Especificaciones base
+│   │   │   └── base.specification.ts
+│   │   ├── strategies/            # Estrategias de autenticación
+│   │   │   ├── __tests__/
+│   │   │   │   ├── jwt.strategy.spec.ts
+│   │   │   │   └── local.strategy.spec.ts
+│   │   │   ├── jwt.strategy.ts
+│   │   │   ├── local.strategy.ts
+│   │   │   └── index.ts
+│   │   ├── types/                 # Tipos compartidos
+│   │   │   └── paginate-result.type.ts
 │   │   └── utils/                 # Funciones utilitarias (e.g., helpers, formatters)
+│   │       └── constantes-electricas.ts
 │   │
 │   ├── config/                    # Configuraciones (entorno, base de datos, etc.)
 │   │   ├── database.config.ts     # Configuración de la base de datos
 │   │   ├── env.config.ts          # Carga de variables de entorno
+│   │   ├── jwt.config.ts          # Configuración JWT
 │   │   └── index.ts               # Exporta todas las configuraciones
 │   │
 │   ├── modules/                   # Módulos de negocio (funcionalidades específicas)
 │   │   ├── auth/                  # Módulo de autenticación
 │   │   │   ├── controllers/       # Controladores (manejo de rutas HTTP)
+│   │   │   │   ├── __tests__/
+│   │   │   │   │   └── auth.controller.spec.ts
+│   │   │   │   └── auth.controller.ts
 │   │   │   ├── services/          # Lógica de negocio
-│   │   │   ├── entities/          # Entidades ORM (e.g., TypeORM)
-│   │   │   ├── repositories/      # Repositorios para acceso a datos
+│   │   │   │   ├── __tests__/
+│   │   │   │   │   └── auth.service.spec.ts
+│   │   │   │   └── auth.service.ts
 │   │   │   ├── dtos/              # DTOs específicos del módulo
-│   │   │   ├── interfaces/        # Interfaces específicas del módulo
-│   │   │   ├── auth.module.ts     # Definición del módulo
-│   │   │   └── auth.constants.ts  # Constantes del módulo
-│   │   ├── users/                 # Módulo de usuarios (similar estructura)
-│   │   ├── products/              # Módulo de productos (similar estructura)
-│   │   └── ...                    # Otros módulos según el proyecto
+│   │   │   │   ├── login.dto.ts
+│   │   │   │   └── register.dto.ts
+│   │   │   └── auth.module.ts     # Definición del módulo
+│   │   │
+│   │   ├── users/                 # Módulo de usuarios
+│   │   │   ├── controllers/       # Controladores
+│   │   │   │   ├── __tests__/
+│   │   │   │   │   └── users.controller.spec.ts
+│   │   │   │   └── users.controller.ts
+│   │   │   ├── services/          # Lógica de negocio
+│   │   │   │   ├── __tests__/
+│   │   │   │   │   └── users.service.spec.ts
+│   │   │   │   └── users.service.ts
+│   │   │   ├── entities/          # Entidades ORM
+│   │   │   │   └── user.entity.ts
+│   │   │   ├── dtos/              # DTOs específicos del módulo
+│   │   │   └── users.module.ts    # Definición del módulo
+│   │   │
+│   │   ├── ambientes/             # Módulo de ambientes
+│   │   │   ├── controllers/       # Controladores
+│   │   │   │   ├── __tests__/
+│   │   │   │   │   └── ambiente.controller.spec.ts
+│   │   │   │   └── ambiente.controller.ts
+│   │   │   ├── services/          # Lógica de negocio
+│   │   │   │   ├── __tests__/
+│   │   │   │   │   └── ambiente.service.spec.ts
+│   │   │   │   └── ambiente.service.ts
+│   │   │   ├── entities/          # Entidades ORM
+│   │   │   │   └── ambiente.entity.ts
+│   │   │   ├── dtos/              # DTOs específicos del módulo
+│   │   │   │   ├── create-ambiente.dto.ts
+│   │   │   │   └── update-ambiente.dto.ts
+│   │   │   ├── specifications/    # Especificaciones del módulo
+│   │   │   │   ├── activo.specification.ts
+│   │   │   │   └── nombre.specification.ts
+│   │   │   └── ambiente.module.ts # Definición del módulo
+│   │   │
+│   │   ├── cargas/                # Módulo de cargas
+│   │   │   ├── controllers/       # Controladores
+│   │   │   │   ├── __tests__/
+│   │   │   │   │   └── cargas.controller.spec.ts
+│   │   │   │   └── cargas.controller.ts
+│   │   │   ├── services/          # Lógica de negocio
+│   │   │   │   ├── __tests__/
+│   │   │   │   │   └── cargas.service.spec.ts
+│   │   │   │   └── cargas.service.ts
+│   │   │   ├── entities/          # Entidades ORM
+│   │   │   │   └── cargas.entity.ts
+│   │   │   ├── dtos/              # DTOs específicos del módulo
+│   │   │   │   ├── create-carga.dto.ts
+│   │   │   │   └── update-carga.dto.ts
+│   │   │   ├── specifications/    # Especificaciones del módulo
+│   │   │   │   ├── activo.specification.ts
+│   │   │   │   └── nombre.specification.ts
+│   │   │   └── cargas.module.ts   # Definición del módulo
+│   │   │
+│   │   ├── calculos/              # Módulo de cálculos
+│   │   │   ├── controllers/       # Controladores
+│   │   │   │   ├── __tests__/
+│   │   │   │   │   └── calculos.controller.spec.ts
+│   │   │   │   └── calculos.controller.ts
+│   │   │   ├── services/          # Lógica de negocio
+│   │   │   │   ├── __tests__/
+│   │   │   │   │   └── calculos.service.spec.ts
+│   │   │   │   └── calculos.service.ts
+│   │   │   └── calculos.module.ts # Definición del módulo
+│   │   │
+│   │   ├── tipos-ambientes/       # Módulo de tipos de ambientes
+│   │   │   ├── controllers/       # Controladores
+│   │   │   │   ├── __tests__/
+│   │   │   │   │   └── tipos-ambientes.controller.spec.ts
+│   │   │   │   └── tipos-ambientes.controller.ts
+│   │   │   ├── services/          # Lógica de negocio
+│   │   │   │   ├── __tests__/
+│   │   │   │   │   └── tipos-ambientes.service.spec.ts
+│   │   │   │   └── tipos-ambientes.service.ts
+│   │   │   ├── entities/          # Entidades ORM
+│   │   │   │   └── tipo-ambiente.entity.ts
+│   │   │   ├── dtos/              # DTOs específicos del módulo
+│   │   │   │   ├── create-tipo-ambiente.dto.ts
+│   │   │   │   └── update-tipo-ambiente.dto.ts
+│   │   │   ├── specifications/    # Especificaciones del módulo
+│   │   │   │   ├── activo.specification.ts
+│   │   │   │   └── nombre.specification.ts
+│   │   │   └── tipos-ambientes.module.ts # Definición del módulo
+│   │   │
+│   │   ├── tipos-artefactos/      # Módulo de tipos de artefactos
+│   │   │   ├── controllers/       # Controladores
+│   │   │   │   ├── __tests__/
+│   │   │   │   │   └── tipos-artefactos.controller.spec.ts
+│   │   │   │   └── tipos-artefactos.controller.ts
+│   │   │   ├── services/          # Lógica de negocio
+│   │   │   │   ├── __tests__/
+│   │   │   │   │   └── tipos-artefactos.service.spec.ts
+│   │   │   │   └── tipos-artefactos.service.ts
+│   │   │   ├── entities/          # Entidades ORM
+│   │   │   │   └── tipo-artefacto.entity.ts
+│   │   │   ├── dtos/              # DTOs específicos del módulo
+│   │   │   │   ├── create-tipo-artefacto.dto.ts
+│   │   │   │   └── update-tipo-artefacto.dto.ts
+│   │   │   └── tipos-artefactos.module.ts # Definición del módulo
+│   │   │
+│   │   └── tipos-instalaciones/   # Módulo de tipos de instalaciones
+│   │       ├── controllers/       # Controladores
+│   │       │   ├── __tests__/
+│   │       │   │   └── tipos-instalaciones.controller.spec.ts
+│   │       │   └── tipos-instalaciones.controller.ts
+│   │       ├── services/          # Lógica de negocio
+│   │       │   ├── __tests__/
+│   │       │   │   └── tipos-instalaciones.service.spec.ts
+│   │       │   └── tipos-instalaciones.service.ts
+│   │       ├── entities/          # Entidades ORM
+│   │       │   └── tipo-instalacion.entity.ts
+│   │       ├── dtos/              # DTOs específicos del módulo
+│   │       │   ├── create-tipo-instalacion.dto.ts
+│   │       │   └── update-tipo-instalacion.dto.ts
+│   │       ├── specifications/    # Especificaciones del módulo
+│   │       │   ├── activo.specification.ts
+│   │       │   └── nombre.specification.ts
+│   │       └── tipos-instalaciones.module.ts # Definición del módulo
 │   │
 │   ├── database/                  # Configuración y migraciones de la base de datos
 │   │   ├── migrations/            # Migraciones de la base de datos
+│   │   │   └── 1753557558030-CreateTables.ts
 │   │   ├── seeds/                 # Scripts para datos iniciales
+│   │   │   ├── seeds.module.ts
+│   │   │   ├── seeds.service.ts
+│   │   │   ├── TiposAmbientes.json
+│   │   │   ├── TiposArtefactos.json
+│   │   │   └── TiposInstalacion.json
+│   │   ├── data-source.ts
 │   │   └── index.ts               # Exporta configuraciones de la DB
 │   │
+│   ├── app.controller.spec.ts     # Test del controlador principal
+│   ├── app.controller.ts          # Controlador principal
 │   ├── app.module.ts              # Módulo raíz de la aplicación
-│   ├── main.ts                    # Punto de entrada (bootstrap)
-│   └── constants.ts               # Constantes globales
+│   ├── app.service.ts             # Servicio principal
+│   └── main.ts                    # Punto de entrada (bootstrap)
 │
 ├── test/                          # Pruebas unitarias y e2e
-│   ├── unit/                      # Pruebas unitarias
-│   ├── e2e/                       # Pruebas end-to-end
+│   ├── app.e2e-spec.ts            # Pruebas end-to-end
+│   ├── jest-e2e.json              # Configuración Jest para e2e
 │   └── jest.config.js             # Configuración de Jest
 │
-├── scripts/                       # Scripts de automatización (e.g., seeding, build)
+├── scripts/                       # Scripts de automatización
+│   ├── create-admin.ts            # Script para crear administrador
+│   ├── run-seeds.ts               # Script para ejecutar seeds
+│   └── test-db-connection.ts      # Script para probar conexión DB
 │
-├── docs/                          # Documentación del proyecto (e.g., API, arquitectura)
+├── docs/                          # Documentación del proyecto
+│   └── containerCommand.txt       # Comandos de contenedor
+│
+├── postman/                       # Colecciones de Postman
+│   ├── calculadora-electrica-rd.postman_collection.json
+│   ├── collections/
+│   │   └── auth.collection.json
+│   └── local.postman_environment.json
 │
 ├── .env                           # Variables de entorno (no versionado)
 ├── .env.example                   # Ejemplo de variables de entorno
 ├── .gitignore                     # Archivos y carpetas ignorados por Git
+├── eslint.config.mjs              # Configuración de ESLint
 ├── nest-cli.json                  # Configuración del CLI de NestJS
 ├── package.json                   # Dependencias y scripts
+├── package-lock.json              # Lock file de dependencias
 ├── tsconfig.json                  # Configuración de TypeScript
+├── tsconfig.build.json            # Configuración TypeScript para build
 ├── README.md                      # Documentación inicial
-└── docker-compose.yml             # Configuración de Docker (opcional)
+└── Estructura_carpetas.txt        # Este archivo de estructura

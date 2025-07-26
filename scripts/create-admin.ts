@@ -1,5 +1,6 @@
-import mysql, { RowDataPacket } from 'mysql2/promise';
-import bcrypt from 'bcrypt';
+import * as mysql from 'mysql2/promise';
+import { RowDataPacket } from 'mysql2/promise';
+import * as bcrypt from 'bcrypt';
 import { config } from 'dotenv';
 import { randomUUID } from 'crypto';
 import {
@@ -8,10 +9,6 @@ import {
 } from '../src/modules/users/entities/user.entity';
 
 config();
-
-interface AdminUser extends RowDataPacket {
-  id: string;
-}
 
 interface DatabaseError extends Error {
   code?: string;
@@ -34,7 +31,7 @@ async function createAdminUser() {
     console.log('✅ Conectado a MariaDB');
 
     // Verificar si ya existe un admin
-    const [existingAdmin] = await connection.execute<AdminUser[]>(
+    const [existingAdmin] = await connection.execute<RowDataPacket[]>(
       'SELECT id FROM users WHERE role = ? LIMIT 1',
       [UserRole.ADMIN],
     );
@@ -60,7 +57,7 @@ async function createAdminUser() {
 
     const adminData = {
       id: uuid,
-      name: 'admin',
+      username: 'admin',
       email: 'admin@calculadora-rd.com',
       password: hashedPassword,
       nombre: 'Administrador',
@@ -75,13 +72,13 @@ async function createAdminUser() {
     await connection.execute(
       `
       INSERT INTO users (
-        id, name, email, password, nombre, apellido,
+        id, username, email, password, nombre, apellido,
         role, estado, telefono, empresa, cedula, fechaCreacion, fechaActualizacion
       ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
     `,
       [
         adminData.id,
-        adminData.name,
+        adminData.username,
         adminData.email,
         adminData.password,
         adminData.nombre,

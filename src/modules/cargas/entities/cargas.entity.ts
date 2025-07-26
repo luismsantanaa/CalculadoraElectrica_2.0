@@ -4,7 +4,6 @@ import {
   Column,
   CreateDateColumn,
   Entity,
-  Generated,
   JoinColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -30,8 +29,7 @@ export class Carga {
   @Column({ nullable: true, type: 'int' })
   horasUso: number;
 
-  @Column({ type: 'float' })
-  @Generated()
+  @Column({ type: 'float', default: 0 })
   kwhMensual: number;
 
   @Column({ nullable: true })
