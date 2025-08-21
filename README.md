@@ -1,415 +1,337 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
-## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
-
-## Project setup
-
-```bash
-$ npm install
-```
-
-## Compile and run the project
-
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
-```
-
-## Run tests
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
-
-## Resources
-
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
-
 # Calculadora Eléctrica RD - Backend API
 
-API REST para la Calculadora Eléctrica de República Dominicana desarrollada con NestJS, TypeORM y MariaDB.
+<p align="center">
+  <img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" />
+  <br>
+  <strong>API REST para Cálculos Eléctricos según Normas RIE RD/NEC</strong>
+</p>
 
-## 🚀 Características
+<p align="center">
+  <a href="https://nestjs.com" target="_blank"><img src="https://img.shields.io/badge/NestJS-10.0-red.svg" alt="NestJS" /></a>
+  <a href="https://www.typescriptlang.org" target="_blank"><img src="https://img.shields.io/badge/TypeScript-5.0-blue.svg" alt="TypeScript" /></a>
+  <a href="https://mariadb.org" target="_blank"><img src="https://img.shields.io/badge/MariaDB-11.0-orange.svg" alt="MariaDB" /></a>
+  <a href="https://typeorm.io" target="_blank"><img src="https://img.shields.io/badge/TypeORM-0.3-green.svg" alt="TypeORM" /></a>
+  <a href="https://swagger.io" target="_blank"><img src="https://img.shields.io/badge/Swagger-4.0-brightgreen.svg" alt="Swagger" /></a>
+</p>
 
-- **Motor de Reglas Data-Driven**: Sistema de reglas normativas configurables (RIE RD/NEC)
-- **Cálculos Eléctricos**: Preview de instalaciones residenciales con propuesta de circuitos
-- **Arquitectura Modular**: Diseño limpio y escalable
-- **Documentación Swagger**: API completamente documentada
-- **Validación Robusta**: Validación de entrada con class-validator
-- **Observabilidad**: Logging estructurado y traceId
-- **Pruebas**: Unitarias y e2e con Jest
-- **Docker**: Contenedores para desarrollo y producción
-- **CI/CD**: Pipeline de Azure DevOps
+## 🎯 **Descripción**
 
-## 📋 Prerrequisitos
+API REST completa para la **Calculadora Eléctrica de República Dominicana** desarrollada con NestJS, TypeORM y MariaDB. El sistema implementa cálculos eléctricos residenciales según las normas **RIE RD** (Reglamento de Instalaciones Eléctricas) y **NEC** (National Electrical Code).
 
-- Node.js 20.x
-- npm 10.x
-- MariaDB 11.x
-- Docker y Docker Compose (opcional)
+## ✅ **Estado del Proyecto**
 
-## 🛠️ Instalación
+- **Funcionalidad Core**: ✅ **100% Implementada**
+- **Seguridad Básica**: ✅ **100% Implementada** (Fase 1)
+- **Documentación API**: ✅ **100% Implementada**
+- **Testing**: 🔄 **70% Completado**
 
-### Desarrollo Local
+## 🚀 **Características Principales**
 
-1. **Clonar el repositorio**
+### **⚡ Cálculos Eléctricos**
+- **Motor de reglas data-driven** para normas RIE RD/NEC
+- **Cálculo de potencia demandada** por ambiente
+- **Distribución automática de circuitos** (ILU/TOM)
+- **Validación de superficies y consumos**
+- **Propuesta de circuitos** con calibres y breakers
 
-   ```bash
-   git clone <repository-url>
-   cd calculadora-electrica-backend
-   ```
+### **📊 Gestión de Proyectos**
+- **CRUD completo** de proyectos eléctricos
+- **Versionado automático** con snapshots
+- **Firma de reglas** para trazabilidad
+- **Exportación de proyectos**
 
-2. **Instalar dependencias**
+### **🧮 Motor de Reglas Normativas**
+- **Reglas configurables** (RIE RD/NEC)
+- **Cache optimizado** para performance
+- **Administración completa** de reglas
+- **Historial de cambios** con auditoría
 
-   ```bash
-   npm install
-   ```
+### **🔐 Seguridad Implementada**
+- **Rate limiting** global y específico
+- **Helmet** para headers de seguridad
+- **CORS restrictivo** configurable
+- **Sistema de auditoría** completo
+- **JWT con bcrypt** para autenticación
 
-3. **Configurar variables de entorno**
+## 🛠️ **Tecnologías Utilizadas**
 
-   ```bash
-   cp .env.example .env
-   ```
+### **Framework y Lenguaje**
+- **NestJS 10.x** - Framework de Node.js para aplicaciones escalables
+- **TypeScript 5.x** - Tipado estático para mayor robustez
 
-   Editar `.env` con tus configuraciones:
+### **Base de Datos y ORM**
+- **MariaDB 10.x** - Sistema de gestión de base de datos relacional
+- **TypeORM 0.3.x** - ORM para TypeScript con soporte completo
 
-   ```env
-   # Database
-   DB_HOST=localhost
-   DB_PORT=3306
-   DB_USER=electridom
-   DB_PASS=electridom
-   DB_NAME=electridom
+### **Autenticación y Seguridad**
+- **@nestjs/jwt** - Manejo de tokens JWT
+- **@nestjs/passport** - Estrategias de autenticación
+- **bcrypt** - Hashing seguro de contraseñas
+- **@nestjs/throttler** - Rate limiting
+- **helmet** - Headers de seguridad HTTP
 
-   # Application
-   PORT=3000
-   API_PREFIX=api
+### **Validación y Documentación**
+- **class-validator** - Validación de DTOs
+- **@nestjs/swagger** - Documentación automática de API
 
-   # Rules Engine
-   RULE_CACHE_TTL_MS=60000
-   APPLY_MIGRATIONS_ON_STARTUP=true
-   ```
+## 📦 **Módulos Implementados**
 
-4. **Ejecutar migraciones y seeds**
+### **1. 🔐 AuthModule - Autenticación**
+- `POST /auth/register` - Registro de usuarios
+- `POST /auth/login` - Inicio de sesión con JWT
+- `GET /auth/profile` - Perfil del usuario
 
-   ```bash
-   npm run migration:run
-   npm run seed
-   ```
+### **2. ⚡ CalculosModule - Cálculos Eléctricos**
+- `POST /v1/calculations/preview` - Preview de instalación eléctrica
 
-5. **Iniciar en modo desarrollo**
-   ```bash
-   npm run start:dev
-   ```
+### **3. 📊 ProjectsModule - Gestión de Proyectos**
+- `POST /v1/projects` - Crear proyecto
+- `GET /v1/projects` - Listar proyectos
+- `POST /v1/projects/:id/versions` - Crear versión
+- `GET /v1/projects/:id/export` - Exportar proyecto
 
-### Docker
+### **4. 🧮 RulesModule - Motor de Reglas**
+- `GET /v1/rules/active` - Obtener reglas activas
+- `GET /v1/rules/:ruleSetId` - Reglas específicas
 
-1. **Construir y ejecutar con Docker Compose**
+### **5. 🔧 RulesAdminModule - Administración**
+- `POST /v1/rulesets` - Crear conjunto de reglas
+- `PUT /v1/rulesets/:id/rules` - Actualizar reglas
+- `POST /v1/rulesets/:id/publish` - Publicar reglas
+- `GET /v1/rulesets/:idA/diff/:idB` - Comparar conjuntos
 
-   ```bash
-   docker-compose up -d
-   ```
+### **6. 👥 UsersModule - Usuarios**
+- `GET /users` - Listar usuarios
+- `PATCH /users/:id` - Actualizar usuario
+- `POST /users/reset-password` - Reset contraseña
 
-2. **Ver logs**
+### **7. 🏠 AmbienteModule - Ambientes**
+- CRUD completo de ambientes de instalación
 
-   ```bash
-   docker-compose logs -f api
-   ```
+### **8. 🔌 CargasModule - Cargas Eléctricas**
+- CRUD completo de cargas eléctricas
 
-3. **Detener servicios**
-   ```bash
-   docker-compose down
-   ```
+### **9-11. Tipos* - Catálogos**
+- CRUD de tipos de instalación, ambientes y artefactos
 
-## 📚 API Endpoints
+## 🗄️ **Base de Datos**
 
-### Cálculos Eléctricos
+### **Entidades Principales**
+- **User** - Usuarios del sistema con roles
+- **Project** - Proyectos eléctricos
+- **ProjectVersion** - Versiones con snapshots
+- **RuleSet** - Conjuntos de reglas normativas
+- **NormRule** - Reglas individuales
+- **AuditLog** - Logs de auditoría
+- **Ambiente** - Ambientes de instalación
+- **Cargas** - Cargas eléctricas
 
-#### POST /v1/calculations/preview
+### **Migraciones**
+- ✅ Todas las tablas creadas
+- ✅ Índices optimizados
+- ✅ Relaciones configuradas
+- ✅ Datos iniciales (seeds)
 
-Calcula preview de instalación eléctrica residencial.
+## 🔒 **Seguridad Implementada**
 
-**Request:**
+### **✅ Fase 1: Seguridad Básica - COMPLETADA**
 
-```json
-{
-  "superficies": [
-    { "ambiente": "Sala", "areaM2": 18.5 },
-    { "ambiente": "Dormitorio 1", "areaM2": 12.0 }
-  ],
-  "consumos": [
-    { "nombre": "Televisor", "ambiente": "Sala", "watts": 120 },
-    { "nombre": "Lámpara", "ambiente": "Dormitorio 1", "watts": 60 }
-  ],
-  "opciones": {
-    "tensionV": 120,
-    "monofasico": true
-  }
-}
-```
+#### **Rate Limiting**
+- **Global**: 100 requests/minuto
+- **Auth Login**: 5 intentos/5 minutos
+- **Auth Register**: 3 intentos/5 minutos
 
-**Response:**
+#### **Headers de Seguridad**
+- **Helmet** configurado con CSP
+- **CORS restrictivo** con origins configurables
+- **Cookies seguras** preparadas
 
-```json
-{
-  "cargasPorAmbiente": [
-    {
-      "ambiente": "Sala",
-      "iluminacionVA": 1850,
-      "tomasVA": 120,
-      "cargasFijasVA": 0,
-      "totalVA": 1970
-    }
-  ],
-  "totales": {
-    "totalConectadaVA": 3170,
-    "demandaEstimadaVA": 3170
-  },
-  "propuestaCircuitos": [
-    {
-      "tipo": "ILU",
-      "cargaAsignadaVA": 3050,
-      "ambientesIncluidos": ["Sala", "Dormitorio 1"],
-      "breakerSugerido": "15A // TODO validar RIE RD",
-      "calibreSugerido": "AWG 14 // TODO validar RIE RD"
-    }
-  ],
-  "warnings": [],
-  "traceId": "550e8400-e29b-41d4-a716-446655440000"
-}
-```
+#### **Sistema de Auditoría**
+- **AuditLog** con eventos críticos
+- **Trazabilidad** de IP y User-Agent
+- **TraceID** para seguimiento
 
-## 🧮 Motor de Reglas
+#### **Autenticación**
+- **JWT** con bcrypt
+- **Roles**: ADMIN, CLIENTE, AUDITOR
+- **Estados**: ACTIVO, INACTIVO, BLOQUEADO
 
-El sistema utiliza un motor de reglas data-driven para los cálculos normativos:
+## 📋 **Prerrequisitos**
 
-### Reglas Disponibles
+- **Node.js** 20.x o superior
+- **npm** 10.x o superior
+- **MariaDB** 11.x o superior
+- **Git** para clonar el repositorio
 
-- `LUZ_VA_POR_M2`: VA de iluminación por metro cuadrado
-- `TOMA_VA_MAX_POR_CIRCUITO`: VA máximo por circuito de tomacorrientes
-- `ILU_VA_MAX_POR_CIRCUITO`: VA máximo por circuito de iluminación
-- `FACTOR_DEMANDA_LUZ`: Factor de demanda para iluminación
-- `FACTOR_DEMANDA_TOMA`: Factor de demanda para tomacorrientes
-- `FACTOR_DEMANDA_CARGAS_FIJAS`: Factor de demanda para cargas fijas
+## 🚀 **Instalación Rápida**
 
-### Gestión de Reglas
-
+### **1. Clonar Repositorio**
 ```bash
-# Ver reglas en la base de datos
-mysql -u electridom -p electridom -e "SELECT * FROM norm_rules;"
-
-# Actualizar regla
-mysql -u electridom -p electridom -e "UPDATE norm_rules SET numericValue = '120.000' WHERE code = 'LUZ_VA_POR_M2';"
+git clone https://github.com/luismsantanaa/CalculadoraElectrica_2.0.git
+cd CalculadoraElectrica_2.0
 ```
 
-## 🧪 Pruebas
-
-### Unitarias
-
+### **2. Instalar Dependencias**
 ```bash
-npm test
-npm run test:watch
-npm run test:cov
+npm install
 ```
 
-### End-to-End
-
+### **3. Configurar Variables de Entorno**
 ```bash
-npm run test:e2e
+cp .env.example .env
 ```
 
-### Cobertura
+Editar `.env`:
+```env
+# Database
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=electridom
+DB_PASS=electridom
+DB_NAME=electridom
 
+# Application
+PORT=3000
+API_PREFIX=api
+
+# Security
+THROTTLE_TTL=60
+THROTTLE_LIMIT=100
+AUTH_THROTTLE_LIMIT=5
+
+# Rules Engine
+RULE_CACHE_TTL_MS=60000
+APPLY_MIGRATIONS_ON_STARTUP=true
+```
+
+### **4. Ejecutar Migraciones y Seeds**
 ```bash
-npm run test:cov
+npm run migration:run
+npm run seed
 ```
 
-## 🐳 Docker
-
-### Construir imagen
-
+### **5. Iniciar Desarrollo**
 ```bash
-docker build -t electridom-api .
+npm run start:dev
 ```
 
-### Ejecutar contenedor
-
-```bash
-docker run -p 3000:3000 electridom-api
-```
-
-### Docker Compose
-
-```bash
-# Desarrollo
-docker-compose up -d
-
-# Producción
-docker-compose -f docker-compose.prod.yml up -d
-```
-
-## 📖 Documentación
+## 📖 **Documentación API**
 
 - **Swagger UI**: http://localhost:3000/api/docs
 - **API JSON**: http://localhost:3000/api/docs-json
-- **Health Check**: http://localhost:3000/api/health
+- **Health Check**: http://localhost:3000/api
 
-## 🔧 Scripts Disponibles
+## 🧪 **Testing**
+
+```bash
+# Unit Tests
+npm test
+
+# E2E Tests
+npm run test:e2e
+
+# Coverage
+npm run test:cov
+```
+
+## 🐳 **Docker**
+
+### **Desarrollo**
+```bash
+docker-compose up -d
+```
+
+### **Producción**
+```bash
+docker build -t electridom-api .
+docker run -p 3000:3000 electridom-api
+```
+
+## 📊 **Scripts Disponibles**
 
 ```bash
 # Desarrollo
-npm run start:dev          # Iniciar en modo desarrollo
-npm run start:debug        # Iniciar con debugger
+npm run start:dev          # Desarrollo con hot reload
+npm run start:debug        # Desarrollo con debugger
 
 # Producción
 npm run build              # Construir aplicación
-npm run start:prod         # Iniciar en producción
+npm run start:prod         # Iniciar producción
 
-# Calidad de código
-npm run lint               # Ejecutar ESLint
-npm run format             # Formatear con Prettier
-
-# Base de datos
+# Base de Datos
 npm run migration:generate # Generar migración
 npm run migration:run      # Ejecutar migraciones
-npm run migration:revert   # Revertir migración
 npm run seed               # Ejecutar seeds
 
-# Pruebas
-npm test                   # Pruebas unitarias
-npm run test:e2e           # Pruebas e2e
-npm run test:cov           # Cobertura de código
+# Testing
+npm test                   # Unit tests
+npm run test:e2e           # E2E tests
+npm run test:cov           # Coverage
+
+# Calidad
+npm run lint               # ESLint
+npm run format             # Prettier
 ```
 
-## 🏗️ Arquitectura
+## 🏗️ **Arquitectura**
 
 ```
 src/
 ├── common/                 # Recursos compartidos
-│   ├── filters/           # Filtros globales
-│   ├── interceptors/      # Interceptors
-│   └── utils/             # Utilidades
+│   ├── entities/          # BaseAuditEntity
+│   ├── services/          # AuditService
+│   ├── guards/            # Guards de seguridad
+│   └── interceptors/      # Interceptors
 ├── config/                # Configuraciones
-├── modules/
-│   ├── rules/             # Motor de reglas
-│   │   ├── entities/      # Entidad NormRule
-│   │   ├── services/      # RuleProvider
-│   │   └── seeds/         # Datos iniciales
-│   ├── calculos/          # Cálculos eléctricos
-│   │   ├── dtos/          # Data Transfer Objects
-│   │   ├── services/      # Lógica de negocio
-│   │   └── controllers/   # Endpoints REST
-│   └── ...                # Otros módulos
+├── modules/               # Módulos de negocio
+│   ├── auth/             # Autenticación
+│   ├── calculos/         # Cálculos eléctricos
+│   ├── projects/         # Gestión de proyectos
+│   ├── rules/            # Motor de reglas
+│   ├── rules-admin/      # Administración de reglas
+│   └── users/            # Gestión de usuarios
 └── database/
     ├── migrations/        # Migraciones TypeORM
-    └── seeds/             # Scripts de seed
+    └── seeds/            # Datos iniciales
 ```
 
-## 🔒 Seguridad
+## 📈 **Próximos Pasos**
 
-- Validación de entrada con class-validator
-- Sanitización de datos
-- Manejo seguro de errores
-- Logging estructurado
-- TraceId para trazabilidad
+### **Prioridad ALTA**
+- [ ] Completar testing (e2e)
+- [ ] Configuración de producción
+- [ ] Monitoreo y logs
 
-## 📊 Monitoreo
+### **Prioridad MEDIA**
+- [ ] Fase 2 de Seguridad (Argon2)
+- [ ] RBAC avanzado
+- [ ] Optimización de performance
 
-- Health checks automáticos
-- Logs estructurados
-- Métricas de rendimiento
-- Trazabilidad con traceId
+### **Prioridad BAJA**
+- [ ] Fase 3-4 de Seguridad
+- [ ] Microservicios
+- [ ] CI/CD avanzado
 
-## 🤝 Contribución
+## 🤝 **Contribución**
 
 1. Fork el proyecto
-2. Crear rama feature (`git checkout -b feature/AmazingFeature`)
-3. Commit cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
+2. Crear rama feature (`git checkout -b feature/NuevaFuncionalidad`)
+3. Commit cambios (`git commit -m 'feat: Agregar nueva funcionalidad'`)
+4. Push a la rama (`git push origin feature/NuevaFuncionalidad`)
 5. Abrir Pull Request
 
-## 📄 Licencia
+## 📄 **Licencia**
 
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
+Este proyecto está bajo la **Licencia MIT**. Ver el archivo `LICENSE` para más detalles.
 
-## 🆘 Soporte
+## 🆘 **Soporte**
 
 - **Documentación**: [Swagger UI](http://localhost:3000/api/docs)
-- **Issues**: [GitHub Issues](https://github.com/your-repo/issues)
-- **Email**: support@calculadoraelectricrd.com
+- **Issues**: [GitHub Issues](https://github.com/luismsantanaa/CalculadoraElectrica_2.0/issues)
+- **Estado del Proyecto**: [ESTADO_PROYECTO.md](./ESTADO_PROYECTO.md)
 
 ---
 
-**Desarrollado con ❤️ para la comunidad eléctrica de República Dominicana**
+**⚡ Desarrollado con ❤️ para la comunidad eléctrica de República Dominicana**
+
+*Cumpliendo con las normas RIE RD y NEC para instalaciones eléctricas seguras y eficientes.*
