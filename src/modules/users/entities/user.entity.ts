@@ -1,13 +1,11 @@
 import {
   Entity,
   Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
   BeforeInsert,
 } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { BaseAuditEntity } from '../../../common/entities/base-audit.entity';
 
 export enum UserRole {
   ADMIN = 'admin',
@@ -24,14 +22,15 @@ export enum UserStatus {
 
 export type UserWithoutPassword = Omit<
   User,
-  'password' | 'hashPassword' | 'validatePassword' | 'toJSON'
+  'password' | 'hashPassword' | 'validatePassword' | 'toJSON' | 'hashedPassword'
 >;
 
 @Entity('users')
-export class User {
+export class User extends BaseAuditEntity {
+  private readonly saltOrRounds = 10;
+
   @ApiProperty({ description: 'ID único del usuario' })
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  // id ya viene de BaseAuditEntity
 
   @ApiProperty({ description: 'Nombre de usuario único' })
   @Column({ unique: true, length: 50 })
@@ -93,23 +92,27 @@ export class User {
   @Column({ type: 'datetime', nullable: true })
   ultimoAcceso?: Date;
 
-  @ApiProperty({ description: 'Fecha de creación del usuario' })
-  @CreateDateColumn()
-  fechaCreacion: Date;
-
-  @ApiProperty({ description: 'Fecha de última actualización' })
-  @UpdateDateColumn()
-  fechaActualizacion: Date;
+  // Los campos de auditoría ya vienen de BaseAuditEntity:
+  // - creationDate (antes fechaCreacion)
+  // - updateDate (antes fechaActualizacion)
+  // - usrCreate (antes creadoPor)
+  // - usrUpdate (antes actualizadoPor)
+  // - active (antes activo)
 
   @BeforeInsert()
   async hashPassword() {
     if (this.password) {
-      this.password = await bcrypt.hash(this.password, 12);
+      this.password = await this.hashedPassword(this.password);
     }
   }
 
   async validatePassword(password: string): Promise<boolean> {
-    return bcrypt.compare(password, this.password);
+    const isMatch = await bcrypt.compare(password, this.password);
+    return isMatch;
+  }
+
+  async hashedPassword(password: string) {
+    return await bcrypt.hash(password, this.saltOrRounds);
   }
 
   toJSON() {

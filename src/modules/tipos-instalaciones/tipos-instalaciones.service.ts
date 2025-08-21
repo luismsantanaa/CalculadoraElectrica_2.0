@@ -25,7 +25,7 @@ export class TiposInstalacionesService {
   ): Promise<TipoInstalacion> {
     const tipoInstalacion = this.tipoInstalacionRepository.create({
       ...createDto,
-      creadoPor: usuario,
+      usrCreate: usuario,
     });
     return await this.tipoInstalacionRepository.save(tipoInstalacion);
   }
@@ -47,7 +47,7 @@ export class TiposInstalacionesService {
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     const result = (await paginate<TipoInstalacion>(query, queryBuilder, {
-      sortableColumns: ['id', 'nombre', 'descripcion', 'fechaCreacion'],
+      sortableColumns: ['id', 'nombre', 'descripcion', 'creationDate'],
       searchableColumns: ['nombre', 'descripcion'],
       defaultSortBy: [['nombre', 'ASC']],
       defaultLimit: 10,
@@ -64,7 +64,7 @@ export class TiposInstalacionesService {
 
   async findOne(id: string): Promise<TipoInstalacion> {
     const tipoInstalacion = await this.tipoInstalacionRepository.findOne({
-      where: { id, activo: true },
+      where: { id, active: true },
     });
     if (!tipoInstalacion) {
       throw new NotFoundException(
@@ -82,15 +82,15 @@ export class TiposInstalacionesService {
     const tipoInstalacion = await this.findOne(id);
     Object.assign(tipoInstalacion, {
       ...updateDto,
-      actualizadoPor: usuario,
+      usrUpdate: usuario,
     });
     return await this.tipoInstalacionRepository.save(tipoInstalacion);
   }
 
   async remove(id: string, usuario: string): Promise<void> {
     const tipoInstalacion = await this.findOne(id);
-    tipoInstalacion.activo = false;
-    tipoInstalacion.actualizadoPor = usuario;
+    tipoInstalacion.active = false;
+    tipoInstalacion.usrUpdate = usuario;
     await this.tipoInstalacionRepository.save(tipoInstalacion);
   }
 }

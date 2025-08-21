@@ -17,6 +17,7 @@ import {
   ApiResponse,
   ApiBearerAuth,
 } from '@nestjs/swagger';
+import { ResetPasswordDto } from './dtos/resetPassword.dto';
 
 @ApiTags('users')
 @ApiBearerAuth()
@@ -60,5 +61,21 @@ export class UsersController {
   @ApiResponse({ status: 404, description: 'Usuario no encontrado' })
   remove(@Param('id') id: string): Promise<void> {
     return this.usersService.remove(id);
+  }
+
+  @Post('reset-password')
+  @ApiOperation({ summary: 'Recuperar contraseña de usuario' })
+  @ApiResponse({
+    status: 200,
+    description: 'Contraseña actualizada exitosamente',
+  })
+  @ApiResponse({ status: 404, description: 'Usuario no encontrado' })
+  resetPassword(
+    @Body() resetPasswordDto: ResetPasswordDto,
+  ): Promise<{ message: string }> {
+    return this.usersService.resetPassword(
+      resetPasswordDto.email,
+      resetPasswordDto.newPassword,
+    );
   }
 }

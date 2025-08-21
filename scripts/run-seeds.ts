@@ -1,6 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { SeedsModule } from '../src/database/seeds/seeds.module';
 import { SeedsService } from '../src/database/seeds/seeds.service';
+import * as dotenv from 'dotenv';
+
+// Cargar variables de entorno
+dotenv.config();
 
 async function bootstrap() {
   try {

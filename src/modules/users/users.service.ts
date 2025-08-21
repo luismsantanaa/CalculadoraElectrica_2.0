@@ -55,4 +55,19 @@ export class UsersService {
   async findAll(): Promise<User[]> {
     return this.usersRepository.find();
   }
+
+  async resetPassword(
+    email: string,
+    newPassword: string,
+  ): Promise<{ message: string }> {
+    const user = await this.findByEmail(email);
+    if (!user) {
+      throw new NotFoundException('Usuario no encontrado');
+    }
+
+    const hashedPassword = await user.hashedPassword(newPassword);
+    await this.usersRepository.update(user.id, { password: hashedPassword });
+
+    return { message: 'Contraseña actualizada exitosamente' };
+  }
 }

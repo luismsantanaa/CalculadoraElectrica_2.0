@@ -1,64 +1,33 @@
-import { TipoAmbiente } from '../../tipos-ambientes/entities/tipo-ambiente.entity';
-import { TipoArtefacto } from '../../tipos-artefactos/entities/tipo-artefacto.entity';
 import {
-  Column,
-  CreateDateColumn,
   Entity,
-  Generated,
-  JoinColumn,
+  Column,
   ManyToOne,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
+  JoinColumn,
 } from 'typeorm';
+import { BaseAuditEntity } from '../../../common/entities/base-audit.entity';
+import { TipoArtefacto } from '../../tipos-artefactos/entities/tipo-artefacto.entity';
 
 @Entity('cargas')
-export class Carga {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+export class Cargas extends BaseAuditEntity {
+  // id ya viene de BaseAuditEntity
 
-  @ManyToOne(() => TipoAmbiente, { eager: true })
-  @JoinColumn({ name: 'tipo_ambiente_id' })
-  tipoAmbiente: TipoAmbiente;
+  @Column({ length: 100 })
+  nombre: string;
+
+  @Column({ type: 'decimal', precision: 10, scale: 2 })
+  potencia: number;
+
+  @Column({ type: 'decimal', precision: 10, scale: 2 })
+  voltaje: number;
 
   @ManyToOne(() => TipoArtefacto, { eager: true })
   @JoinColumn({ name: 'tipo_artefacto_id' })
   tipoArtefacto: TipoArtefacto;
 
-  @Column({ nullable: true, type: 'int' })
-  voltaje: number;
-
-  @Column({ nullable: true, type: 'int' })
-  horasUso: number;
-
-  @Column({ type: 'float' })
-  @Generated()
-  kwhMensual: number;
-
-  @Column({ nullable: true })
-  observaciones?: string;
-
-  @Column({ name: 'proyecto_id' })
-  proyectoId: string;
-
-  @Column({ default: true })
-  activo: boolean;
-
-  @CreateDateColumn()
-  fechaCreacion: Date;
-
-  @UpdateDateColumn()
-  fechaActualizacion: Date;
-
-  @Column({ nullable: true })
-  creadoPor: string;
-
-  @Column({ nullable: true })
-  actualizadoPor: string;
-
-  getCalculatedkwhMensual(): number {
-    if (!this.horasUso) {
-      return 0;
-    }
-    return this.horasUso * 30;
-  }
+  // Los campos de auditoría ya vienen de BaseAuditEntity:
+  // - active
+  // - creationDate
+  // - updateDate
+  // - usrCreate
+  // - usrUpdate
 }

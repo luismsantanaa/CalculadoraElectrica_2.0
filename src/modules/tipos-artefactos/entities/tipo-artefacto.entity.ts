@@ -1,44 +1,29 @@
 import {
   Entity,
   Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-  ManyToOne,
-  JoinColumn,
 } from 'typeorm';
-import { TipoAmbiente } from '../../tipos-ambientes/entities/tipo-ambiente.entity';
+import { BaseAuditEntity } from '../../../common/entities/base-audit.entity';
 
 @Entity('tipos_artefactos')
-export class TipoArtefacto {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+export class TipoArtefacto extends BaseAuditEntity {
+  // id ya viene de BaseAuditEntity
 
   @Column({ length: 100 })
   nombre: string;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
-  potencia: number;
+  @Column({ length: 255, nullable: true })
+  descripcion: string;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2 })
-  voltaje: number;
+  @Column({ type: 'decimal', precision: 10, scale: 2, nullable: true })
+  potenciaNominal: number;
 
-  @ManyToOne(() => TipoAmbiente, (tipoAmbiente) => tipoAmbiente.id)
-  @JoinColumn({ name: 'tipoAmbiente_id' })
-  tipoAmbiente: TipoAmbiente;
+  @Column({ type: 'decimal', precision: 10, scale: 2, nullable: true })
+  factorDemanda: number;
 
-  @Column({ default: true })
-  activo: boolean;
-
-  @CreateDateColumn()
-  fechaCreacion: Date;
-
-  @Column({ length: 100, nullable: true })
-  creadoPor: string;
-
-  @UpdateDateColumn()
-  fechaActualizacion: Date;
-
-  @Column({ length: 100, nullable: true })
-  actualizadoPor: string;
+  // Los campos de auditoría ya vienen de BaseAuditEntity:
+  // - active
+  // - creationDate
+  // - updateDate
+  // - usrCreate
+  // - usrUpdate
 }

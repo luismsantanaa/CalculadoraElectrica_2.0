@@ -1,14 +1,38 @@
 {
     "info": {
-        "name": "Calculadora Eléctrica RD",
-        "description": "Colección de endpoints para la API de Calculadora Eléctrica RD",
+        "name": "Calculadora Eléctrica API",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
     },
     "item": [
         {
-            "name": "Auth",
-            "description": "Colección de endpoints para autenticación y gestión de usuarios",
+            "name": "Autenticación",
             "item": [
+                {
+                    "name": "Registro",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/auth/register",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "auth",
+                                "register"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"email\": \"usuario@ejemplo.com\",\n    \"password\": \"contraseña123\",\n    \"username\": \"usuario1\",\n    \"nombre\": \"Nombre\",\n    \"apellido\": \"Apellido\",\n    \"telefono\": \"8091234567\",\n    \"empresa\": \"Empresa S.A.\",\n    \"cedula\": \"40212345678\"\n}"
+                        }
+                    }
+                },
                 {
                     "name": "Login",
                     "request": {
@@ -20,9 +44,9 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{baseUrl}}/auth/login",
+                            "raw": "{{base_url}}/auth/login",
                             "host": [
-                                "{{baseUrl}}"
+                                "{{base_url}}"
                             ],
                             "path": [
                                 "auth",
@@ -31,42 +55,10 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}"
+                            "raw": "{\n    \"email\": \"usuario@ejemplo.com\",\n    \"password\": \"contraseña123\"\n}"
                         }
                     }
                 },
-                {
-                    "name": "Register",
-                    "request": {
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{baseUrl}}/auth/register",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "auth",
-                                "register"
-                            ]
-                        },
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n  \"username\": \"test\",\n  \"email\": \"test@example.com\",\n  \"password\": \"test123\",\n  \"nombre\": \"Test\",\n  \"apellido\": \"User\"\n}"
-                        }
-                    }
-                }
-            ]
-        },
-        {
-            "name": "Usuarios",
-            "description": "Colección de endpoints para gestión de usuarios",
-            "item": [
                 {
                     "name": "Obtener Perfil",
                     "request": {
@@ -78,79 +70,24 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{baseUrl}}/usuarios/perfil",
+                            "raw": "{{base_url}}/auth/profile",
                             "host": [
-                                "{{baseUrl}}"
+                                "{{base_url}}"
                             ],
                             "path": [
-                                "usuarios",
-                                "perfil"
+                                "auth",
+                                "profile"
                             ]
                         }
                     }
-                },
+                }
+            ]
+        },
+        {
+            "name": "Usuarios",
+            "item": [
                 {
-                    "name": "Actualizar Perfil",
-                    "request": {
-                        "method": "PATCH",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            },
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{token}}"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{baseUrl}}/usuarios/perfil",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "usuarios",
-                                "perfil"
-                            ]
-                        },
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n  \"nombre\": \"Usuario\",\n  \"apellido\": \"Actualizado\",\n  \"email\": \"usuario@example.com\"\n}"
-                        }
-                    }
-                },
-                {
-                    "name": "Cambiar Contraseña",
-                    "request": {
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            },
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{token}}"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{baseUrl}}/usuarios/cambiar-password",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "usuarios",
-                                "cambiar-password"
-                            ]
-                        },
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n  \"passwordActual\": \"password123\",\n  \"passwordNuevo\": \"nuevoPassword123\"\n}"
-                        }
-                    }
-                },
-                {
-                    "name": "Listar Usuarios",
+                    "name": "Obtener Todos los Usuarios",
                     "request": {
                         "method": "GET",
                         "header": [
@@ -160,18 +97,18 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{baseUrl}}/usuarios",
+                            "raw": "{{base_url}}/users",
                             "host": [
-                                "{{baseUrl}}"
+                                "{{base_url}}"
                             ],
                             "path": [
-                                "usuarios"
+                                "users"
                             ]
                         }
                     }
                 },
                 {
-                    "name": "Obtener Usuario",
+                    "name": "Obtener Usuario por ID",
                     "request": {
                         "method": "GET",
                         "header": [
@@ -181,18 +118,18 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{baseUrl}}/usuarios/:id",
+                            "raw": "{{base_url}}/users/:id",
                             "host": [
-                                "{{baseUrl}}"
+                                "{{base_url}}"
                             ],
                             "path": [
-                                "usuarios",
+                                "users",
                                 ":id"
                             ],
                             "variable": [
                                 {
                                     "key": "id",
-                                    "value": "1"
+                                    "value": "user_id"
                                 }
                             ]
                         }
@@ -204,33 +141,33 @@
                         "method": "PATCH",
                         "header": [
                             {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            },
-                            {
                                 "key": "Authorization",
                                 "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
                             }
                         ],
                         "url": {
-                            "raw": "{{baseUrl}}/usuarios/:id",
+                            "raw": "{{base_url}}/users/:id",
                             "host": [
-                                "{{baseUrl}}"
+                                "{{base_url}}"
                             ],
                             "path": [
-                                "usuarios",
+                                "users",
                                 ":id"
                             ],
                             "variable": [
                                 {
                                     "key": "id",
-                                    "value": "1"
+                                    "value": "user_id"
                                 }
                             ]
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n  \"nombre\": \"Usuario\",\n  \"apellido\": \"Actualizado\",\n  \"email\": \"usuario@example.com\",\n  \"activo\": true\n}"
+                            "raw": "{\n    \"nombre\": \"Nuevo Nombre\",\n    \"apellido\": \"Nuevo Apellido\",\n    \"telefono\": \"8098765432\",\n    \"empresa\": \"Nueva Empresa S.A.\",\n    \"cedula\": \"40287654321\"\n}"
                         }
                     }
                 },
@@ -245,18 +182,18 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{baseUrl}}/usuarios/:id",
+                            "raw": "{{base_url}}/users/:id",
                             "host": [
-                                "{{baseUrl}}"
+                                "{{base_url}}"
                             ],
                             "path": [
-                                "usuarios",
+                                "users",
                                 ":id"
                             ],
                             "variable": [
                                 {
                                     "key": "id",
-                                    "value": "1"
+                                    "value": "user_id"
                                 }
                             ]
                         }
@@ -265,27 +202,26 @@
             ]
         },
         {
-            "name": "Tipos Instalaciones",
-            "description": "Colección de endpoints para gestión de tipos de instalaciones",
+            "name": "Tipos de Instalaciones",
             "item": [
                 {
-                    "name": "Crear Tipo Instalación",
+                    "name": "Crear Tipo de Instalación",
                     "request": {
                         "method": "POST",
                         "header": [
                             {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            },
-                            {
                                 "key": "Authorization",
                                 "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
                             }
                         ],
                         "url": {
-                            "raw": "{{baseUrl}}/tipos-instalaciones",
+                            "raw": "{{base_url}}/tipos-instalaciones",
                             "host": [
-                                "{{baseUrl}}"
+                                "{{base_url}}"
                             ],
                             "path": [
                                 "tipos-instalaciones"
@@ -293,12 +229,12 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n  \"nombre\": \"Residencial\",\n  \"descripcion\": \"Instalación residencial\"\n}"
+                            "raw": "{\n    \"nombre\": \"Nuevo Tipo de Instalación\",\n    \"descripcion\": \"Descripción del tipo de instalación\"\n}"
                         }
                     }
                 },
                 {
-                    "name": "Listar Tipos Instalaciones",
+                    "name": "Obtener Tipos de Instalaciones",
                     "request": {
                         "method": "GET",
                         "header": [
@@ -308,18 +244,28 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{baseUrl}}/tipos-instalaciones",
+                            "raw": "{{base_url}}/tipos-instalaciones?nombre=ejemplo&activo=true",
                             "host": [
-                                "{{baseUrl}}"
+                                "{{base_url}}"
                             ],
                             "path": [
                                 "tipos-instalaciones"
+                            ],
+                            "query": [
+                                {
+                                    "key": "nombre",
+                                    "value": "ejemplo"
+                                },
+                                {
+                                    "key": "activo",
+                                    "value": "true"
+                                }
                             ]
                         }
                     }
                 },
                 {
-                    "name": "Obtener Tipo Instalación",
+                    "name": "Obtener Tipo de Instalación por ID",
                     "request": {
                         "method": "GET",
                         "header": [
@@ -329,9 +275,9 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{baseUrl}}/tipos-instalaciones/:id",
+                            "raw": "{{base_url}}/tipos-instalaciones/:id",
                             "host": [
-                                "{{baseUrl}}"
+                                "{{base_url}}"
                             ],
                             "path": [
                                 "tipos-instalaciones",
@@ -340,30 +286,30 @@
                             "variable": [
                                 {
                                     "key": "id",
-                                    "value": "1"
+                                    "value": "tipo_instalacion_id"
                                 }
                             ]
                         }
                     }
                 },
                 {
-                    "name": "Actualizar Tipo Instalación",
+                    "name": "Actualizar Tipo de Instalación",
                     "request": {
                         "method": "PATCH",
                         "header": [
                             {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            },
-                            {
                                 "key": "Authorization",
                                 "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
                             }
                         ],
                         "url": {
-                            "raw": "{{baseUrl}}/tipos-instalaciones/:id",
+                            "raw": "{{base_url}}/tipos-instalaciones/:id",
                             "host": [
-                                "{{baseUrl}}"
+                                "{{base_url}}"
                             ],
                             "path": [
                                 "tipos-instalaciones",
@@ -372,18 +318,18 @@
                             "variable": [
                                 {
                                     "key": "id",
-                                    "value": "1"
+                                    "value": "tipo_instalacion_id"
                                 }
                             ]
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n  \"nombre\": \"Residencial Actualizado\",\n  \"descripcion\": \"Instalación residencial actualizada\"\n}"
+                            "raw": "{\n    \"nombre\": \"Tipo de Instalación Actualizado\",\n    \"descripcion\": \"Nueva descripción\"\n}"
                         }
                     }
                 },
                 {
-                    "name": "Eliminar Tipo Instalación",
+                    "name": "Eliminar Tipo de Instalación",
                     "request": {
                         "method": "DELETE",
                         "header": [
@@ -393,9 +339,9 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{baseUrl}}/tipos-instalaciones/:id",
+                            "raw": "{{base_url}}/tipos-instalaciones/:id",
                             "host": [
-                                "{{baseUrl}}"
+                                "{{base_url}}"
                             ],
                             "path": [
                                 "tipos-instalaciones",
@@ -404,7 +350,7 @@
                             "variable": [
                                 {
                                     "key": "id",
-                                    "value": "1"
+                                    "value": "tipo_instalacion_id"
                                 }
                             ]
                         }
@@ -413,27 +359,26 @@
             ]
         },
         {
-            "name": "Tipos Ambientes",
-            "description": "Colección de endpoints para gestión de tipos de ambientes",
+            "name": "Tipos de Ambientes",
             "item": [
                 {
-                    "name": "Crear Tipo Ambiente",
+                    "name": "Crear Tipo de Ambiente",
                     "request": {
                         "method": "POST",
                         "header": [
                             {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            },
-                            {
                                 "key": "Authorization",
                                 "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
                             }
                         ],
                         "url": {
-                            "raw": "{{baseUrl}}/tipos-ambientes",
+                            "raw": "{{base_url}}/tipos-ambientes",
                             "host": [
-                                "{{baseUrl}}"
+                                "{{base_url}}"
                             ],
                             "path": [
                                 "tipos-ambientes"
@@ -441,12 +386,12 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n  \"nombre\": \"Dormitorio\",\n  \"tipoInstalacion_Id\": \"1\"\n}"
+                            "raw": "{\n    \"nombre\": \"Nuevo Tipo de Ambiente\",\n    \"descripcion\": \"Descripción del tipo de ambiente\"\n}"
                         }
                     }
                 },
                 {
-                    "name": "Listar Tipos Ambientes",
+                    "name": "Obtener Tipos de Ambientes",
                     "request": {
                         "method": "GET",
                         "header": [
@@ -456,18 +401,28 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{baseUrl}}/tipos-ambientes",
+                            "raw": "{{base_url}}/tipos-ambientes?nombre=ejemplo&activo=true",
                             "host": [
-                                "{{baseUrl}}"
+                                "{{base_url}}"
                             ],
                             "path": [
                                 "tipos-ambientes"
+                            ],
+                            "query": [
+                                {
+                                    "key": "nombre",
+                                    "value": "ejemplo"
+                                },
+                                {
+                                    "key": "activo",
+                                    "value": "true"
+                                }
                             ]
                         }
                     }
                 },
                 {
-                    "name": "Obtener Tipo Ambiente",
+                    "name": "Obtener Tipo de Ambiente por ID",
                     "request": {
                         "method": "GET",
                         "header": [
@@ -477,9 +432,9 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{baseUrl}}/tipos-ambientes/:id",
+                            "raw": "{{base_url}}/tipos-ambientes/:id",
                             "host": [
-                                "{{baseUrl}}"
+                                "{{base_url}}"
                             ],
                             "path": [
                                 "tipos-ambientes",
@@ -488,30 +443,30 @@
                             "variable": [
                                 {
                                     "key": "id",
-                                    "value": "1"
+                                    "value": "tipo_ambiente_id"
                                 }
                             ]
                         }
                     }
                 },
                 {
-                    "name": "Actualizar Tipo Ambiente",
+                    "name": "Actualizar Tipo de Ambiente",
                     "request": {
                         "method": "PATCH",
                         "header": [
                             {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            },
-                            {
                                 "key": "Authorization",
                                 "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
                             }
                         ],
                         "url": {
-                            "raw": "{{baseUrl}}/tipos-ambientes/:id",
+                            "raw": "{{base_url}}/tipos-ambientes/:id",
                             "host": [
-                                "{{baseUrl}}"
+                                "{{base_url}}"
                             ],
                             "path": [
                                 "tipos-ambientes",
@@ -520,18 +475,18 @@
                             "variable": [
                                 {
                                     "key": "id",
-                                    "value": "1"
+                                    "value": "tipo_ambiente_id"
                                 }
                             ]
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n  \"nombre\": \"Dormitorio Actualizado\"\n}"
+                            "raw": "{\n    \"nombre\": \"Tipo de Ambiente Actualizado\",\n    \"descripcion\": \"Nueva descripción\"\n}"
                         }
                     }
                 },
                 {
-                    "name": "Eliminar Tipo Ambiente",
+                    "name": "Eliminar Tipo de Ambiente",
                     "request": {
                         "method": "DELETE",
                         "header": [
@@ -541,9 +496,9 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{baseUrl}}/tipos-ambientes/:id",
+                            "raw": "{{base_url}}/tipos-ambientes/:id",
                             "host": [
-                                "{{baseUrl}}"
+                                "{{base_url}}"
                             ],
                             "path": [
                                 "tipos-ambientes",
@@ -552,7 +507,164 @@
                             "variable": [
                                 {
                                     "key": "id",
-                                    "value": "1"
+                                    "value": "tipo_ambiente_id"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Cargas",
+            "item": [
+                {
+                    "name": "Crear Carga",
+                    "request": {
+                        "method": "POST",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/cargas",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "cargas"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"nombre\": \"Nueva Carga\",\n    \"descripcion\": \"Descripción de la carga\",\n    \"cantidad\": 1,\n    \"potencia\": 100,\n    \"factorDemanda\": 0.8,\n    \"factorSimultaneidad\": 0.9,\n    \"horasUso\": 8,\n    \"diasUso\": 5,\n    \"tipoArtefactoId\": \"tipo_artefacto_id\",\n    \"ambienteId\": \"ambiente_id\"\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "Obtener Cargas",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/cargas?nombre=ejemplo&activo=true",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "cargas"
+                            ],
+                            "query": [
+                                {
+                                    "key": "nombre",
+                                    "value": "ejemplo"
+                                },
+                                {
+                                    "key": "activo",
+                                    "value": "true"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Obtener Carga por ID",
+                    "request": {
+                        "method": "GET",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/cargas/:id",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "cargas",
+                                ":id"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "carga_id"
+                                }
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Actualizar Carga",
+                    "request": {
+                        "method": "PATCH",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/cargas/:id",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "cargas",
+                                ":id"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "carga_id"
+                                }
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"nombre\": \"Carga Actualizada\",\n    \"descripcion\": \"Nueva descripción\",\n    \"cantidad\": 2,\n    \"potencia\": 150,\n    \"factorDemanda\": 0.85,\n    \"factorSimultaneidad\": 0.95,\n    \"horasUso\": 10,\n    \"diasUso\": 6\n}"
+                        }
+                    }
+                },
+                {
+                    "name": "Eliminar Carga",
+                    "request": {
+                        "method": "DELETE",
+                        "header": [
+                            {
+                                "key": "Authorization",
+                                "value": "Bearer {{token}}"
+                            }
+                        ],
+                        "url": {
+                            "raw": "{{base_url}}/cargas/:id",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "cargas",
+                                ":id"
+                            ],
+                            "variable": [
+                                {
+                                    "key": "id",
+                                    "value": "carga_id"
                                 }
                             ]
                         }
@@ -562,7 +674,6 @@
         },
         {
             "name": "Ambientes",
-            "description": "Colección de endpoints para gestión de ambientes",
             "item": [
                 {
                     "name": "Crear Ambiente",
@@ -570,18 +681,18 @@
                         "method": "POST",
                         "header": [
                             {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            },
-                            {
                                 "key": "Authorization",
                                 "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
                             }
                         ],
                         "url": {
-                            "raw": "{{baseUrl}}/ambientes",
+                            "raw": "{{base_url}}/ambientes",
                             "host": [
-                                "{{baseUrl}}"
+                                "{{base_url}}"
                             ],
                             "path": [
                                 "ambientes"
@@ -589,12 +700,12 @@
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n  \"nombre\": \"Dormitorio Principal\",\n  \"tipoAmbienteId\": \"1\",\n  \"tipoSuperficie\": \"RECTANGULAR\",\n  \"proyectoId\": \"1\"\n}"
+                            "raw": "{\n    \"nombre\": \"Nuevo Ambiente\",\n    \"descripcion\": \"Descripción del ambiente\",\n    \"tipoAmbienteId\": \"tipo_ambiente_id\",\n    \"tipoSuperficie\": \"RECTANGULAR\",\n    \"largo\": 10,\n    \"ancho\": 8,\n    \"altura\": 3,\n    \"nivel\": \"1\",\n    \"proyectoId\": \"proyecto_id\"\n}"
                         }
                     }
                 },
                 {
-                    "name": "Listar Ambientes",
+                    "name": "Obtener Ambientes",
                     "request": {
                         "method": "GET",
                         "header": [
@@ -604,18 +715,28 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{baseUrl}}/ambientes",
+                            "raw": "{{base_url}}/ambientes?nombre=ejemplo&activo=true",
                             "host": [
-                                "{{baseUrl}}"
+                                "{{base_url}}"
                             ],
                             "path": [
                                 "ambientes"
+                            ],
+                            "query": [
+                                {
+                                    "key": "nombre",
+                                    "value": "ejemplo"
+                                },
+                                {
+                                    "key": "activo",
+                                    "value": "true"
+                                }
                             ]
                         }
                     }
                 },
                 {
-                    "name": "Obtener Ambiente",
+                    "name": "Obtener Ambiente por ID",
                     "request": {
                         "method": "GET",
                         "header": [
@@ -625,9 +746,9 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{baseUrl}}/ambientes/:id",
+                            "raw": "{{base_url}}/ambientes/:id",
                             "host": [
-                                "{{baseUrl}}"
+                                "{{base_url}}"
                             ],
                             "path": [
                                 "ambientes",
@@ -636,7 +757,7 @@
                             "variable": [
                                 {
                                     "key": "id",
-                                    "value": "1"
+                                    "value": "ambiente_id"
                                 }
                             ]
                         }
@@ -648,18 +769,18 @@
                         "method": "PATCH",
                         "header": [
                             {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            },
-                            {
                                 "key": "Authorization",
                                 "value": "Bearer {{token}}"
+                            },
+                            {
+                                "key": "Content-Type",
+                                "value": "application/json"
                             }
                         ],
                         "url": {
-                            "raw": "{{baseUrl}}/ambientes/:id",
+                            "raw": "{{base_url}}/ambientes/:id",
                             "host": [
-                                "{{baseUrl}}"
+                                "{{base_url}}"
                             ],
                             "path": [
                                 "ambientes",
@@ -668,13 +789,13 @@
                             "variable": [
                                 {
                                     "key": "id",
-                                    "value": "1"
+                                    "value": "ambiente_id"
                                 }
                             ]
                         },
                         "body": {
                             "mode": "raw",
-                            "raw": "{\n  \"nombre\": \"Dormitorio Principal Actualizado\"\n}"
+                            "raw": "{\n    \"nombre\": \"Ambiente Actualizado\",\n    \"descripcion\": \"Nueva descripción\",\n    \"largo\": 12,\n    \"ancho\": 10,\n    \"altura\": 3.5,\n    \"nivel\": \"2\"\n}"
                         }
                     }
                 },
@@ -689,9 +810,9 @@
                             }
                         ],
                         "url": {
-                            "raw": "{{baseUrl}}/ambientes/:id",
+                            "raw": "{{base_url}}/ambientes/:id",
                             "host": [
-                                "{{baseUrl}}"
+                                "{{base_url}}"
                             ],
                             "path": [
                                 "ambientes",
@@ -700,161 +821,23 @@
                             "variable": [
                                 {
                                     "key": "id",
-                                    "value": "1"
+                                    "value": "ambiente_id"
                                 }
                             ]
                         }
                     }
                 }
             ]
+        }
+    ],
+    "variable": [
+        {
+            "key": "base_url",
+            "value": "http://localhost:3000/api"
         },
         {
-            "name": "Tipos Artefactos",
-            "description": "Colección de endpoints para gestión de tipos de artefactos",
-            "item": [
-                {
-                    "name": "Crear Tipo Artefacto",
-                    "request": {
-                        "method": "POST",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            },
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{token}}"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{baseUrl}}/tipos-artefactos",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "tipos-artefactos"
-                            ]
-                        },
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n  \"nombre\": \"Lámpara LED\",\n  \"descripcion\": \"Lámpara LED de bajo consumo\",\n  \"potencia\": 15,\n  \"tipoAmbiente_Id\": \"1\"\n}"
-                        }
-                    }
-                },
-                {
-                    "name": "Listar Tipos Artefactos",
-                    "request": {
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{token}}"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{baseUrl}}/tipos-artefactos",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "tipos-artefactos"
-                            ]
-                        }
-                    }
-                },
-                {
-                    "name": "Obtener Tipo Artefacto",
-                    "request": {
-                        "method": "GET",
-                        "header": [
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{token}}"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{baseUrl}}/tipos-artefactos/:id",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "tipos-artefactos",
-                                ":id"
-                            ],
-                            "variable": [
-                                {
-                                    "key": "id",
-                                    "value": "1"
-                                }
-                            ]
-                        }
-                    }
-                },
-                {
-                    "name": "Actualizar Tipo Artefacto",
-                    "request": {
-                        "method": "PATCH",
-                        "header": [
-                            {
-                                "key": "Content-Type",
-                                "value": "application/json"
-                            },
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{token}}"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{baseUrl}}/tipos-artefactos/:id",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "tipos-artefactos",
-                                ":id"
-                            ],
-                            "variable": [
-                                {
-                                    "key": "id",
-                                    "value": "1"
-                                }
-                            ]
-                        },
-                        "body": {
-                            "mode": "raw",
-                            "raw": "{\n  \"nombre\": \"Lámpara LED Actualizada\",\n  \"descripcion\": \"Lámpara LED de bajo consumo actualizada\",\n  \"potencia\": 20\n}"
-                        }
-                    }
-                },
-                {
-                    "name": "Eliminar Tipo Artefacto",
-                    "request": {
-                        "method": "DELETE",
-                        "header": [
-                            {
-                                "key": "Authorization",
-                                "value": "Bearer {{token}}"
-                            }
-                        ],
-                        "url": {
-                            "raw": "{{baseUrl}}/tipos-artefactos/:id",
-                            "host": [
-                                "{{baseUrl}}"
-                            ],
-                            "path": [
-                                "tipos-artefactos",
-                                ":id"
-                            ],
-                            "variable": [
-                                {
-                                    "key": "id",
-                                    "value": "1"
-                                }
-                            ]
-                        }
-                    }
-                }
-            ]
+            "key": "token",
+            "value": "tu_token_jwt_aqui"
         }
     ]
 }

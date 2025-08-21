@@ -1,9 +1,13 @@
 import { Module } from '@nestjs/common';
-import { CalculosService } from './calculos.service';
 import { CalculosController } from './calculos.controller';
+import { CalculationAppService } from './services/calculation-app.service';
+import { CalculationDomainService } from './services/calculation-domain.service';
+import { RulesModule } from '../rules/rules.module';
 
 @Module({
+  imports: [RulesModule],
   controllers: [CalculosController],
-  providers: [CalculosService],
+  providers: [CalculationAppService, CalculationDomainService],
+  exports: [CalculationAppService],
 })
 export class CalculosModule {}

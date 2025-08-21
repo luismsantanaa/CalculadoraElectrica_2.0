@@ -20,7 +20,7 @@ import { PaginateQuery } from 'nestjs-paginate';
 import { BaseSpecification } from '../../common/specifications/base.specification';
 import { ActivoSpecification } from './specifications/activo.specification';
 import { NombreSpecification } from './specifications/nombre.specification';
-import { Carga } from './entities/cargas.entity';
+import { Cargas } from './entities/cargas.entity';
 
 @Controller('cargas')
 @UseGuards(JwtAuthGuard)
@@ -39,7 +39,7 @@ export class CargasController {
     @Query('activo') activo?: boolean,
   ) {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
-    let specification: BaseSpecification<Carga> = new ActivoSpecification(
+    let specification: BaseSpecification<Cargas> = new ActivoSpecification(
       activo ?? true,
     );
 

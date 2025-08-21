@@ -4,30 +4,54 @@ import {
   ArgumentsHost,
   HttpException,
   HttpStatus,
+  Logger,
 } from '@nestjs/common';
 import { Request, Response } from 'express';
-import { ErrorResponse } from '../interfaces/error.interface';
 
-@Catch(HttpException)
+@Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
-  catch(exception: HttpException, host: ArgumentsHost) {
+  private readonly logger = new Logger(HttpExceptionFilter.name);
+
+  catch(exception: unknown, host: ArgumentsHost): void {
     const ctx = host.switchToHttp();
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
-    const status = exception.getStatus();
-    const errorResponse = exception.getResponse() as ErrorResponse;
+    const traceId = (request as any).traceId || 'unknown';
 
-    const error: ErrorResponse = {
-      success: false,
-      error: {
-        code: errorResponse?.error?.code || 'HTTP_EXCEPTION',
-        message: errorResponse?.error?.message || exception.message,
-        details: errorResponse?.error?.details || null,
-        timestamp: new Date().toISOString(),
-        path: request.url,
-      },
+    let status = HttpStatus.INTERNAL_SERVER_ERROR;
+    let message = 'Internal server error';
+    let errors: string[] = [];
+
+    if (exception instanceof HttpException) {
+      status = exception.getStatus();
+      const exceptionResponse = exception.getResponse();
+
+      if (typeof exceptionResponse === 'string') {
+        message = exceptionResponse;
+      } else if (typeof exceptionResponse === 'object') {
+        const responseObj = exceptionResponse as any;
+        message = responseObj.message || message;
+        errors = Array.isArray(responseObj.message) ? responseObj.message : [message];
+      }
+    } else if (exception instanceof Error) {
+      message = exception.message;
+      errors = [exception.message];
+    }
+
+    const errorResponse = {
+      traceId,
+      message,
+      errors,
+      timestamp: new Date().toISOString(),
+      path: request.url,
     };
 
-    response.status(status).json(error);
+    this.logger.error(
+      `Exception: ${message}`,
+      exception instanceof Error ? exception.stack : undefined,
+      { traceId, path: request.url },
+    );
+
+    response.status(status).json(errorResponse);
   }
 }

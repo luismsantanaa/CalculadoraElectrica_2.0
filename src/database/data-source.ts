@@ -8,11 +8,15 @@ export const AppDataSource = new DataSource({
   type: 'mariadb',
   host: process.env.DB_HOST || 'localhost',
   port: parseInt(process.env.DB_PORT || '3306'),
-  username: process.env.DB_USERNAME || 'root',
-  password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_DATABASE || 'calculadora-electrica',
+  username: process.env.DB_USER || 'root',
+  password: process.env.DB_PASS || '',
+  database: process.env.DB_NAME || 'calculadora_electrica',
+  charset: 'utf8mb4',
   entities: [join(__dirname, '..', '**', '*.entity.{ts,js}')],
   migrations: [join(__dirname, 'migrations', '*.{ts,js}')],
   synchronize: false,
   logging: process.env.DB_LOGGING === 'true',
+  extra: {
+    charset: 'utf8mb4_unicode_ci',
+  },
 });

@@ -24,11 +24,11 @@ interface TipoAmbienteSeed {
 
 interface TipoArtefactoSeed {
   id: number;
-  nombre: string;
-  descripcion: string;
+  Nombre: string;
+  descripcion?: string;
   activo: boolean;
-  tipoAmbiente_Id: number;
-  potencia: number;
+  EspacioId: number;
+  Potencia: number;
 }
 
 function getSeedFilePath(filename: string): string {
@@ -132,11 +132,12 @@ export class SeedsService {
   private async seedTiposArtefactos(): Promise<void> {
     const artefactos = tiposArtefactos.map((artefacto) => ({
       id: artefacto.id.toString(),
-      nombre: artefacto.nombre,
-      descripcion: artefacto.descripcion,
+      nombre: artefacto.Nombre,
+      descripcion: artefacto.descripcion || '',
       activo: artefacto.activo,
-      potencia: artefacto.potencia,
-      tipoAmbiente: { id: artefacto.tipoAmbiente_Id.toString() },
+      potencia: artefacto.Potencia,
+      voltaje: 120, // Voltaje estándar en RD
+      tipoAmbiente: { id: artefacto.EspacioId.toString() },
       creadoPor: 'SEED',
       actualizadoPor: 'SEED',
     }));
@@ -170,9 +171,10 @@ export class SeedsService {
       const tiposArtefactosFormateados = tiposArtefactos.map((tipo) => ({
         ...tipo,
         id: tipo.id.toString(),
-        nombre: tipo.nombre,
-        potencia: tipo.potencia,
-        tipoAmbiente: { id: tipo.tipoAmbiente_Id.toString() },
+        nombre: tipo.Nombre,
+        potencia: tipo.Potencia,
+        voltaje: 120, // Voltaje estándar en RD
+        tipoAmbiente: { id: tipo.EspacioId.toString() },
       }));
       await this.tipoArtefactoRepository.save(tiposArtefactosFormateados);
       console.log('Seeds de tipos_artefactos completados.');

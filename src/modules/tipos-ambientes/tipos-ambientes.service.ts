@@ -25,7 +25,7 @@ export class TiposAmbientesService {
   ): Promise<TipoAmbiente> {
     const tipoAmbiente = this.tipoAmbienteRepository.create({
       ...createDto,
-      creadoPor: usuario,
+      usrCreate: usuario,
     });
     return await this.tipoAmbienteRepository.save(tipoAmbiente);
   }
@@ -51,11 +51,11 @@ export class TiposAmbientesService {
       sortableColumns: [
         'id',
         'nombre',
-        'activo',
-        'fechaCreacion',
-        'creadoPor',
-        'fechaActualizacion',
-        'actualizadoPor',
+        'active',
+        'creationDate',
+        'usrCreate',
+        'updateDate',
+        'usrUpdate',
       ],
       searchableColumns: ['nombre'],
       defaultSortBy: [['nombre', 'ASC']],
@@ -74,7 +74,7 @@ export class TiposAmbientesService {
 
   async findOne(id: string): Promise<TipoAmbiente> {
     const tipoAmbiente = await this.tipoAmbienteRepository.findOne({
-      where: { id, activo: true },
+      where: { id, active: true },
     });
     if (!tipoAmbiente) {
       throw new NotFoundException(
@@ -99,8 +99,8 @@ export class TiposAmbientesService {
 
   async remove(id: string, usuario: string): Promise<void> {
     const tipoAmbiente = await this.findOne(id);
-    tipoAmbiente.activo = false;
-    tipoAmbiente.actualizadoPor = usuario;
+    tipoAmbiente.active = false;
+    tipoAmbiente.usrUpdate = usuario;
     await this.tipoAmbienteRepository.save(tipoAmbiente);
   }
 }

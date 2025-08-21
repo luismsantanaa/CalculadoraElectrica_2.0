@@ -8,7 +8,7 @@ export class ActivoSpecification extends BaseSpecification<Ambiente> {
   }
 
   isSatisfiedBy(entity: Ambiente): boolean {
-    return entity.activo === this.activo;
+    return entity.active === this.activo;
   }
 
   toQueryBuilder(

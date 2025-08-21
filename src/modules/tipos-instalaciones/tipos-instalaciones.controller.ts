@@ -49,7 +49,6 @@ export class TiposInstalacionesController {
       new ActivoSpecification(activo ?? true);
 
     if (nombre) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-call
       specification = specification.and(new NombreSpecification(nombre));
     }
 

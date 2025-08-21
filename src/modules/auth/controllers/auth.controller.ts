@@ -6,7 +6,9 @@ import {
   Get,
   UnauthorizedException,
   Request,
+  Ip,
 } from '@nestjs/common';
+import { Throttle } from '@nestjs/throttler';
 import { AuthService } from '../services/auth.service';
 import { JwtAuthGuard } from '../../../common/guards/jwt-auth.guard';
 import {
@@ -32,8 +34,8 @@ type UserResponse = Pick<
   | 'empresa'
   | 'cedula'
   | 'ultimoAcceso'
-  | 'fechaCreacion'
-  | 'fechaActualizacion'
+  | 'creationDate'
+  | 'updateDate'
 >;
 
 @ApiTags('auth')
@@ -42,6 +44,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register')
+  @Throttle({ default: { ttl: 300, limit: 3 } }) // 3 intentos por 5 minutos
   @ApiOperation({ summary: 'Registrar un nuevo usuario' })
   @ApiResponse({
     status: 201,
@@ -55,11 +58,19 @@ export class AuthController {
     status: 409,
     description: 'El correo electrónico ya está registrado',
   })
-  async register(@Body() registerDto: RegisterDto): Promise<UserResponse> {
+  @ApiResponse({
+    status: 429,
+    description: 'Demasiados intentos de registro',
+  })
+  async register(
+    @Body() registerDto: RegisterDto,
+    @Ip() ip: string,
+  ): Promise<UserResponse> {
     return this.authService.register(registerDto);
   }
 
   @Post('login')
+  @Throttle({ default: { ttl: 300, limit: 5 } }) // 5 intentos por 5 minutos
   @ApiOperation({ summary: 'Iniciar sesión' })
   @ApiResponse({
     status: 200,
@@ -69,10 +80,24 @@ export class AuthController {
     status: 401,
     description: 'Credenciales inválidas',
   })
-  async login(@Body() loginDto: LoginDto) {
+  @ApiResponse({
+    status: 429,
+    description: 'Demasiados intentos de inicio de sesión',
+  })
+  async login(
+    @Body() loginDto: LoginDto,
+    @Ip() ip: string,
+    @Request() req: any,
+  ) {
+    const userAgent = req.headers['user-agent'] || 'unknown';
+    const traceId = req.headers['x-trace-id'] || 'unknown';
+
     const user = await this.authService.validateUser(
       loginDto.email,
       loginDto.password,
+      ip,
+      userAgent,
+      traceId,
     );
     if (!user) {
       throw new UnauthorizedException('Credenciales inválidas');

@@ -19,14 +19,14 @@ export class AmbienteService {
     private readonly ambienteRepository: Repository<Ambiente>,
   ) {}
 
-  async create(
-    createDto: CreateAmbienteDto,
-    usuario: string,
-  ): Promise<Ambiente> {
+  async create(createDto: CreateAmbienteDto, usuario: string): Promise<Ambiente> {
     const ambiente = this.ambienteRepository.create({
-      ...createDto,
-      creadoPor: usuario,
-    } as Ambiente);
+      nombre: createDto.nombre,
+      area: createDto.area || (createDto.largo && createDto.ancho ? createDto.largo * createDto.ancho : 0),
+      tipoAmbiente: { id: createDto.tipoAmbienteId },
+      usrCreate: usuario,
+    });
+
     return await this.ambienteRepository.save(ambiente);
   }
 
@@ -52,11 +52,11 @@ export class AmbienteService {
         'id',
         'nombre',
         'area',
-        'activo',
-        'fechaCreacion',
-        'creadoPor',
-        'fechaActualizacion',
-        'actualizadoPor',
+        'active',
+        'creationDate',
+        'usrCreate',
+        'updateDate',
+        'usrUpdate',
       ],
       searchableColumns: ['nombre'],
       defaultSortBy: [['nombre', 'ASC']],
@@ -75,7 +75,7 @@ export class AmbienteService {
 
   async findOne(id: string): Promise<Ambiente> {
     const ambiente = await this.ambienteRepository.findOne({
-      where: { id, activo: true },
+      where: { id, active: true },
       relations: ['tipoAmbiente', 'tipoAmbiente.tipoInstalacion'],
     });
     if (!ambiente) {
@@ -99,8 +99,8 @@ export class AmbienteService {
 
   async remove(id: string, usuario: string): Promise<void> {
     const ambiente = await this.findOne(id);
-    ambiente.activo = false;
-    ambiente.actualizadoPor = usuario;
+    ambiente.active = false;
+    ambiente.usrUpdate = usuario;
     await this.ambienteRepository.save(ambiente);
   }
 }

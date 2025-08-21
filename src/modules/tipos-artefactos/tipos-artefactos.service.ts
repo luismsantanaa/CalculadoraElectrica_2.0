@@ -19,8 +19,8 @@ export class TiposArtefactosService {
   ): Promise<TipoArtefacto> {
     const tipoArtefacto = this.tipoArtefactoRepository.create({
       ...createDto,
-      tipoAmbiente: { id: createDto.tipoAmbiente_Id },
-      creadoPor: usuario,
+      // tipoAmbiente: { id: createDto.tipoAmbiente_Id },
+              usrCreate: usuario,
     });
     return await this.tipoArtefactoRepository.save(tipoArtefacto);
   }
@@ -34,7 +34,7 @@ export class TiposArtefactosService {
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call
     return await paginate(query, queryBuilder, {
-      sortableColumns: ['id', 'nombre', 'fechaCreacion'],
+      sortableColumns: ['id', 'nombre', 'creationDate'],
       searchableColumns: ['nombre'],
       defaultSortBy: [['nombre', 'ASC']],
       defaultLimit: 10,
@@ -44,7 +44,7 @@ export class TiposArtefactosService {
 
   async findOne(id: string): Promise<TipoArtefacto> {
     const tipoArtefacto = await this.tipoArtefactoRepository.findOne({
-      where: { id, activo: true },
+      where: { id, active: true },
       relations: ['tipoAmbiente'],
     });
     if (!tipoArtefacto) {
@@ -63,7 +63,7 @@ export class TiposArtefactosService {
     const tipoArtefacto = await this.findOne(id);
     const updateData = {
       ...updateDto,
-      actualizadoPor: usuario,
+      usrUpdate: usuario,
     };
 
     if (updateDto.tipoAmbiente_Id) {
@@ -76,8 +76,8 @@ export class TiposArtefactosService {
 
   async remove(id: string, usuario: string): Promise<void> {
     const tipoArtefacto = await this.findOne(id);
-    tipoArtefacto.activo = false;
-    tipoArtefacto.actualizadoPor = usuario;
+    tipoArtefacto.active = false;
+    tipoArtefacto.usrUpdate = usuario;
     await this.tipoArtefactoRepository.save(tipoArtefacto);
   }
 }

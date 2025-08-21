@@ -1,38 +1,23 @@
-import { TipoInstalacion } from '../../tipos-instalaciones/entities/tipo-instalacion.entity';
 import {
   Entity,
   Column,
-  PrimaryGeneratedColumn,
-  CreateDateColumn,
-  UpdateDateColumn,
-  JoinColumn,
-  ManyToOne,
 } from 'typeorm';
+import { BaseAuditEntity } from '../../../common/entities/base-audit.entity';
 
 @Entity('tipos_ambientes')
-export class TipoAmbiente {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+export class TipoAmbiente extends BaseAuditEntity {
+  // id ya viene de BaseAuditEntity
 
   @Column({ length: 100 })
   nombre: string;
 
-  @ManyToOne(() => TipoInstalacion, { eager: true })
-  @JoinColumn({ name: 'tipoInstalacion_Id' })
-  tipoInstalacion: TipoInstalacion;
+  @Column({ length: 255, nullable: true })
+  descripcion: string;
 
-  @Column({ default: true })
-  activo: boolean;
-
-  @CreateDateColumn()
-  fechaCreacion: Date;
-
-  @Column({ nullable: true })
-  creadoPor: string;
-
-  @UpdateDateColumn()
-  fechaActualizacion: Date;
-
-  @Column({ nullable: true })
-  actualizadoPor: string;
+  // Los campos de auditoría ya vienen de BaseAuditEntity:
+  // - active
+  // - creationDate
+  // - updateDate
+  // - usrCreate
+  // - usrUpdate
 }

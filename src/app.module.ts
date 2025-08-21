@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { envConfig, jwtConfig, getDatabaseConfig } from './config';
+import { ThrottlerModule } from '@nestjs/throttler';
+import { envConfig, jwtConfig, rulesConfig, getDatabaseConfig } from './config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './modules/users/users.module';
@@ -9,15 +10,37 @@ import { AuthModule } from './modules/auth/auth.module';
 import { TiposInstalacionesModule } from './modules/tipos-instalaciones/tipos-instalaciones.module';
 import { TiposAmbientesModule } from './modules/tipos-ambientes/tipos-ambientes.module';
 import { TiposArtefactosModule } from './modules/tipos-artefactos/tipos-artefactos.module';
-import { APP_INTERCEPTOR } from '@nestjs/core';
+import { RulesModule } from './modules/rules/rules.module';
+import { CalculosModule } from './modules/calculos/calculos.module';
+import { AmbienteModule } from './modules/ambientes/ambiente.module';
+import { CargasModule } from './modules/cargas/cargas.module';
+import { ProjectsModule } from './modules/projects/projects.module';
+import { RulesAdminModule } from './modules/rules-admin/rules-admin.module';
+import { CommonModule } from './common/common.module';
+import { APP_INTERCEPTOR, APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 import { ErrorInterceptor } from './common/interceptors/error.interceptor';
+import { TraceIdInterceptor } from './common/interceptors/trace-id.interceptor';
+import { HttpExceptionFilter } from './common/filters/http-exception.filter';
+import { ThrottlerGuard } from '@nestjs/throttler';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [envConfig, jwtConfig],
+      load: [envConfig, jwtConfig, rulesConfig],
+    }),
+    ThrottlerModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (config: ConfigService) => ({
+        throttlers: [
+          {
+            ttl: config.get('THROTTLE_TTL', 60),
+            limit: config.get('THROTTLE_LIMIT', 100),
+          },
+        ],
+      }),
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
@@ -29,6 +52,13 @@ import { ErrorInterceptor } from './common/interceptors/error.interceptor';
     TiposInstalacionesModule,
     TiposAmbientesModule,
     TiposArtefactosModule,
+    RulesModule,
+    CalculosModule,
+    AmbienteModule,
+    CargasModule,
+    ProjectsModule,
+    RulesAdminModule,
+    CommonModule,
   ],
   controllers: [AppController],
   providers: [
@@ -40,6 +70,18 @@ import { ErrorInterceptor } from './common/interceptors/error.interceptor';
     {
       provide: APP_INTERCEPTOR,
       useClass: ErrorInterceptor,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: TraceIdInterceptor,
+    },
+    {
+      provide: APP_FILTER,
+      useClass: HttpExceptionFilter,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
     },
   ],
 })
