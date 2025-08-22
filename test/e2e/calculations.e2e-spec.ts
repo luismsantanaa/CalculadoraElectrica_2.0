@@ -9,6 +9,7 @@ import { NormRule } from '../../src/modules/rules/entities/norm-rule.entity';
 import { RuleSet } from '../../src/modules/rules/entities/rule-set.entity';
 import { normRulesSeed } from '../../src/modules/rules/seeds/norm-rules.seed';
 import { calculationFixtures } from './fixtures/calculation-payloads';
+import { testConfig } from './test-config';
 
 describe('Calculations E2E Tests', () => {
   let app: INestApplication;
@@ -21,14 +22,14 @@ describe('Calculations E2E Tests', () => {
         }),
         TypeOrmModule.forRoot({
           type: 'mariadb',
-          host: process.env.DB_HOST || 'localhost',
-          port: parseInt(process.env.DB_PORT || '3306', 10),
-          username: process.env.DB_USER || 'electridom',
-          password: process.env.DB_PASS || 'electridom',
-          database: process.env.DB_NAME || 'electridom',
+          host: testConfig.database.host,
+          port: testConfig.database.port,
+          username: testConfig.database.username,
+          password: testConfig.database.password,
+          database: testConfig.database.database,
           entities: [NormRule, RuleSet],
-          synchronize: true,
-          logging: false,
+          synchronize: testConfig.database.synchronize,
+          logging: testConfig.database.logging,
         }),
         CalculosModule,
         RulesModule,
