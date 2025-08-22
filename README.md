@@ -28,6 +28,7 @@ API REST completa para la **Calculadora Eléctrica de República Dominicana** de
 ## 🚀 **Características Principales**
 
 ### **⚡ Cálculos Eléctricos**
+
 - **Motor de reglas data-driven** para normas RIE RD/NEC
 - **Cálculo de potencia demandada** por ambiente
 - **Distribución automática de circuitos** (ILU/TOM)
@@ -35,18 +36,21 @@ API REST completa para la **Calculadora Eléctrica de República Dominicana** de
 - **Propuesta de circuitos** con calibres y breakers
 
 ### **📊 Gestión de Proyectos**
+
 - **CRUD completo** de proyectos eléctricos
 - **Versionado automático** con snapshots
 - **Firma de reglas** para trazabilidad
 - **Exportación de proyectos**
 
 ### **🧮 Motor de Reglas Normativas**
+
 - **Reglas configurables** (RIE RD/NEC)
 - **Cache optimizado** para performance
 - **Administración completa** de reglas
 - **Historial de cambios** con auditoría
 
 ### **🔐 Seguridad Implementada**
+
 - **Rate limiting** global y específico
 - **Helmet** para headers de seguridad
 - **CORS restrictivo** configurable
@@ -56,14 +60,17 @@ API REST completa para la **Calculadora Eléctrica de República Dominicana** de
 ## 🛠️ **Tecnologías Utilizadas**
 
 ### **Framework y Lenguaje**
+
 - **NestJS 10.x** - Framework de Node.js para aplicaciones escalables
 - **TypeScript 5.x** - Tipado estático para mayor robustez
 
 ### **Base de Datos y ORM**
+
 - **MariaDB 10.x** - Sistema de gestión de base de datos relacional
 - **TypeORM 0.3.x** - ORM para TypeScript con soporte completo
 
 ### **Autenticación y Seguridad**
+
 - **@nestjs/jwt** - Manejo de tokens JWT
 - **@nestjs/passport** - Estrategias de autenticación
 - **bcrypt** - Hashing seguro de contraseñas
@@ -71,52 +78,63 @@ API REST completa para la **Calculadora Eléctrica de República Dominicana** de
 - **helmet** - Headers de seguridad HTTP
 
 ### **Validación y Documentación**
+
 - **class-validator** - Validación de DTOs
 - **@nestjs/swagger** - Documentación automática de API
 
 ## 📦 **Módulos Implementados**
 
 ### **1. 🔐 AuthModule - Autenticación**
+
 - `POST /auth/register` - Registro de usuarios
 - `POST /auth/login` - Inicio de sesión con JWT
 - `GET /auth/profile` - Perfil del usuario
 
 ### **2. ⚡ CalculosModule - Cálculos Eléctricos**
+
 - `POST /v1/calculations/preview` - Preview de instalación eléctrica
 
 ### **3. 📊 ProjectsModule - Gestión de Proyectos**
+
 - `POST /v1/projects` - Crear proyecto
 - `GET /v1/projects` - Listar proyectos
 - `POST /v1/projects/:id/versions` - Crear versión
 - `GET /v1/projects/:id/export` - Exportar proyecto
 
 ### **4. 🧮 RulesModule - Motor de Reglas**
+
 - `GET /v1/rules/active` - Obtener reglas activas
 - `GET /v1/rules/:ruleSetId` - Reglas específicas
 
 ### **5. 🔧 RulesAdminModule - Administración**
+
 - `POST /v1/rulesets` - Crear conjunto de reglas
 - `PUT /v1/rulesets/:id/rules` - Actualizar reglas
 - `POST /v1/rulesets/:id/publish` - Publicar reglas
 - `GET /v1/rulesets/:idA/diff/:idB` - Comparar conjuntos
 
 ### **6. 👥 UsersModule - Usuarios**
+
 - `GET /users` - Listar usuarios
 - `PATCH /users/:id` - Actualizar usuario
 - `POST /users/reset-password` - Reset contraseña
 
 ### **7. 🏠 AmbienteModule - Ambientes**
+
 - CRUD completo de ambientes de instalación
 
 ### **8. 🔌 CargasModule - Cargas Eléctricas**
+
 - CRUD completo de cargas eléctricas
 
-### **9-11. Tipos* - Catálogos**
+### **9-11. Tipos\* - Catálogos**
+
 - CRUD de tipos de instalación, ambientes y artefactos
 
 ## 🗄️ **Base de Datos**
 
 ### **Entidades Principales**
+
 - **User** - Usuarios del sistema con roles
 - **Project** - Proyectos eléctricos
 - **ProjectVersion** - Versiones con snapshots
@@ -127,6 +145,7 @@ API REST completa para la **Calculadora Eléctrica de República Dominicana** de
 - **Cargas** - Cargas eléctricas
 
 ### **Migraciones**
+
 - ✅ Todas las tablas creadas
 - ✅ Índices optimizados
 - ✅ Relaciones configuradas
@@ -137,21 +156,25 @@ API REST completa para la **Calculadora Eléctrica de República Dominicana** de
 ### **✅ Fase 1: Seguridad Básica - COMPLETADA**
 
 #### **Rate Limiting**
+
 - **Global**: 100 requests/minuto
 - **Auth Login**: 5 intentos/5 minutos
 - **Auth Register**: 3 intentos/5 minutos
 
 #### **Headers de Seguridad**
+
 - **Helmet** configurado con CSP
 - **CORS restrictivo** con origins configurables
 - **Cookies seguras** preparadas
 
 #### **Sistema de Auditoría**
+
 - **AuditLog** con eventos críticos
 - **Trazabilidad** de IP y User-Agent
 - **TraceID** para seguimiento
 
 #### **Autenticación**
+
 - **JWT** con bcrypt
 - **Roles**: ADMIN, CLIENTE, AUDITOR
 - **Estados**: ACTIVO, INACTIVO, BLOQUEADO
@@ -166,22 +189,26 @@ API REST completa para la **Calculadora Eléctrica de República Dominicana** de
 ## 🚀 **Instalación Rápida**
 
 ### **1. Clonar Repositorio**
+
 ```bash
 git clone https://github.com/luismsantanaa/CalculadoraElectrica_2.0.git
 cd CalculadoraElectrica_2.0
 ```
 
 ### **2. Instalar Dependencias**
+
 ```bash
 npm install
 ```
 
 ### **3. Configurar Variables de Entorno**
+
 ```bash
 cp .env.example .env
 ```
 
 Editar `.env`:
+
 ```env
 # Database
 DB_HOST=localhost
@@ -205,12 +232,14 @@ APPLY_MIGRATIONS_ON_STARTUP=true
 ```
 
 ### **4. Ejecutar Migraciones y Seeds**
+
 ```bash
 npm run migration:run
 npm run seed
 ```
 
 ### **5. Iniciar Desarrollo**
+
 ```bash
 npm run start:dev
 ```
@@ -237,11 +266,13 @@ npm run test:cov
 ## 🐳 **Docker**
 
 ### **Desarrollo**
+
 ```bash
 docker-compose up -d
 ```
 
 ### **Producción**
+
 ```bash
 docker build -t electridom-api .
 docker run -p 3000:3000 electridom-api
@@ -298,16 +329,19 @@ src/
 ## 📈 **Próximos Pasos**
 
 ### **Prioridad ALTA**
+
 - [ ] Completar testing (e2e)
 - [ ] Configuración de producción
 - [ ] Monitoreo y logs
 
 ### **Prioridad MEDIA**
+
 - [ ] Fase 2 de Seguridad (Argon2)
 - [ ] RBAC avanzado
 - [ ] Optimización de performance
 
 ### **Prioridad BAJA**
+
 - [ ] Fase 3-4 de Seguridad
 - [ ] Microservicios
 - [ ] CI/CD avanzado
@@ -334,4 +368,4 @@ Este proyecto está bajo la **Licencia MIT**. Ver el archivo `LICENSE` para más
 
 **⚡ Desarrollado con ❤️ para la comunidad eléctrica de República Dominicana**
 
-*Cumpliendo con las normas RIE RD y NEC para instalaciones eléctricas seguras y eficientes.*
+_Cumpliendo con las normas RIE RD y NEC para instalaciones eléctricas seguras y eficientes._
