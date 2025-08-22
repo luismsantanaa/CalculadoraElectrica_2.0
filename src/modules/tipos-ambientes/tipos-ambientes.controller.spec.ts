@@ -7,6 +7,7 @@ import { PaginateQuery } from 'nestjs-paginate';
 import { TipoAmbiente } from './entities/tipo-ambiente.entity';
 import { TipoInstalacion } from '../tipos-instalaciones/entities/tipo-instalacion.entity';
 import { User, UserRole, UserStatus } from '../users/entities/user.entity';
+import { createMockUser } from '../users/__tests__/user.mock.helper';
 
 describe('TiposAmbientesController', () => {
   let controller: TiposAmbientesController;
@@ -28,24 +29,9 @@ describe('TiposAmbientesController', () => {
       remove: jest.fn(),
     };
 
-    mockUser = {
-      id: '1',
-      username: 'testUser',
-      email: 'test@example.com',
-      password: 'hashedPassword',
-      nombre: 'Test',
-      apellido: 'User',
-      activo: true,
+    mockUser = createMockUser({
       role: UserRole.ADMIN,
-      estado: UserStatus.ACTIVO,
-      fechaCreacion: new Date(),
-      fechaActualizacion: new Date(),
-      creadoPor: 'system',
-      actualizadoPor: 'system',
-      hashPassword: jest.fn(),
-      validatePassword: jest.fn(),
-      toJSON: jest.fn(),
-    } as User;
+    });
 
     const module: TestingModule = await Test.createTestingModule({
       controllers: [TiposAmbientesController],
@@ -75,22 +61,22 @@ describe('TiposAmbientesController', () => {
         id: '1',
         nombre: 'Test Instalacion',
         descripcion: 'Test Description',
-        activo: true,
-        fechaCreacion: new Date(),
-        fechaActualizacion: new Date(),
-        creadoPor: 'system',
-        actualizadoPor: 'system',
+        active: true,
+        creationDate: new Date(),
+        updateDate: new Date(),
+        usrCreate: 'system',
+        usrUpdate: 'system',
       };
 
       const expectedTipoAmbiente: TipoAmbiente = {
         id: '1',
         nombre: createDto.nombre,
-        tipoInstalacion: mockTipoInstalacion,
-        activo: true,
-        fechaCreacion: new Date(),
-        fechaActualizacion: new Date(),
-        creadoPor: mockUser.username,
-        actualizadoPor: mockUser.username,
+        descripcion: '',
+        active: true,
+        creationDate: new Date(),
+        updateDate: new Date(),
+        usrCreate: mockUser.username,
+        usrUpdate: mockUser.username,
       };
 
       mockService.create.mockResolvedValue(expectedTipoAmbiente);
@@ -120,7 +106,7 @@ describe('TiposAmbientesController', () => {
             id: '1',
             nombre: 'Test Ambiente',
             tipoInstalacion_Id: '1',
-            activo: true,
+            active: true,
           },
         ],
         total: 1,
@@ -162,7 +148,7 @@ describe('TiposAmbientesController', () => {
             id: '1',
             nombre: 'Test Ambiente',
             tipoInstalacion_Id: '1',
-            activo: true,
+            active: true,
           },
         ],
         total: 1,
@@ -197,7 +183,7 @@ describe('TiposAmbientesController', () => {
         id,
         nombre: 'Test Ambiente',
         tipoInstalacion_Id: '1',
-        activo: true,
+        active: true,
       };
 
       mockService.findOne.mockResolvedValue(expectedTipoAmbiente);
@@ -220,22 +206,22 @@ describe('TiposAmbientesController', () => {
         id: '1',
         nombre: 'Test Instalacion',
         descripcion: 'Test Description',
-        activo: true,
-        fechaCreacion: new Date(),
-        fechaActualizacion: new Date(),
-        creadoPor: 'system',
-        actualizadoPor: 'system',
+        active: true,
+        creationDate: new Date(),
+        updateDate: new Date(),
+        usrCreate: 'system',
+        usrUpdate: 'system',
       };
 
       const expectedTipoAmbiente: TipoAmbiente = {
         id,
         nombre: updateDto.nombre || 'Default Name',
-        tipoInstalacion: mockTipoInstalacion,
-        activo: true,
-        fechaCreacion: new Date(),
-        fechaActualizacion: new Date(),
-        creadoPor: mockUser.username,
-        actualizadoPor: mockUser.username,
+        descripcion: '',
+        active: true,
+        creationDate: new Date(),
+        updateDate: new Date(),
+        usrCreate: mockUser.username,
+        usrUpdate: mockUser.username,
       };
 
       mockService.update.mockResolvedValue(expectedTipoAmbiente);

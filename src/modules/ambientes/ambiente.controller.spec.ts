@@ -6,6 +6,7 @@ import { UpdateAmbienteDto } from './dto/update-ambiente.dto';
 import { PaginateQuery } from 'nestjs-paginate';
 import { tipoSuperficieEnum } from '../../common/dtos/enums';
 import { User, UserRole, UserStatus } from '../users/entities/user.entity';
+import { createMockUser } from '../users/__tests__/user.mock.helper';
 
 describe('AmbienteController', () => {
   let controller: AmbienteController;
@@ -18,24 +19,9 @@ describe('AmbienteController', () => {
     remove: jest.fn(),
   };
 
-  const mockUser = {
-    id: '1',
-    username: 'testUser',
-    email: 'test@example.com',
-    password: 'password',
-    activo: true,
-    nombre: 'Test',
-    apellido: 'User',
+  const mockUser = createMockUser({
     role: UserRole.ADMIN,
-    estado: UserStatus.ACTIVO,
-    fechaCreacion: new Date(),
-    fechaActualizacion: new Date(),
-    creadoPor: 'system',
-    actualizadoPor: 'system',
-    hashPassword: jest.fn(),
-    validatePassword: jest.fn(),
-    toJSON: jest.fn(),
-  } as User;
+  });
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({

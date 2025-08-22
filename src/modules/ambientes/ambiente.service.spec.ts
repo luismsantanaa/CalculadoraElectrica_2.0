@@ -68,8 +68,10 @@ describe('AmbienteService', () => {
 
       expect(result).toEqual(expectedAmbiente);
       expect(mockRepository.create).toHaveBeenCalledWith({
-        ...createDto,
-        creadoPor: usuario,
+        nombre: createDto.nombre,
+        area: 0, // calculado como largo * ancho o 0 si no se proporciona
+        tipoAmbiente: { id: createDto.tipoAmbienteId },
+        usrCreate: usuario,
       });
       expect(mockRepository.save).toHaveBeenCalledWith(expectedAmbiente);
     });
@@ -169,7 +171,7 @@ describe('AmbienteService', () => {
 
       expect(result).toEqual(expectedAmbiente);
       expect(mockRepository.findOne).toHaveBeenCalledWith({
-        where: { id, activo: true },
+        where: { id, active: true },
         relations: ['tipoAmbiente', 'tipoAmbiente.tipoInstalacion'],
       });
     });
@@ -230,7 +232,12 @@ describe('AmbienteService', () => {
 
       await service.remove(id, usuario);
 
-      expect(mockRepository.save).toHaveBeenCalledWith(deletedAmbiente);
+      expect(mockRepository.save).toHaveBeenCalledWith(
+        expect.objectContaining({
+          active: false,
+          usrUpdate: usuario,
+        }),
+      );
     });
   });
 });

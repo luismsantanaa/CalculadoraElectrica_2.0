@@ -8,6 +8,7 @@ export enum UserRole {
   INGENIERO = 'ingeniero',
   TECNICO = 'tecnico',
   CLIENTE = 'cliente',
+  AUDITOR = 'auditor',
 }
 
 export enum UserStatus {

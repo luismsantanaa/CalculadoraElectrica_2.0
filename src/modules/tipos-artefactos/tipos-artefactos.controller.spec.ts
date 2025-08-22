@@ -5,6 +5,7 @@ import { CreateTipoArtefactoDto } from './dtos/create-tipo-artefacto.dto';
 import { UpdateTipoArtefactoDto } from './dtos/update-tipo-artefacto.dto';
 import { PaginateQuery } from 'nestjs-paginate';
 import { UserRole, UserStatus } from '../users/entities/user.entity';
+import { createMockUser } from '../users/__tests__/user.mock.helper';
 
 describe('TiposArtefactosController', () => {
   let controller: TiposArtefactosController;
@@ -47,21 +48,15 @@ describe('TiposArtefactosController', () => {
         voltaje: 220,
         tipoAmbiente_Id: '1',
       };
-      const usuario = {
+      const usuario = createMockUser({
         id: '1',
         email: 'test@example.com',
-        password: 'hashedPassword',
         nombre: 'Test',
         apellido: 'User',
         username: 'testUser',
         role: UserRole.CLIENTE,
         estado: UserStatus.ACTIVO,
-        fechaCreacion: new Date(),
-        fechaActualizacion: new Date(),
-        hashPassword: jest.fn(),
-        validatePassword: jest.fn(),
-        toJSON: jest.fn(),
-      };
+      });
       const expectedTipoArtefacto = {
         ...createDto,
         id: '1',
@@ -150,21 +145,15 @@ describe('TiposArtefactosController', () => {
       const updateDto: UpdateTipoArtefactoDto = {
         nombre: 'Updated Artefacto',
       };
-      const usuario = {
+      const usuario = createMockUser({
         id: '1',
         email: 'test@example.com',
-        password: 'hashedPassword',
         nombre: 'Test',
         apellido: 'User',
         username: 'testUser',
         role: UserRole.CLIENTE,
         estado: UserStatus.ACTIVO,
-        fechaCreacion: new Date(),
-        fechaActualizacion: new Date(),
-        hashPassword: jest.fn(),
-        validatePassword: jest.fn(),
-        toJSON: jest.fn(),
-      };
+      });
       const updatedTipoArtefacto = {
         id,
         ...updateDto,
@@ -192,21 +181,15 @@ describe('TiposArtefactosController', () => {
   describe('remove', () => {
     it('should remove a tipo artefacto', async () => {
       const id = '1';
-      const usuario = {
+      const usuario = createMockUser({
         id: '1',
         email: 'test@example.com',
-        password: 'hashedPassword',
         nombre: 'Test',
         apellido: 'User',
         username: 'testUser',
         role: UserRole.CLIENTE,
         estado: UserStatus.ACTIVO,
-        fechaCreacion: new Date(),
-        fechaActualizacion: new Date(),
-        hashPassword: jest.fn(),
-        validatePassword: jest.fn(),
-        toJSON: jest.fn(),
-      };
+      });
 
       await controller.remove(id, usuario);
 

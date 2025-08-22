@@ -4,6 +4,8 @@ import { TiposInstalacionesService } from './tipos-instalaciones.service';
 import { CreateTipoInstalacionDto } from './dtos/create-tipo-instalacion.dto';
 import { UpdateTipoInstalacionDto } from './dtos/update-tipo-instalacion.dto';
 import { User, UserRole, UserStatus } from '../users/entities/user.entity';
+import { createMockUser } from '../users/__tests__/user.mock.helper';
+import { PaginateQuery } from 'nestjs-paginate';
 
 describe('TiposInstalacionesController', () => {
   let controller: TiposInstalacionesController;
@@ -28,7 +30,9 @@ describe('TiposInstalacionesController', () => {
       ],
     }).compile();
 
-    controller = module.get<TiposInstalacionesController>(TiposInstalacionesController);
+    controller = module.get<TiposInstalacionesController>(
+      TiposInstalacionesController,
+    );
     service = module.get<TiposInstalacionesService>(TiposInstalacionesService);
   });
 
@@ -44,23 +48,7 @@ describe('TiposInstalacionesController', () => {
         descripcion: 'Test Description',
       };
 
-      const mockUser = {
-        id: '1',
-        username: 'testuser',
-        email: 'test@example.com',
-        firstName: 'Test',
-        lastName: 'User',
-        role: UserRole.ADMIN,
-        status: UserStatus.ACTIVO,
-        creationDate: new Date(),
-        updateDate: new Date(),
-        active: true,
-        saltOrRounds: 10,
-        hashedPassword: 'hashedPassword',
-        validatePassword: jest.fn(),
-        hashPassword: jest.fn(),
-        toJSON: jest.fn(),
-      } as User;
+      const mockUser = createMockUser({ role: UserRole.ADMIN });
 
       const expectedResult = {
         id: '1',
@@ -74,7 +62,7 @@ describe('TiposInstalacionesController', () => {
 
       mockTiposInstalacionesService.create.mockResolvedValue(expectedResult);
 
-      const result = await controller.create(createDto, mockUser);
+      const result = await controller.create(createDto, mockUser.username);
 
       expect(service.create).toHaveBeenCalledWith(createDto, mockUser.username);
       expect(result).toEqual(expectedResult);
@@ -100,9 +88,13 @@ describe('TiposInstalacionesController', () => {
 
       mockTiposInstalacionesService.findAll.mockResolvedValue(expectedResult);
 
-      const result = await controller.findAll();
+      const mockQuery: PaginateQuery = { page: 1, limit: 10, path: '/tipos-instalaciones' };
+      const result = await controller.findAll(mockQuery);
 
-      expect(service.findAll).toHaveBeenCalled();
+      expect(service.findAll).toHaveBeenCalledWith(
+        mockQuery,
+        expect.any(Object),
+      );
       expect(result).toEqual(expectedResult);
     });
   });
@@ -134,23 +126,7 @@ describe('TiposInstalacionesController', () => {
         descripcion: 'Updated Description',
       };
 
-      const mockUser = {
-        id: '1',
-        username: 'testuser',
-        email: 'test@example.com',
-        firstName: 'Test',
-        lastName: 'User',
-        role: UserRole.ADMIN,
-        status: UserStatus.ACTIVO,
-        creationDate: new Date(),
-        updateDate: new Date(),
-        active: true,
-        saltOrRounds: 10,
-        hashedPassword: 'hashedPassword',
-        validatePassword: jest.fn(),
-        hashPassword: jest.fn(),
-        toJSON: jest.fn(),
-      } as User;
+      const mockUser = createMockUser({ role: UserRole.ADMIN });
 
       const expectedResult = {
         id: '1',
@@ -162,9 +138,13 @@ describe('TiposInstalacionesController', () => {
 
       mockTiposInstalacionesService.update.mockResolvedValue(expectedResult);
 
-      const result = await controller.update(id, updateDto, mockUser);
+      const result = await controller.update(id, updateDto, mockUser.username);
 
-      expect(service.update).toHaveBeenCalledWith(id, updateDto, mockUser.username);
+      expect(service.update).toHaveBeenCalledWith(
+        id,
+        updateDto,
+        mockUser.username,
+      );
       expect(result).toEqual(expectedResult);
     });
   });
@@ -172,27 +152,11 @@ describe('TiposInstalacionesController', () => {
   describe('remove', () => {
     it('should remove a tipo instalacion', async () => {
       const id = '1';
-      const mockUser = {
-        id: '1',
-        username: 'testuser',
-        email: 'test@example.com',
-        firstName: 'Test',
-        lastName: 'User',
-        role: UserRole.ADMIN,
-        status: UserStatus.ACTIVO,
-        creationDate: new Date(),
-        updateDate: new Date(),
-        active: true,
-        saltOrRounds: 10,
-        hashedPassword: 'hashedPassword',
-        validatePassword: jest.fn(),
-        hashPassword: jest.fn(),
-        toJSON: jest.fn(),
-      } as User;
+      const mockUser = createMockUser({ role: UserRole.ADMIN });
 
       mockTiposInstalacionesService.remove.mockResolvedValue(undefined);
 
-      await controller.remove(id, mockUser);
+      await controller.remove(id, mockUser.username);
 
       expect(service.remove).toHaveBeenCalledWith(id, mockUser.username);
     });

@@ -67,8 +67,7 @@ describe('TiposArtefactosService', () => {
       expect(result).toEqual(expectedTipoArtefacto);
       expect(mockRepository.create).toHaveBeenCalledWith({
         ...createDto,
-        creadoPor: usuario,
-        tipoAmbiente: { id: createDto.tipoAmbiente_Id },
+        usrCreate: usuario,
       });
       expect(mockRepository.save).toHaveBeenCalledWith(expectedTipoArtefacto);
     });
@@ -171,7 +170,7 @@ describe('TiposArtefactosService', () => {
 
       expect(result).toEqual(expectedTipoArtefacto);
       expect(mockRepository.findOne).toHaveBeenCalledWith({
-        where: { id, activo: true },
+        where: { id, active: true },
         relations: ['tipoAmbiente'],
       });
     });
@@ -211,7 +210,11 @@ describe('TiposArtefactosService', () => {
       const result = await service.update(id, updateDto, usuario);
 
       expect(result).toEqual(updatedTipoArtefacto);
-      expect(mockRepository.save).toHaveBeenCalledWith(updatedTipoArtefacto);
+      expect(mockRepository.save).toHaveBeenCalledWith(
+        expect.objectContaining({
+          usrUpdate: usuario,
+        }),
+      );
     });
   });
 
@@ -238,7 +241,12 @@ describe('TiposArtefactosService', () => {
 
       await service.remove(id, usuario);
 
-      expect(mockRepository.save).toHaveBeenCalledWith(deletedTipoArtefacto);
+      expect(mockRepository.save).toHaveBeenCalledWith(
+        expect.objectContaining({
+          active: false,
+          usrUpdate: usuario,
+        }),
+      );
     });
   });
 });

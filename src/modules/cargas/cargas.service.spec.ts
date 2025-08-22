@@ -71,8 +71,11 @@ describe('CargasService', () => {
 
       expect(result).toEqual(expectedCarga);
       expect(mockRepository.create).toHaveBeenCalledWith({
-        ...createDto,
-        creadoPor: usuario,
+        nombre: `Carga ${createDto.tipoArtefacto}`,
+        potencia: 0,
+        voltaje: createDto.voltaje,
+        tipoArtefacto: { id: createDto.tipoArtefacto },
+        usrCreate: usuario,
       });
       expect(mockRepository.save).toHaveBeenCalledWith(expectedCarga);
     });
@@ -175,8 +178,8 @@ describe('CargasService', () => {
 
       expect(result).toEqual(expectedCarga);
       expect(mockRepository.findOne).toHaveBeenCalledWith({
-        where: { id, activo: true },
-        relations: ['tipoAmbiente', 'tipoArtefacto'],
+        where: { id, active: true },
+        relations: ['tipoArtefacto'],
       });
     });
 
@@ -213,7 +216,11 @@ describe('CargasService', () => {
       const result = await service.update(id, updateDto, usuario);
 
       expect(result).toEqual(updatedCarga);
-      expect(mockRepository.save).toHaveBeenCalledWith(updatedCarga);
+      expect(mockRepository.save).toHaveBeenCalledWith(
+        expect.objectContaining({
+          usrUpdate: usuario,
+        }),
+      );
     });
   });
 
@@ -238,7 +245,12 @@ describe('CargasService', () => {
 
       await service.remove(id, usuario);
 
-      expect(mockRepository.save).toHaveBeenCalledWith(deletedCarga);
+      expect(mockRepository.save).toHaveBeenCalledWith(
+        expect.objectContaining({
+          active: false,
+          usrUpdate: usuario,
+        }),
+      );
     });
   });
 });

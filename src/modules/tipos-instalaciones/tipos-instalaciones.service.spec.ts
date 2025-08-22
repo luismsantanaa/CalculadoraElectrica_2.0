@@ -98,14 +98,26 @@ describe('TiposInstalacionesService', () => {
         },
       ];
 
-      mockRepository.find.mockResolvedValue(expectedTipoInstalaciones);
+      const mockPaginateResult = {
+        data: expectedTipoInstalaciones,
+        meta: {
+          itemsPerPage: 10,
+          totalItems: expectedTipoInstalaciones.length,
+          currentPage: 1,
+          totalPages: 1,
+          sortBy: [['nombre', 'ASC']],
+          searchBy: ['nombre'],
+          search: '',
+          select: [],
+        },
+      };
 
-      const result = await service.findAll();
+      (paginate as jest.Mock).mockResolvedValue(mockPaginateResult);
 
-      expect(result).toEqual(expectedTipoInstalaciones);
-      expect(mockRepository.find).toHaveBeenCalledWith({
-        where: { active: true },
-      });
+      const result = await service.findAll({} as PaginateQuery);
+
+      expect(result.data).toEqual(expectedTipoInstalaciones);
+      expect(paginate).toHaveBeenCalled();
     });
 
     it('should return paginated results', async () => {

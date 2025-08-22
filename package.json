@@ -28,7 +28,16 @@
     "test:performance": "jest --testPathPattern=performance",
     "test:coverage": "jest --coverage --coverageReporters=text --coverageReporters=lcov --coverageReporters=html",
     "setup:test-db": "node scripts/setup-test-db.js",
+    "setup:test-db-complete": "ts-node scripts/setup-test-db-complete.ts",
+    "cleanup:test-db": "node scripts/cleanup-test-db.js",
     "test:e2e:setup": "npm run setup:test-db && npm run test:e2e",
+    "test:e2e:clean": "npm run setup:test-db",
+    "test:all": "npm run test && npm run test:e2e",
+    "test:all:clean": "npm run setup:test-db && npm run test:all",
+    "test:unit": "jest --testPathIgnorePatterns=e2e",
+    "test:unit:watch": "jest --testPathIgnorePatterns=e2e --watch",
+    "test:unit:coverage": "jest --testPathIgnorePatterns=e2e --coverage --coverageReporters=text --coverageReporters=lcov --coverageReporters=html",
+    "test:e2e:watch": "jest --config ./test/jest-e2e.json --watch",
     "migration:generate": "typeorm-ts-node-commonjs migration:generate -d src/config/typeorm.config.ts",
     "migration:run": "typeorm-ts-node-commonjs migration:run -d src/config/typeorm.config.ts",
     "migration:revert": "typeorm-ts-node-commonjs migration:revert -d src/config/typeorm.config.ts",
@@ -97,22 +106,5 @@
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.7.3",
     "typescript-eslint": "^8.20.0"
-  },
-  "jest": {
-    "moduleFileExtensions": [
-      "js",
-      "json",
-      "ts"
-    ],
-    "rootDir": "src",
-    "testRegex": ".*\\.spec\\.ts$",
-    "transform": {
-      "^.+\\.(t|j)s$": "ts-jest"
-    },
-    "collectCoverageFrom": [
-      "**/*.(t|j)s"
-    ],
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
   }
 }

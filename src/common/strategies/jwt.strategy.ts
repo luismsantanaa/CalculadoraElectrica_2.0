@@ -31,11 +31,15 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
 
-  async validate(payload: JwtPayload): Promise<Omit<User, 'password'>> {
+  async validate(payload: JwtPayload): Promise<Omit<User, 'password'> | null> {
     const user = await this.usersService.findById(payload.sub.toString());
 
     if (!user) {
-      throw new UnauthorizedException('Usuario no encontrado');
+      return null;
+    }
+
+    if (!user.active || user.estado !== 'activo') {
+      return null;
     }
 
     return user;

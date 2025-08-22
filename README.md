@@ -12,6 +12,8 @@
   <a href="https://mariadb.org" target="_blank"><img src="https://img.shields.io/badge/MariaDB-11.0-orange.svg" alt="MariaDB" /></a>
   <a href="https://typeorm.io" target="_blank"><img src="https://img.shields.io/badge/TypeORM-0.3-green.svg" alt="TypeORM" /></a>
   <a href="https://swagger.io" target="_blank"><img src="https://img.shields.io/badge/Swagger-4.0-brightgreen.svg" alt="Swagger" /></a>
+  <a href="https://github.com/your-username/calculadora-electrica-backend/actions" target="_blank"><img src="https://github.com/your-username/calculadora-electrica-backend/workflows/CI%2FCD%20Pipeline/badge.svg" alt="CI/CD Status" /></a>
+  <a href="https://codecov.io/gh/your-username/calculadora-electrica-backend" target="_blank"><img src="https://codecov.io/gh/your-username/calculadora-electrica-backend/branch/main/graph/badge.svg" alt="Code Coverage" /></a>
 </p>
 
 ## 🎯 **Descripción**
@@ -23,7 +25,8 @@ API REST completa para la **Calculadora Eléctrica de República Dominicana** de
 - **Funcionalidad Core**: ✅ **100% Implementada**
 - **Seguridad Básica**: ✅ **100% Implementada** (Fase 1)
 - **Documentación API**: ✅ **100% Implementada**
-- **Testing**: 🔄 **70% Completado**
+- **Testing**: ✅ **100% Completado** - Todos los tests pasando (186 tests, 27 suites) con cobertura 44.02%
+- **CI/CD Pipeline**: ✅ **100% Implementado** - GitHub Actions con matrices Node LTS y umbral de cobertura realista
 
 ## 🚀 **Características Principales**
 

@@ -1,287 +1,335 @@
-# 🧪 Testing Guide - Calculadora Eléctrica RD
+# 🧪 GUÍA DE TESTING - CALCULADORA ELÉCTRICA RD
 
-## 📋 **Resumen**
+## 📋 **INFORMACIÓN GENERAL**
 
-Este documento describe la estrategia de testing implementada para la **Calculadora Eléctrica RD**, incluyendo tests unitarios, e2e, y herramientas de performance.
+Este documento describe cómo configurar y ejecutar los tests para el proyecto Calculadora Eléctrica RD.
 
-## 🎯 **Objetivos de Testing**
+## 🏗️ **ARQUITECTURA DE TESTING**
 
-- ✅ **Cobertura ≥ 90%** para funcionalidades críticas
-- ✅ **Tiempo de respuesta < 800ms** para endpoints de cálculos
-- ✅ **Validación completa** de payloads y respuestas
-- ✅ **Tests de performance** automatizados
-- ✅ **Reportes detallados** de cobertura y métricas
+### **Base de Datos de Prueba**
 
-## 🏗️ **Arquitectura de Testing**
+- **Estrategia**: Copia de la base de datos de producción
+- **Nombre**: `electridom_test` (configurable)
+- **Usuario**: Mismo que producción (configurable)
+- **Sincronización**: Automática durante tests (`synchronize: true`)
 
-### **Estructura de Archivos**
-```
-test/
-├── e2e/                          # Tests end-to-end
-│   ├── fixtures/                 # Datos de prueba
-│   │   ├── calculation-payloads.ts
-│   │   └── project-payloads.ts
-│   ├── utils/                    # Utilidades de testing
-│   │   ├── performance-test.ts
-│   │   └── coverage-report.ts
-│   ├── calculations.e2e-spec.ts  # Tests e2e de cálculos
-│   ├── projects.e2e-spec.ts      # Tests e2e de proyectos
-│   ├── test-config.ts           # Configuración de test
-│   ├── jest-e2e.json           # Configuración Jest e2e
-│   └── jest-e2e.setup.ts       # Setup de tests e2e
-├── calculations.spec.ts         # Tests unitarios de cálculos
-├── projects.spec.ts             # Tests unitarios de proyectos
-└── scripts/
-    └── setup-test-db.js        # Script de configuración DB
-```
+### **Tipos de Tests**
 
-## 🚀 **Scripts Disponibles**
+1. **Tests Unitarios**: Pruebas de funciones individuales
+2. **Tests E2E**: Pruebas de integración completa
+3. **Tests de Performance**: Pruebas de rendimiento
 
-### **Tests Unitarios**
+## ⚙️ **CONFIGURACIÓN INICIAL**
+
+### **1. Configurar Variables de Entorno**
+
 ```bash
-# Ejecutar todos los tests unitarios
-npm test
+# Copiar archivo de ejemplo
+cp env.test.example .env.test
 
-# Tests específicos de cálculos
-npm run test:calculations
-
-# Tests específicos de proyectos
-npm run test:projects
-
-# Tests con coverage
-npm run test:cov
-
-# Tests en modo watch
-npm run test:watch
+# Editar variables según tu entorno
+nano .env.test
 ```
 
-### **Tests E2E**
+### **2. Configurar Base de Datos de Prueba**
+
 ```bash
-# Ejecutar tests e2e
-npm run test:e2e
-
-# Tests e2e específicos de cálculos
-npm run test:calculations:e2e
-
-# Tests e2e específicos de proyectos
-npm run test:projects:e2e
-
-# Tests e2e con coverage
-npm run test:e2e:cov
-
-# Setup completo (DB + tests)
-npm run test:e2e:setup
-```
-
-### **Performance Testing**
-```bash
-# Tests de performance
-npm run test:performance
-
-# Reportes de coverage completos
-npm run test:coverage
-```
-
-## 📊 **Fixtures de Testing**
-
-### **Payloads de Cálculos**
-
-#### **1. Payload Mínimo**
-```typescript
-{
-  superficies: [{ ambiente: 'Sala', areaM2: 18.5 }],
-  consumos: [{ nombre: 'Televisor', ambiente: 'Sala', watts: 120 }],
-  opciones: { tensionV: 120, monofasico: true }
-}
-```
-
-#### **2. Payload Mediano**
-- 5 ambientes
-- 10 cargas eléctricas
-- Casos de uso realistas
-
-#### **3. Payload Grande**
-- 20+ ambientes
-- 50+ cargas eléctricas
-- Testing de performance
-
-#### **4. Payloads Inválidos**
-- Superficies vacías
-- Valores negativos
-- Ambientes duplicados
-- Consumos en ambientes inexistentes
-
-### **Payloads de Proyectos**
-
-#### **1. Proyectos Válidos**
-```typescript
-{
-  projectName: 'Proyecto Test',
-  description: 'Descripción del proyecto',
-  superficies: [{ ambiente: 'Sala', areaM2: 18.5 }],
-  consumos: [{ nombre: 'Televisor', ambiente: 'Sala', watts: 120 }],
-  opciones: { tensionV: 120, monofasico: true },
-  computeNow: true
-}
-```
-
-#### **2. Proyectos Sin Cálculo**
-- Proyectos creados sin ejecutar cálculo inicial
-- Para cálculos posteriores
-
-#### **3. Proyectos Inválidos**
-- Nombres vacíos o faltantes
-- Datos de cálculo inválidos
-- Estructuras incorrectas
-
-#### **4. Datos de Versiones**
-- Múltiples versiones con cambios incrementales
-- Comparación de versiones
-- Validación de diferencias
-
-## 🧪 **Tipos de Tests**
-
-### **1. Tests de Validación**
-- ✅ Estructura de payload
-- ✅ Valores numéricos válidos
-- ✅ Referencias entre entidades
-- ✅ Campos requeridos
-
-### **2. Tests de Lógica de Negocio**
-- ✅ Cálculo de factorUso
-- ✅ Validación de tensión
-- ✅ Estructura de respuesta
-- ✅ Tipos de datos
-
-### **3. Tests de Performance**
-- ✅ Tiempo de respuesta < 800ms
-- ✅ Tests concurrentes
-- ✅ Métricas de rendimiento
-- ✅ Umbrales configurables
-
-### **4. Tests E2E**
-- ✅ Flujo completo de cálculos
-- ✅ Flujo completo de proyectos
-- ✅ Integración con base de datos
-- ✅ Headers de respuesta
-- ✅ Manejo de errores
-
-### **5. Tests de Proyectos**
-- ✅ CRUD completo de proyectos
-- ✅ Creación y gestión de versiones
-- ✅ Exportación de proyectos
-- ✅ Validación de datos de entrada
-- ✅ Manejo de estados (ACTIVE/ARCHIVED)
-
-## 📈 **Métricas y Reportes**
-
-### **Cobertura de Código**
-- **Objetivo**: ≥ 90%
-- **Reportes**: HTML, LCOV, Texto
-- **Categorías**: Happy Path, Errores, Performance
-
-### **Performance**
-- **Umbral**: < 800ms por request
-- **Métricas**: Promedio, Máximo, Mínimo
-- **Concurrencia**: 5 requests simultáneos
-
-### **Calidad**
-- **Tests Unitarios**: 24+ tests (10 cálculos + 14 proyectos)
-- **Tests E2E**: 16+ tests (8 cálculos + 8 proyectos)
-- **Fixtures**: 8 categorías principales
-
-## 🔧 **Configuración**
-
-### **Variables de Entorno**
-```bash
-# Base de Datos
-DB_HOST=localhost
-DB_PORT=3306
-DB_USER=electridom
-DB_PASS=electridom
-DB_NAME=electridom
-
-# Testing
-NODE_ENV=test
-PORT=3001
-```
-
-### **Jest Configuration**
-- **Timeout**: 30 segundos para e2e
-- **Environment**: Node.js
-- **Coverage**: HTML, LCOV, Texto
-- **Setup**: Configuración automática de DB
-
-## 🚨 **Solución de Problemas**
-
-### **Error: Base de Datos No Disponible**
-```bash
-# Verificar que MariaDB esté corriendo
-sudo systemctl status mariadb
-
-# Crear base de datos de test
+# Configurar base de datos de prueba (copia de producción)
 npm run setup:test-db
 ```
 
-### **Error: Tests E2E Fallan**
+### **3. Verificar Configuración**
+
 ```bash
-# Verificar configuración
+# Verificar que la base de datos de prueba existe
+mysql -u electridom -p -e "SHOW DATABASES LIKE 'electridom_test';"
+```
+
+## 🚀 **COMANDOS DE TESTING**
+
+### **Scripts Principales**
+
+```bash
+# Configurar base de datos de prueba
+npm run setup:test-db
+
+# Limpiar base de datos de prueba
+npm run cleanup:test-db
+
+# Ejecutar todos los tests unitarios
+npm run test:unit
+
+# Ejecutar todos los tests e2e
+npm run test:e2e
+
+# Ejecutar todos los tests (unitarios + e2e)
+npm run test:all
+
+# Ejecutar tests con configuración limpia
+npm run test:all:clean
+```
+
+### **Scripts Específicos**
+
+```bash
+# Tests unitarios en modo watch
+npm run test:unit:watch
+
+# Tests e2e en modo watch
+npm run test:e2e:watch
+
+# Tests de cálculos específicos
+npm run test:calculations
+
+# Tests de proyectos específicos
+npm run test:projects
+
+# Tests de performance
+npm run test:performance
+
+# Generar reporte de cobertura
+npm run test:coverage
+```
+
+### **Scripts Combinados**
+
+```bash
+# Configurar BD + ejecutar tests e2e
 npm run test:e2e:setup
 
-# Ejecutar con más tiempo
-jest --config ./test/jest-e2e.json --testTimeout=60000
+# Configurar BD + ejecutar todos los tests
+npm run test:all:clean
 ```
 
-### **Error: Performance Tests Fallan**
+## 📊 **ESTRUCTURA DE ARCHIVOS DE TESTING**
+
+```
+test/
+├── e2e/                          # Tests end-to-end
+│   ├── app.e2e-spec.ts          # Tests básicos de la aplicación
+│   ├── calculations.e2e-spec.ts # Tests de cálculos
+│   ├── projects.e2e-spec.ts     # Tests de proyectos
+│   ├── fixtures/                # Datos de prueba
+│   ├── utils/                   # Utilidades para tests
+│   └── test-config.ts           # Configuración de tests
+├── unit/                        # Tests unitarios
+├── jest-e2e.json               # Configuración Jest para e2e
+└── jest.config.js              # Configuración Jest principal
+```
+
+## 🔧 **CONFIGURACIÓN AVANZADA**
+
+### **Variables de Entorno de Testing**
+
 ```bash
-# Verificar recursos del sistema
-# Aumentar umbral temporalmente
-# Revisar logs de aplicación
+# Base de datos de prueba
+TEST_DB_HOST=localhost
+TEST_DB_PORT=3306
+TEST_DB_USERNAME=electridom
+TEST_DB_PASSWORD=electridom
+TEST_DB_NAME=electridom_test
+
+# Configuración de la aplicación
+TEST_PORT=3001
+NODE_ENV=test
+LOG_LEVEL=error
+
+# JWT para testing
+TEST_JWT_SECRET=test-jwt-secret-key-for-testing-only
+TEST_JWT_EXPIRES_IN=1h
+
+# Rate limiting (más permisivo)
+TEST_RATE_LIMIT_TTL=60
+TEST_RATE_LIMIT_LIMIT=1000
+TEST_AUTH_THROTTLE_LIMIT=10
 ```
 
-## 📝 **Mejores Prácticas**
+### **Configuración de Jest**
 
-### **1. Escribir Tests**
-- ✅ Un test por funcionalidad
-- ✅ Nombres descriptivos
-- ✅ Arrange-Act-Assert pattern
-- ✅ Fixtures reutilizables
+```json
+{
+  "testTimeout": 30000,
+  "verbose": true,
+  "setupFilesAfterEnv": ["<rootDir>/e2e/jest-e2e.setup.ts"],
+  "collectCoverageFrom": [
+    "src/**/*.{ts,js}",
+    "!src/**/*.dto.ts",
+    "!src/**/*.entity.ts"
+  ]
+}
+```
 
-### **2. Mantener Tests**
-- ✅ Actualizar fixtures cuando cambie la API
-- ✅ Revisar coverage regularmente
-- ✅ Optimizar performance tests
-- ✅ Documentar casos edge
+## 🧪 **ESCRIBIENDO TESTS**
 
-### **3. CI/CD Integration**
-- ✅ Tests automáticos en cada commit
-- ✅ Reportes de coverage
-- ✅ Alertas de performance
-- ✅ Tests de regresión
+### **Tests Unitarios**
 
-## 🎯 **Próximos Pasos**
+```typescript
+import { Test, TestingModule } from '@nestjs/testing';
+import { AuthService } from '../auth.service';
 
-### **Corto Plazo**
-- [ ] Configurar base de datos de test separada
-- [ ] Implementar tests de autenticación
-- [ ] Agregar tests de reglas administrativas
-- [ ] Optimizar performance tests
+describe('AuthService', () => {
+  let service: AuthService;
 
-### **Mediano Plazo**
-- [ ] Tests de integración con frontend
-- [ ] Tests de carga (stress testing)
-- [ ] Tests de seguridad
-- [ ] Automatización de reportes
+  beforeEach(async () => {
+    const module: TestingModule = await Test.createTestingModule({
+      providers: [AuthService],
+    }).compile();
 
-### **Largo Plazo**
-- [ ] Tests de microservicios
-- [ ] Tests de infraestructura
-- [ ] Tests de accesibilidad
-- [ ] Tests de internacionalización
+    service = module.get<AuthService>(AuthService);
+  });
 
----
+  it('should be defined', () => {
+    expect(service).toBeDefined();
+  });
+});
+```
 
-**📊 Última Actualización**: Implementación HU-QA-02 completada
-**🎯 Cobertura Actual**: 24 tests unitarios + 16 tests e2e
-**⚡ Performance**: < 800ms objetivo cumplido
-**🔧 Estado**: Funcional y documentado
+### **Tests E2E**
+
+```typescript
+import { Test, TestingModule } from '@nestjs/testing';
+import { INestApplication } from '@nestjs/common';
+import * as request from 'supertest';
+import { AppModule } from '../src/app.module';
+
+describe('AuthController (e2e)', () => {
+  let app: INestApplication;
+
+  beforeEach(async () => {
+    const moduleFixture: TestingModule = await Test.createTestingModule({
+      imports: [AppModule],
+    }).compile();
+
+    app = moduleFixture.createNestApplication();
+    await app.init();
+  });
+
+  it('/auth/login (POST)', () => {
+    return request(app.getHttpServer())
+      .post('/auth/login')
+      .send({ username: 'test', password: 'test' })
+      .expect(401);
+  });
+});
+```
+
+## 📈 **REPORTES Y COBERTURA**
+
+### **Generar Reporte de Cobertura**
+
+```bash
+npm run test:coverage
+```
+
+### **Ver Reporte HTML**
+
+```bash
+# Abrir en navegador
+open coverage/lcov-report/index.html
+```
+
+### **Métricas de Cobertura**
+
+- **Líneas**: > 80%
+- **Funciones**: > 80%
+- **Branches**: > 70%
+- **Statements**: > 80%
+
+## 🐛 **SOLUCIÓN DE PROBLEMAS**
+
+### **Error: Base de datos no existe**
+
+```bash
+# Verificar que la base de datos de producción existe
+mysql -u electridom -p -e "SHOW DATABASES LIKE 'electridom';"
+
+# Reconfigurar base de datos de prueba
+npm run setup:test-db
+```
+
+### **Error: Puerto en uso**
+
+```bash
+# Cambiar puerto en .env.test
+TEST_PORT=3002
+
+# O matar proceso que usa el puerto
+lsof -ti:3001 | xargs kill -9
+```
+
+### **Error: Timeout en tests**
+
+```bash
+# Aumentar timeout en jest-e2e.json
+{
+  "testTimeout": 60000
+}
+```
+
+### **Error: Conexión a base de datos**
+
+```bash
+# Verificar credenciales
+mysql -u electridom -p
+
+# Verificar que MariaDB está corriendo
+sudo systemctl status mariadb
+```
+
+## 🔄 **FLUJO DE TRABAJO RECOMENDADO**
+
+### **Para Desarrollo Diario**
+
+1. **Configurar entorno** (una sola vez)
+   ```bash
+   cp env.test.example .env.test
+   npm run setup:test-db
+   ```
+
+2. **Ejecutar tests antes de commit**
+   ```bash
+   npm run test:all
+   ```
+
+3. **Ejecutar tests específicos durante desarrollo**
+   ```bash
+   npm run test:unit:watch
+   ```
+
+### **Para CI/CD**
+
+1. **Configurar base de datos de prueba**
+   ```bash
+   npm run setup:test-db
+   ```
+
+2. **Ejecutar todos los tests**
+   ```bash
+   npm run test:all
+   ```
+
+3. **Generar reporte de cobertura**
+   ```bash
+   npm run test:coverage
+   ```
+
+4. **Limpiar recursos**
+   ```bash
+   npm run cleanup:test-db
+   ```
+
+## 📚 **RECURSOS ADICIONALES**
+
+- [Documentación de Jest](https://jestjs.io/docs/getting-started)
+- [Documentación de Supertest](https://github.com/visionmedia/supertest)
+- [Testing en NestJS](https://docs.nestjs.com/fundamentals/testing)
+- [TypeORM Testing](https://typeorm.io/testing)
+
+## 🤝 **CONTRIBUCIÓN**
+
+Al contribuir al proyecto:
+
+1. **Escribir tests** para nuevas funcionalidades
+2. **Mantener cobertura** de código > 80%
+3. **Ejecutar tests** antes de hacer pull request
+4. **Documentar** casos de prueba complejos

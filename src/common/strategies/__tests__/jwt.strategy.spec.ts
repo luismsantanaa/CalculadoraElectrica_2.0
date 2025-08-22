@@ -3,7 +3,12 @@ import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { JwtStrategy } from '../jwt.strategy';
 import { UsersService } from '../../../modules/users/users.service';
-import { User, UserRole, UserStatus } from '../../../modules/users/entities/user.entity';
+import {
+  User,
+  UserRole,
+  UserStatus,
+} from '../../../modules/users/entities/user.entity';
+import { createMockUser } from '../../../modules/users/__tests__/user.mock.helper';
 
 describe('JwtStrategy', () => {
   let strategy: JwtStrategy;
@@ -24,6 +29,8 @@ describe('JwtStrategy', () => {
   };
 
   beforeEach(async () => {
+    mockConfigService.get.mockReturnValue('test-secret');
+
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         JwtStrategy,
@@ -64,7 +71,7 @@ describe('JwtStrategy', () => {
         role: UserRole.CLIENTE,
       };
 
-      const mockUser = {
+      const mockUser = createMockUser({
         id: '1',
         username: 'testuser',
         email: 'test@example.com',
@@ -72,32 +79,15 @@ describe('JwtStrategy', () => {
         apellido: 'User',
         role: UserRole.CLIENTE,
         estado: UserStatus.ACTIVO,
-        creationDate: new Date(),
-        updateDate: new Date(),
-        active: true,
-        password: 'hashedPassword',
-        validatePassword: jest.fn(),
-        hashPassword: jest.fn(),
-        hashedPassword: jest.fn(),
-        toJSON: () => ({
-          id: '1',
-          email: 'test@example.com',
-          username: 'testuser',
-          nombre: 'Test',
-          apellido: 'User',
-          role: UserRole.CLIENTE,
-          estado: UserStatus.ACTIVO,
-          creationDate: expect.any(Date),
-          updateDate: expect.any(Date),
-          active: true,
-        }),
-      } as User;
+      });
 
       mockUsersService.findById.mockResolvedValue(mockUser);
 
       const result = await strategy.validate(payload);
 
-      expect(usersService.findById).toHaveBeenCalledWith(payload.sub.toString());
+      expect(usersService.findById).toHaveBeenCalledWith(
+        payload.sub.toString(),
+      );
       expect(result).toEqual(mockUser);
     });
 
@@ -112,7 +102,9 @@ describe('JwtStrategy', () => {
 
       const result = await strategy.validate(payload);
 
-      expect(usersService.findById).toHaveBeenCalledWith(payload.sub.toString());
+      expect(usersService.findById).toHaveBeenCalledWith(
+        payload.sub.toString(),
+      );
       expect(result).toBeNull();
     });
 
@@ -123,7 +115,7 @@ describe('JwtStrategy', () => {
         role: UserRole.CLIENTE,
       };
 
-      const mockInactiveUser = {
+      const mockInactiveUser = createMockUser({
         id: '1',
         username: 'inactiveuser',
         email: 'inactive@example.com',
@@ -131,32 +123,16 @@ describe('JwtStrategy', () => {
         apellido: 'User',
         role: UserRole.CLIENTE,
         estado: UserStatus.INACTIVO,
-        creationDate: new Date(),
-        updateDate: new Date(),
         active: false,
-        password: 'hashedPassword',
-        validatePassword: jest.fn(),
-        hashPassword: jest.fn(),
-        hashedPassword: jest.fn(),
-        toJSON: () => ({
-          id: '1',
-          email: 'inactive@example.com',
-          username: 'inactiveuser',
-          nombre: 'Inactive',
-          apellido: 'User',
-          role: UserRole.CLIENTE,
-          estado: UserStatus.INACTIVO,
-          creationDate: expect.any(Date),
-          updateDate: expect.any(Date),
-          active: false,
-        }),
-      } as User;
+      });
 
       mockUsersService.findById.mockResolvedValue(mockInactiveUser);
 
       const result = await strategy.validate(payload);
 
-      expect(usersService.findById).toHaveBeenCalledWith(payload.sub.toString());
+      expect(usersService.findById).toHaveBeenCalledWith(
+        payload.sub.toString(),
+      );
       expect(result).toBeNull();
     });
   });

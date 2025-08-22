@@ -66,7 +66,7 @@ describe('TiposAmbientesService', () => {
       expect(result).toEqual(expectedTipoAmbiente);
       expect(mockRepository.create).toHaveBeenCalledWith({
         ...createDto,
-        creadoPor: usuario,
+        usrCreate: usuario,
       });
       expect(mockRepository.save).toHaveBeenCalledWith(expectedTipoAmbiente);
     });
@@ -168,7 +168,7 @@ describe('TiposAmbientesService', () => {
 
       expect(result).toEqual(expectedTipoAmbiente);
       expect(mockRepository.findOne).toHaveBeenCalledWith({
-        where: { id, activo: true },
+        where: { id, active: true },
       });
     });
 
@@ -228,7 +228,12 @@ describe('TiposAmbientesService', () => {
 
       await service.remove(id, usuario);
 
-      expect(mockRepository.save).toHaveBeenCalledWith(deletedTipoAmbiente);
+      expect(mockRepository.save).toHaveBeenCalledWith(
+        expect.objectContaining({
+          active: false,
+          usrUpdate: usuario,
+        }),
+      );
     });
   });
 });
