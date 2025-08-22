@@ -18,11 +18,16 @@ describe('TiposInstalacionesService', () => {
   const mockRepository = {
     create: jest.fn(),
     save: jest.fn(),
+    find: jest.fn(),
     findOne: jest.fn(),
+    update: jest.fn(),
+    delete: jest.fn(),
     createQueryBuilder: jest.fn(() => ({
       leftJoinAndSelect: jest.fn().mockReturnThis(),
       where: jest.fn().mockReturnThis(),
       andWhere: jest.fn().mockReturnThis(),
+      getMany: jest.fn(),
+      getOne: jest.fn(),
     })),
   };
 
@@ -47,32 +52,62 @@ describe('TiposInstalacionesService', () => {
   describe('create', () => {
     it('should create a new tipo instalacion', async () => {
       const createDto: CreateTipoInstalacionDto = {
+        id: '1',
         nombre: 'Test Instalacion',
         descripcion: 'Test Description',
       };
-      const usuario = 'testUser';
+
       const expectedTipoInstalacion = {
-        ...createDto,
         id: '1',
-        activo: true,
-        creadoPor: usuario,
+        nombre: 'Test Instalacion',
+        descripcion: 'Test Description',
+        active: true,
+        usrCreate: 'testUser',
+        creationDate: expect.any(Date),
+        updateDate: expect.any(Date),
       };
 
       mockRepository.create.mockReturnValue(expectedTipoInstalacion);
       mockRepository.save.mockResolvedValue(expectedTipoInstalacion);
 
-      const result = await service.create(createDto, usuario);
+      const result = await service.create(createDto, 'testUser');
 
       expect(result).toEqual(expectedTipoInstalacion);
       expect(mockRepository.create).toHaveBeenCalledWith({
         ...createDto,
-        creadoPor: usuario,
+        usrCreate: 'testUser',
       });
       expect(mockRepository.save).toHaveBeenCalledWith(expectedTipoInstalacion);
     });
   });
 
   describe('findAll', () => {
+    it('should return all active tipos instalacion', async () => {
+      const expectedTipoInstalaciones = [
+        {
+          id: '1',
+          nombre: 'Test Instalacion 1',
+          descripcion: 'Test Description 1',
+          active: true,
+        },
+        {
+          id: '2',
+          nombre: 'Test Instalacion 2',
+          descripcion: 'Test Description 2',
+          active: true,
+        },
+      ];
+
+      mockRepository.find.mockResolvedValue(expectedTipoInstalaciones);
+
+      const result = await service.findAll();
+
+      expect(result).toEqual(expectedTipoInstalaciones);
+      expect(mockRepository.find).toHaveBeenCalledWith({
+        where: { active: true },
+      });
+    });
+
     it('should return paginated results', async () => {
       const query: PaginateQuery = {
         page: 1,
@@ -156,10 +191,10 @@ describe('TiposInstalacionesService', () => {
     it('should return a tipo instalacion by id', async () => {
       const id = '1';
       const expectedTipoInstalacion = {
-        id,
+        id: '1',
         nombre: 'Test Instalacion',
         descripcion: 'Test Description',
-        activo: true,
+        active: true,
       };
 
       mockRepository.findOne.mockResolvedValue(expectedTipoInstalacion);
@@ -168,7 +203,7 @@ describe('TiposInstalacionesService', () => {
 
       expect(result).toEqual(expectedTipoInstalacion);
       expect(mockRepository.findOne).toHaveBeenCalledWith({
-        where: { id, activo: true },
+        where: { id, active: true },
       });
     });
 
@@ -185,26 +220,31 @@ describe('TiposInstalacionesService', () => {
       const id = '1';
       const updateDto: UpdateTipoInstalacionDto = {
         nombre: 'Updated Instalacion',
+        descripcion: 'Updated Description',
       };
-      const usuario = 'testUser';
+
       const existingTipoInstalacion = {
-        id,
+        id: '1',
         nombre: 'Test Instalacion',
         descripcion: 'Test Description',
-        activo: true,
+        active: true,
       };
+
       const updatedTipoInstalacion = {
         ...existingTipoInstalacion,
         ...updateDto,
-        actualizadoPor: usuario,
+        usrUpdate: 'testUser',
       };
 
       mockRepository.findOne.mockResolvedValue(existingTipoInstalacion);
       mockRepository.save.mockResolvedValue(updatedTipoInstalacion);
 
-      const result = await service.update(id, updateDto, usuario);
+      const result = await service.update(id, updateDto, 'testUser');
 
       expect(result).toEqual(updatedTipoInstalacion);
+      expect(mockRepository.findOne).toHaveBeenCalledWith({
+        where: { id, active: true },
+      });
       expect(mockRepository.save).toHaveBeenCalledWith(updatedTipoInstalacion);
     });
   });
@@ -213,15 +253,18 @@ describe('TiposInstalacionesService', () => {
     it('should soft delete a tipo instalacion', async () => {
       const id = '1';
       const usuario = 'testUser';
+
       const existingTipoInstalacion = {
-        id,
+        id: '1',
         nombre: 'Test Instalacion',
-        activo: true,
+        descripcion: 'Test Description',
+        active: true,
       };
+
       const deletedTipoInstalacion = {
         ...existingTipoInstalacion,
-        activo: false,
-        actualizadoPor: usuario,
+        active: false,
+        usrUpdate: usuario,
       };
 
       mockRepository.findOne.mockResolvedValue(existingTipoInstalacion);

@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { DataSource } from 'typeorm';
 import * as request from 'supertest';
 import { ProjectsModule } from '../../src/modules/projects/projects.module';
 import { AuthModule } from '../../src/modules/auth/auth.module';
@@ -14,13 +15,22 @@ import { User } from '../../src/modules/users/entities/user.entity';
 import { NormRule } from '../../src/modules/rules/entities/norm-rule.entity';
 import { RuleSet } from '../../src/modules/rules/entities/rule-set.entity';
 import { normRulesSeed } from '../../src/modules/rules/seeds/norm-rules.seed';
-import { projectFixtures, userFixtures, authFixtures } from './fixtures/project-payloads';
+import {
+  projectFixtures,
+  userFixtures,
+  authFixtures,
+} from './fixtures/project-payloads';
 import { testConfig } from './test-config';
 import { performanceTester } from './utils/performance-test';
 import { coverageReporter } from './coverage-report';
+import {
+  UserRole,
+  UserStatus,
+} from '../../src/modules/users/entities/user.entity';
 
 describe('Projects E2E Tests', () => {
   let app: INestApplication;
+  let dataSource: DataSource;
   let authToken: string;
   let testProjectId: string;
   let testVersionId: string;
@@ -56,22 +66,18 @@ describe('Projects E2E Tests', () => {
     );
     await app.init();
 
+    // Obtener DataSource
+    dataSource = app.get<DataSource>(DataSource);
+
     // Seed test data
-    const dataSource = app.get('DataSource');
     const ruleSetRepository = dataSource.getRepository(RuleSet);
     const normRuleRepository = dataSource.getRepository(NormRule);
     const userRepository = dataSource.getRepository(User);
-    
-    // Limpiar datos existentes
-    await normRuleRepository.clear();
-    await ruleSetRepository.clear();
-    await userRepository.clear();
-    
+
     // Crear un RuleSet por defecto
     const defaultRuleSet = ruleSetRepository.create({
       name: 'Test Rules',
-      version: '1.0.0',
-      isActive: true,
+      status: 'ACTIVE',
       description: 'Test rule set for e2e tests',
     });
     await ruleSetRepository.save(defaultRuleSet);
@@ -87,12 +93,18 @@ describe('Projects E2E Tests', () => {
 
     // Crear usuario de prueba
     const testUser = userRepository.create({
-      ...userFixtures.testUser,
-      active: true,
+      username: userFixtures.testUser.username,
+      email: userFixtures.testUser.email,
+      password: userFixtures.testUser.password,
+      nombre: userFixtures.testUser.firstName,
+      apellido: userFixtures.testUser.lastName,
+      role: UserRole.CLIENTE,
+      estado: UserStatus.ACTIVO,
     });
+    await testUser.hashPassword();
     await userRepository.save(testUser);
 
-    // Autenticar usuario
+    // Autenticar usuario para obtener token
     const loginResponse = await request(app.getHttpServer())
       .post('/v1/auth/login')
       .send(authFixtures.loginData)
@@ -103,20 +115,6 @@ describe('Projects E2E Tests', () => {
 
   afterEach(async () => {
     if (app) {
-      // Limpiar datos de test
-      const dataSource = app.get('DataSource');
-      const projectVersionRepository = dataSource.getRepository(ProjectVersion);
-      const projectRepository = dataSource.getRepository(Project);
-      const normRuleRepository = dataSource.getRepository(NormRule);
-      const ruleSetRepository = dataSource.getRepository(RuleSet);
-      const userRepository = dataSource.getRepository(User);
-      
-      await projectVersionRepository.clear();
-      await projectRepository.clear();
-      await normRuleRepository.clear();
-      await ruleSetRepository.clear();
-      await userRepository.clear();
-      
       await app.close();
     }
   });
@@ -131,7 +129,7 @@ describe('Projects E2E Tests', () => {
         projectFixtures.valid.minimal,
         authToken,
         201,
-        2000
+        2000,
       );
 
       expect(result.passed).toBe(true);
@@ -164,7 +162,7 @@ describe('Projects E2E Tests', () => {
         projectFixtures.valid.withoutCalculation,
         authToken,
         201,
-        2000
+        2000,
       );
 
       expect(result.passed).toBe(true);
@@ -192,7 +190,7 @@ describe('Projects E2E Tests', () => {
         projectFixtures.invalid.emptyName,
         authToken,
         400,
-        1000
+        1000,
       );
 
       expect(result.passed).toBe(true);
@@ -214,7 +212,7 @@ describe('Projects E2E Tests', () => {
         projectFixtures.invalid.missingName,
         authToken,
         400,
-        1000
+        1000,
       );
 
       expect(result.passed).toBe(true);
@@ -236,7 +234,7 @@ describe('Projects E2E Tests', () => {
         projectFixtures.invalid.invalidCalculationData,
         authToken,
         400,
-        1000
+        1000,
       );
 
       expect(result.passed).toBe(true);
@@ -273,7 +271,7 @@ describe('Projects E2E Tests', () => {
         null,
         authToken,
         200,
-        1000
+        1000,
       );
 
       expect(result.passed).toBe(true);
@@ -303,7 +301,7 @@ describe('Projects E2E Tests', () => {
         null,
         authToken,
         200,
-        1000
+        1000,
       );
 
       expect(result.passed).toBe(true);
@@ -330,7 +328,7 @@ describe('Projects E2E Tests', () => {
         null,
         authToken,
         200,
-        1000
+        1000,
       );
 
       expect(result.passed).toBe(true);
@@ -368,7 +366,7 @@ describe('Projects E2E Tests', () => {
         projectFixtures.versions.version2,
         authToken,
         201,
-        2000
+        2000,
       );
 
       expect(result.passed).toBe(true);
@@ -399,7 +397,7 @@ describe('Projects E2E Tests', () => {
         projectFixtures.versions.version1,
         authToken,
         404,
-        1000
+        1000,
       );
 
       expect(result.passed).toBe(true);
@@ -434,7 +432,7 @@ describe('Projects E2E Tests', () => {
         null,
         authToken,
         200,
-        1000
+        1000,
       );
 
       expect(result.passed).toBe(true);
@@ -466,7 +464,7 @@ describe('Projects E2E Tests', () => {
         null,
         authToken,
         404,
-        1000
+        1000,
       );
 
       expect(result.passed).toBe(true);
@@ -500,14 +498,16 @@ describe('Projects E2E Tests', () => {
         projectFixtures.updates.nameOnly,
         authToken,
         200,
-        1000
+        1000,
       );
 
       expect(result.passed).toBe(true);
       expect(result.statusCode).toBe(200);
 
       const response = result.response;
-      expect(response.body.projectName).toBe(projectFixtures.updates.nameOnly.projectName);
+      expect(response.body.projectName).toBe(
+        projectFixtures.updates.nameOnly.projectName,
+      );
 
       coverageReporter.addTestResult({
         test: 'Update project name',
@@ -525,14 +525,16 @@ describe('Projects E2E Tests', () => {
         projectFixtures.updates.statusOnly,
         authToken,
         200,
-        1000
+        1000,
       );
 
       expect(result.passed).toBe(true);
       expect(result.statusCode).toBe(200);
 
       const response = result.response;
-      expect(response.body.status).toBe(projectFixtures.updates.statusOnly.status);
+      expect(response.body.status).toBe(
+        projectFixtures.updates.statusOnly.status,
+      );
 
       coverageReporter.addTestResult({
         test: 'Update project status',
@@ -550,7 +552,7 @@ describe('Projects E2E Tests', () => {
         projectFixtures.updates.nameOnly,
         authToken,
         404,
-        1000
+        1000,
       );
 
       expect(result.passed).toBe(true);
@@ -584,7 +586,7 @@ describe('Projects E2E Tests', () => {
         null,
         authToken,
         200,
-        2000
+        2000,
       );
 
       expect(result.passed).toBe(true);
@@ -613,7 +615,7 @@ describe('Projects E2E Tests', () => {
         null,
         authToken,
         404,
-        1000
+        1000,
       );
 
       expect(result.passed).toBe(true);

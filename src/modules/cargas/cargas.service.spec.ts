@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { CargasService } from './cargas.service';
-import { Carga } from './entities/cargas.entity';
+import { Cargas } from './entities/cargas.entity';
 import { CreateCargaDto } from './dto/create-carga.dto';
 import { UpdateCargaDto } from './dto/update-carga.dto';
 import { NotFoundException } from '@nestjs/common';
@@ -18,7 +18,10 @@ describe('CargasService', () => {
   const mockRepository = {
     create: jest.fn(),
     save: jest.fn(),
+    find: jest.fn(),
     findOne: jest.fn(),
+    update: jest.fn(),
+    delete: jest.fn(),
     createQueryBuilder: jest.fn(() => ({
       leftJoinAndSelect: jest.fn().mockReturnThis(),
       where: jest.fn().mockReturnThis(),
@@ -31,7 +34,7 @@ describe('CargasService', () => {
       providers: [
         CargasService,
         {
-          provide: getRepositoryToken(Carga),
+          provide: getRepositoryToken(Cargas),
           useValue: mockRepository,
         },
       ],

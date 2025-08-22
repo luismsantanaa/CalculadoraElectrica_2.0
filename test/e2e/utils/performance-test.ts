@@ -7,6 +7,7 @@ export interface PerformanceTestResult {
   statusCode: number;
   passed: boolean;
   threshold: number;
+  response?: any; // Agregar propiedad response opcional
 }
 
 export class PerformanceTester {
@@ -14,34 +15,62 @@ export class PerformanceTester {
 
   async testEndpoint(
     app: INestApplication,
-    method: 'get' | 'post' | 'put' | 'patch' | 'delete',
+    testName: string,
+    method: 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE',
     endpoint: string,
-    payload?: any,
+    data?: any,
+    authToken?: string,
+    expectedStatus?: number,
     threshold: number = 800,
-    testName?: string,
   ): Promise<PerformanceTestResult> {
     const startTime = Date.now();
     
-    const req = request(app.getHttpServer())[method](endpoint);
+    let req = request(app.getHttpServer())[method.toLowerCase()](endpoint);
     
-    if (payload) {
-      req.send(payload);
+    if (authToken) {
+      req = req.set('Authorization', `Bearer ${authToken}`);
     }
-
-    const response = await req;
-    const endTime = Date.now();
-    const responseTime = endTime - startTime;
-
-    const result: PerformanceTestResult = {
-      testName: testName || `${method.toUpperCase()} ${endpoint}`,
-      responseTime,
-      statusCode: response.status,
-      passed: responseTime < threshold,
-      threshold,
-    };
-
-    this.results.push(result);
-    return result;
+    
+    if (data) {
+      req = req.send(data);
+    }
+    
+    try {
+      const response = await req;
+      const endTime = Date.now();
+      const responseTime = endTime - startTime;
+      
+      const passed = responseTime <= threshold && 
+        (expectedStatus ? response.status === expectedStatus : true);
+      
+      const result: PerformanceTestResult = {
+        testName,
+        responseTime,
+        statusCode: response.status,
+        passed,
+        threshold,
+        response, // Incluir la respuesta completa
+      };
+      
+      this.results.push(result);
+      return result;
+      
+    } catch (error) {
+      const endTime = Date.now();
+      const responseTime = endTime - startTime;
+      
+      const result: PerformanceTestResult = {
+        testName,
+        responseTime,
+        statusCode: error.status || 500,
+        passed: false,
+        threshold,
+        response: error.response, // Incluir la respuesta de error
+      };
+      
+      this.results.push(result);
+      return result;
+    }
   }
 
   getResults(): PerformanceTestResult[] {
@@ -59,20 +88,27 @@ export class PerformanceTester {
     const total = this.results.length;
     const passed = this.results.filter(r => r.passed).length;
     const failed = total - passed;
+    
     const responseTimes = this.results.map(r => r.responseTime);
+    const averageResponseTime = responseTimes.length > 0 
+      ? responseTimes.reduce((a, b) => a + b, 0) / responseTimes.length 
+      : 0;
+    const maxResponseTime = responseTimes.length > 0 ? Math.max(...responseTimes) : 0;
+    const minResponseTime = responseTimes.length > 0 ? Math.min(...responseTimes) : 0;
     
     return {
       total,
       passed,
       failed,
-      averageResponseTime: responseTimes.reduce((a, b) => a + b, 0) / total,
-      maxResponseTime: Math.max(...responseTimes),
-      minResponseTime: Math.min(...responseTimes),
+      averageResponseTime,
+      maxResponseTime,
+      minResponseTime,
     };
   }
 
   printSummary(): void {
     const summary = this.getSummary();
+    
     console.log('\n📊 PERFORMANCE TEST SUMMARY');
     console.log('============================');
     console.log(`Total Tests: ${summary.total}`);
@@ -81,15 +117,6 @@ export class PerformanceTester {
     console.log(`Average Response Time: ${summary.averageResponseTime.toFixed(2)}ms`);
     console.log(`Max Response Time: ${summary.maxResponseTime}ms`);
     console.log(`Min Response Time: ${summary.minResponseTime}ms`);
-    
-    if (summary.failed > 0) {
-      console.log('\n❌ FAILED TESTS:');
-      this.results
-        .filter(r => !r.passed)
-        .forEach(r => {
-          console.log(`  - ${r.testName}: ${r.responseTime}ms (threshold: ${r.threshold}ms)`);
-        });
-    }
   }
 }
 

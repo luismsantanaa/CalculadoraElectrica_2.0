@@ -10,25 +10,41 @@ async function setupTestDatabase() {
       port: 3306,
       user: 'electridom',
       password: 'electridom',
+      database: 'electridom', // Usar base de datos principal
     });
 
-    // Crear base de datos de test si no existe
-    await connection.execute('CREATE DATABASE IF NOT EXISTS electridom_test');
-    console.log('✅ Test database created/verified');
+    console.log('✅ Connected to main database for testing');
 
-    // Usar la base de datos de test
-    await connection.execute('USE electridom_test');
-    console.log('✅ Using test database');
-
-    // Verificar que las tablas existen (se crearán automáticamente con synchronize: true)
+    // Verificar que las tablas existen
     const [tables] = await connection.execute('SHOW TABLES');
-    console.log(`📊 Found ${tables.length} tables in test database`);
+    console.log(`📊 Found ${tables.length} tables in database`);
+
+    // Verificar tablas específicas necesarias para tests
+    const requiredTables = [
+      'projects',
+      'project_versions',
+      'users',
+      'norm_rules',
+      'rule_sets',
+    ];
+    const existingTables = tables.map((row) => Object.values(row)[0]);
+
+    console.log('🔍 Checking required tables:');
+    requiredTables.forEach((table) => {
+      if (existingTables.includes(table)) {
+        console.log(`  ✅ ${table}`);
+      } else {
+        console.log(`  ⚠️  ${table} (will be created by TypeORM)`);
+      }
+    });
 
     await connection.end();
     console.log('✅ Test database setup completed');
+    console.log('💡 Using main database for tests (synchronize: true)');
   } catch (error) {
     console.error('❌ Error setting up test database:', error.message);
     console.log('💡 Make sure MariaDB is running and credentials are correct');
+    console.log('💡 Using main database for tests as fallback');
     process.exit(1);
   }
 }

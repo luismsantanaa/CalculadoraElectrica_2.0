@@ -1,24 +1,26 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { JwtService } from '@nestjs/jwt';
+import { ConfigService } from '@nestjs/config';
 import { JwtStrategy } from '../jwt.strategy';
 import { UsersService } from '../../../modules/users/users.service';
-import { ConfigService } from '@nestjs/config';
-import {
-  User,
-  UserRole,
-  UserStatus,
-} from '../../../modules/users/entities/user.entity';
-import { UnauthorizedException } from '@nestjs/common';
-import { JwtPayload } from '../jwt.strategy';
+import { User, UserRole, UserStatus } from '../../../modules/users/entities/user.entity';
 
 describe('JwtStrategy', () => {
   let strategy: JwtStrategy;
+  let usersService: UsersService;
+  let jwtService: JwtService;
+  let configService: ConfigService;
 
   const mockUsersService = {
     findById: jest.fn(),
   };
 
+  const mockJwtService = {
+    verify: jest.fn(),
+  };
+
   const mockConfigService = {
-    get: jest.fn().mockReturnValue('test-secret'),
+    get: jest.fn(),
   };
 
   beforeEach(async () => {
@@ -30,6 +32,10 @@ describe('JwtStrategy', () => {
           useValue: mockUsersService,
         },
         {
+          provide: JwtService,
+          useValue: mockJwtService,
+        },
+        {
           provide: ConfigService,
           useValue: mockConfigService,
         },
@@ -37,6 +43,13 @@ describe('JwtStrategy', () => {
     }).compile();
 
     strategy = module.get<JwtStrategy>(JwtStrategy);
+    usersService = module.get<UsersService>(UsersService);
+    jwtService = module.get<JwtService>(JwtService);
+    configService = module.get<ConfigService>(ConfigService);
+  });
+
+  afterEach(() => {
+    jest.clearAllMocks();
   });
 
   it('should be defined', () => {
@@ -44,55 +57,107 @@ describe('JwtStrategy', () => {
   });
 
   describe('validate', () => {
-    const mockPayload: JwtPayload = {
-      sub: 1,
-      email: 'test@example.com',
-      role: UserRole.CLIENTE,
-    };
-
-    const mockUser: User = {
-      id: '1',
-      email: 'test@example.com',
-      password: 'hashedPassword',
-      username: 'testuser',
-      nombre: 'Test',
-      apellido: 'User',
-      role: UserRole.CLIENTE,
-      estado: UserStatus.ACTIVO,
-      fechaCreacion: new Date(),
-      fechaActualizacion: new Date(),
-      hashPassword: async () => {},
-      validatePassword: async () => true,
-      toJSON: () => ({
-        id: '1',
+    it('should return user when token is valid', async () => {
+      const payload = {
+        sub: 1,
         email: 'test@example.com',
+        role: UserRole.CLIENTE,
+      };
+
+      const mockUser = {
+        id: '1',
         username: 'testuser',
+        email: 'test@example.com',
         nombre: 'Test',
         apellido: 'User',
         role: UserRole.CLIENTE,
         estado: UserStatus.ACTIVO,
-        fechaCreacion: expect.any(Date),
-        fechaActualizacion: expect.any(Date),
-      }),
-    };
+        creationDate: new Date(),
+        updateDate: new Date(),
+        active: true,
+        password: 'hashedPassword',
+        validatePassword: jest.fn(),
+        hashPassword: jest.fn(),
+        hashedPassword: jest.fn(),
+        toJSON: () => ({
+          id: '1',
+          email: 'test@example.com',
+          username: 'testuser',
+          nombre: 'Test',
+          apellido: 'User',
+          role: UserRole.CLIENTE,
+          estado: UserStatus.ACTIVO,
+          creationDate: expect.any(Date),
+          updateDate: expect.any(Date),
+          active: true,
+        }),
+      } as User;
 
-    it('should return user when token is valid', async () => {
       mockUsersService.findById.mockResolvedValue(mockUser);
 
-      const result = await strategy.validate(mockPayload);
+      const result = await strategy.validate(payload);
 
+      expect(usersService.findById).toHaveBeenCalledWith(payload.sub.toString());
       expect(result).toEqual(mockUser);
-      expect(mockUsersService.findById).toHaveBeenCalledWith(
-        mockPayload.sub.toString(),
-      );
     });
 
-    it('should throw UnauthorizedException when user is not found', async () => {
+    it('should return null when user is not found', async () => {
+      const payload = {
+        sub: 999,
+        email: 'nonexistent@example.com',
+        role: UserRole.CLIENTE,
+      };
+
       mockUsersService.findById.mockResolvedValue(null);
 
-      await expect(strategy.validate(mockPayload)).rejects.toThrow(
-        UnauthorizedException,
-      );
+      const result = await strategy.validate(payload);
+
+      expect(usersService.findById).toHaveBeenCalledWith(payload.sub.toString());
+      expect(result).toBeNull();
+    });
+
+    it('should return null when user is inactive', async () => {
+      const payload = {
+        sub: 1,
+        email: 'inactive@example.com',
+        role: UserRole.CLIENTE,
+      };
+
+      const mockInactiveUser = {
+        id: '1',
+        username: 'inactiveuser',
+        email: 'inactive@example.com',
+        nombre: 'Inactive',
+        apellido: 'User',
+        role: UserRole.CLIENTE,
+        estado: UserStatus.INACTIVO,
+        creationDate: new Date(),
+        updateDate: new Date(),
+        active: false,
+        password: 'hashedPassword',
+        validatePassword: jest.fn(),
+        hashPassword: jest.fn(),
+        hashedPassword: jest.fn(),
+        toJSON: () => ({
+          id: '1',
+          email: 'inactive@example.com',
+          username: 'inactiveuser',
+          nombre: 'Inactive',
+          apellido: 'User',
+          role: UserRole.CLIENTE,
+          estado: UserStatus.INACTIVO,
+          creationDate: expect.any(Date),
+          updateDate: expect.any(Date),
+          active: false,
+        }),
+      } as User;
+
+      mockUsersService.findById.mockResolvedValue(mockInactiveUser);
+
+      const result = await strategy.validate(payload);
+
+      expect(usersService.findById).toHaveBeenCalledWith(payload.sub.toString());
+      expect(result).toBeNull();
     });
   });
 });

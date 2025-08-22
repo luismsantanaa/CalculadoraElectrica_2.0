@@ -1,45 +1,113 @@
 import { registerAs } from '@nestjs/config';
+import { Environment, LogLevel } from './env.validation';
 
 export const envConfig = registerAs('env', () => ({
-  nodeEnv: process.env.NODE_ENV || 'development',
+  nodeEnv: process.env.NODE_ENV || Environment.Development,
   port: parseInt(process.env.PORT || '3000', 10),
-  apiPrefix: process.env.API_PREFIX || 'api',
-  corsEnabled: process.env.CORS_ENABLED === 'true',
-  corsOrigin: process.env.CORS_ORIGIN || '*',
-  allowedOrigins:
-    process.env.ALLOWED_ORIGINS ||
-    'http://localhost:4200,http://localhost:3000',
-}));
-
-export const databaseConfig = registerAs('database', () => ({
-  type: 'mariadb',
-  host: process.env.DB_HOST || 'localhost',
-  port: parseInt(process.env.DB_PORT || '3306', 10),
-  username: process.env.DB_USER || 'electridom',
-  password: process.env.DB_PASS || 'electridom',
-  database: process.env.DB_NAME || 'electridom',
-  synchronize: process.env.DB_SYNCHRONIZE === 'true',
-  logging: process.env.DB_LOGGING === 'true',
+  logLevel: process.env.LOG_LEVEL || LogLevel.Info,
 }));
 
 export const jwtConfig = registerAs('jwt', () => ({
-  secret:
-    process.env.JWT_SECRET || 'your-super-secret-jwt-key-change-in-production',
+  secret: process.env.JWT_SECRET,
   expiresIn: process.env.JWT_EXPIRES_IN || '24h',
-  algorithm: process.env.AUTH_JWT_ALG || 'HS256',
-  accessTtl: process.env.JWT_ACCESS_TTL || '900s',
-  refreshTtl: process.env.JWT_REFRESH_TTL || '30d',
+}));
+
+export const databaseConfig = registerAs('database', () => ({
+  host: process.env.DATABASE_HOST || 'localhost',
+  port: parseInt(process.env.DATABASE_PORT || '3306', 10),
+  username: process.env.DATABASE_USERNAME || 'electridom',
+  password: process.env.DATABASE_PASSWORD || 'electridom',
+  database: process.env.DATABASE_NAME || 'electridom',
+  url: process.env.DATABASE_URL,
 }));
 
 export const securityConfig = registerAs('security', () => ({
-  throttleTtl: parseInt(process.env.THROTTLE_TTL || '60', 10),
-  throttleLimit: parseInt(process.env.THROTTLE_LIMIT || '100', 10),
-  authThrottleLimit: parseInt(process.env.AUTH_THROTTLE_LIMIT || '5', 10),
-  totpEnabled: process.env.AUTH_TOTP_ENABLED === 'true',
-  legacyRefresh: process.env.AUTH_LEGACY_REFRESH === 'true',
+  apiKey: process.env.API_KEY,
+  corsOrigin: process.env.CORS_ORIGIN || '*',
+  sslKeyPath: process.env.SSL_KEY_PATH,
+  sslCertPath: process.env.SSL_CERT_PATH,
 }));
 
-export const rulesConfig = registerAs('rules', () => ({
-  cacheTtlMs: parseInt(process.env.RULE_CACHE_TTL_MS || '60000', 10),
-  applyMigrationsOnStartup: process.env.APPLY_MIGRATIONS_ON_STARTUP === 'true',
+export const rateLimitConfig = registerAs('rateLimit', () => ({
+  ttl: parseInt(process.env.RATE_LIMIT_TTL || '60', 10),
+  limit: parseInt(process.env.RATE_LIMIT_LIMIT || '100', 10),
 }));
+
+export const swaggerConfig = registerAs('swagger', () => ({
+  title: process.env.SWAGGER_TITLE || 'Calculadora Eléctrica RD API',
+  description:
+    process.env.SWAGGER_DESCRIPTION ||
+    'API para cálculos eléctricos según normativas dominicanas',
+  version: process.env.SWAGGER_VERSION || '2.0.0',
+}));
+
+// Configuración específica por ambiente
+export const getEnvironmentConfig = () => {
+  const nodeEnv = process.env.NODE_ENV || Environment.Development;
+
+  const baseConfig = {
+    port: parseInt(process.env.PORT || '3000', 10),
+    logLevel: process.env.LOG_LEVEL || LogLevel.Info,
+    corsOrigin: process.env.CORS_ORIGIN || '*',
+  };
+
+  switch (nodeEnv) {
+    case Environment.Development:
+      return {
+        ...baseConfig,
+        port: 3000,
+        logLevel: LogLevel.Debug,
+        corsOrigin: '*',
+        database: {
+          synchronize: true,
+          logging: true,
+        },
+      };
+
+    case Environment.Staging:
+      return {
+        ...baseConfig,
+        port: 3000,
+        logLevel: LogLevel.Info,
+        corsOrigin:
+          process.env.CORS_ORIGIN ||
+          'https://staging.calculadora-electrica.com',
+        database: {
+          synchronize: false,
+          logging: false,
+        },
+      };
+
+    case Environment.Production:
+      return {
+        ...baseConfig,
+        port: parseInt(process.env.PORT || '3000', 10),
+        logLevel: LogLevel.Warn,
+        corsOrigin:
+          process.env.CORS_ORIGIN || 'https://calculadora-electrica.com',
+        database: {
+          synchronize: false,
+          logging: false,
+        },
+        ssl: {
+          enabled: !!process.env.SSL_KEY_PATH && !!process.env.SSL_CERT_PATH,
+          keyPath: process.env.SSL_KEY_PATH,
+          certPath: process.env.SSL_CERT_PATH,
+        },
+      };
+
+    default:
+      return baseConfig;
+  }
+};
+
+// Función helper para obtener configuración completa
+export const getConfig = () => ({
+  env: envConfig(),
+  jwt: jwtConfig(),
+  database: databaseConfig(),
+  security: securityConfig(),
+  rateLimit: rateLimitConfig(),
+  swagger: swaggerConfig(),
+  environment: getEnvironmentConfig(),
+});

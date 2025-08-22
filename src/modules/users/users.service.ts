@@ -6,12 +6,14 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from './entities/user.entity';
+import { HashService } from '../../common/services/hash.service';
 
 @Injectable()
 export class UsersService {
   constructor(
     @InjectRepository(User)
     private usersRepository: Repository<User>,
+    private hashService: HashService,
   ) {}
 
   async create(userData: Partial<User>): Promise<User> {
@@ -23,6 +25,7 @@ export class UsersService {
       throw new ConflictException('El correo electrónico ya está registrado');
     }
     const user = this.usersRepository.create(userData);
+    user.setHashService(this.hashService);
     return this.usersRepository.save(user);
   }
 
@@ -30,7 +33,11 @@ export class UsersService {
     if (!email) {
       throw new NotFoundException('El correo electrónico es obligatorio');
     }
-    return this.usersRepository.findOne({ where: { email } });
+    const user = await this.usersRepository.findOne({ where: { email } });
+    if (user) {
+      user.setHashService(this.hashService);
+    }
+    return user;
   }
 
   async findById(id: string): Promise<User> {
@@ -38,6 +45,7 @@ export class UsersService {
     if (!user) {
       throw new NotFoundException('Usuario no encontrado');
     }
+    user.setHashService(this.hashService);
     return user;
   }
 
@@ -69,5 +77,17 @@ export class UsersService {
     await this.usersRepository.update(user.id, { password: hashedPassword });
 
     return { message: 'Contraseña actualizada exitosamente' };
+  }
+
+  /**
+   * Actualiza la contraseña de un usuario con migración automática a Argon2id
+   */
+  async updatePasswordWithMigration(
+    user: User,
+    newPassword: string,
+  ): Promise<User> {
+    user.setHashService(this.hashService);
+    await user.migratePassword(newPassword);
+    return this.usersRepository.save(user);
   }
 }

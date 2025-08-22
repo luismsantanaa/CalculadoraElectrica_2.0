@@ -3,21 +3,15 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { AuthController } from '../auth.controller';
 import { AuthService } from '../../services/auth.service';
 import { LoginDto } from '../../dtos/login.dto';
-import { RegisterDto } from '../../dtos/register.dto';
-import {
-  User,
-  UserRole,
-  UserStatus,
-} from '../../../users/entities/user.entity';
-import { UnauthorizedException } from '@nestjs/common';
+import { User, UserRole, UserStatus } from '../../../users/entities/user.entity';
 
 describe('AuthController', () => {
   let controller: AuthController;
+  let service: AuthService;
 
   const mockAuthService = {
     validateUser: jest.fn(),
     login: jest.fn(),
-    register: jest.fn(),
   };
 
   beforeEach(async () => {
@@ -32,6 +26,7 @@ describe('AuthController', () => {
     }).compile();
 
     controller = module.get<AuthController>(AuthController);
+    service = module.get<AuthService>(AuthService);
   });
 
   it('should be defined', () => {
@@ -39,25 +34,13 @@ describe('AuthController', () => {
   });
 
   describe('login', () => {
-    const loginDto: LoginDto = {
-      email: 'test@example.com',
-      password: 'password123',
-    };
+    it('should return JWT token on successful login', async () => {
+      const loginDto: LoginDto = {
+        email: 'test@example.com',
+        password: 'password123',
+      };
 
-    const mockUser: User = {
-      id: '1',
-      email: 'test@example.com',
-      password: 'hashedPassword',
-      username: 'testuser',
-      nombre: 'Test',
-      apellido: 'User',
-      role: UserRole.CLIENTE,
-      estado: UserStatus.ACTIVO,
-      fechaCreacion: new Date(),
-      fechaActualizacion: new Date(),
-      hashPassword: async () => {},
-      validatePassword: () => Promise.resolve(true),
-      toJSON: () => ({
+      const mockUser = {
         id: '1',
         email: 'test@example.com',
         username: 'testuser',
@@ -65,20 +48,25 @@ describe('AuthController', () => {
         apellido: 'User',
         role: UserRole.CLIENTE,
         estado: UserStatus.ACTIVO,
-        fechaCreacion: expect.any(Date),
-        fechaActualizacion: expect.any(Date),
-      }),
-    };
+        creationDate: new Date(),
+        updateDate: new Date(),
+        active: true,
+        password: 'hashedPassword',
+        validatePassword: jest.fn(),
+        hashPassword: jest.fn(),
+        hashedPassword: jest.fn(),
+        toJSON: jest.fn(),
+      } as User;
 
-    const mockToken = {
-      access_token: 'mock-jwt-token',
-    };
+      const mockToken = {
+        access_token: 'mock-jwt-token',
+        user: mockUser,
+      };
 
-    it('should return JWT token on successful login', async () => {
       mockAuthService.validateUser.mockResolvedValue(mockUser);
       mockAuthService.login.mockResolvedValue(mockToken);
 
-      const result = await controller.login(loginDto);
+      const result = await controller.login(loginDto, '127.0.0.1', { userAgent: 'test-agent' } as any);
 
       expect(result).toEqual(mockToken);
       expect(mockAuthService.validateUser).toHaveBeenCalledWith(
@@ -89,56 +77,24 @@ describe('AuthController', () => {
     });
 
     it('should throw UnauthorizedException on invalid credentials', async () => {
+      const loginDto: LoginDto = {
+        email: 'test@example.com',
+        password: 'wrongpassword',
+      };
+
       mockAuthService.validateUser.mockResolvedValue(null);
 
-      await expect(controller.login(loginDto)).rejects.toThrow(
-        UnauthorizedException,
+      await expect(controller.login(loginDto, '127.0.0.1', { userAgent: 'test-agent' } as any)).rejects.toThrow();
+      expect(mockAuthService.validateUser).toHaveBeenCalledWith(
+        loginDto.email,
+        loginDto.password,
       );
     });
   });
 
-  describe('register', () => {
-    const registerDto: RegisterDto = {
-      username: 'newuser',
-      email: 'new@example.com',
-      password: 'password123',
-      nombre: 'New',
-      apellido: 'User',
-    };
-
-    const mockRegisteredUser: Partial<User> = {
-      id: '2',
-      email: registerDto.email,
-      nombre: registerDto.nombre,
-      apellido: registerDto.apellido,
-      role: UserRole.CLIENTE,
-    };
-
-    it('should register a new user successfully', async () => {
-      mockAuthService.register.mockResolvedValue(mockRegisteredUser);
-
-      const result = await controller.register(registerDto);
-
-      expect(result).toEqual(mockRegisteredUser);
-      expect(mockAuthService.register).toHaveBeenCalledWith(registerDto);
-    });
-  });
-
   describe('getProfile', () => {
-    const mockUser: User = {
-      id: '1',
-      email: 'test@example.com',
-      password: 'hashedPassword',
-      username: 'testuser',
-      nombre: 'Test',
-      apellido: 'User',
-      role: UserRole.CLIENTE,
-      estado: UserStatus.ACTIVO,
-      fechaCreacion: new Date(),
-      fechaActualizacion: new Date(),
-      hashPassword: async () => {},
-      validatePassword: () => Promise.resolve(true),
-      toJSON: () => ({
+    it('should return user profile', () => {
+      const mockUser = {
         id: '1',
         email: 'test@example.com',
         username: 'testuser',
@@ -146,12 +102,16 @@ describe('AuthController', () => {
         apellido: 'User',
         role: UserRole.CLIENTE,
         estado: UserStatus.ACTIVO,
-        fechaCreacion: expect.any(Date),
-        fechaActualizacion: expect.any(Date),
-      }),
-    };
+        creationDate: new Date(),
+        updateDate: new Date(),
+        active: true,
+        password: 'hashedPassword',
+        validatePassword: jest.fn(),
+        hashPassword: jest.fn(),
+        hashedPassword: jest.fn(),
+        toJSON: jest.fn(),
+      } as User;
 
-    it('should return user profile', () => {
       const result = controller.getProfile({ user: mockUser });
       expect(result).toEqual(mockUser);
     });

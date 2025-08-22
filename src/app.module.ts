@@ -2,7 +2,15 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ThrottlerModule } from '@nestjs/throttler';
-import { envConfig, jwtConfig, rulesConfig, getDatabaseConfig } from './config';
+import {
+  envConfig,
+  jwtConfig,
+  databaseConfig,
+  securityConfig,
+  rateLimitConfig,
+  swaggerConfig,
+} from './config/env.config';
+import { validate } from './config/env.validation';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './modules/users/users.module';
@@ -28,7 +36,15 @@ import { ThrottlerGuard } from '@nestjs/throttler';
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [envConfig, jwtConfig, rulesConfig],
+      load: [
+        envConfig,
+        jwtConfig,
+        databaseConfig,
+        securityConfig,
+        rateLimitConfig,
+        swaggerConfig,
+      ],
+      validate,
     }),
     ThrottlerModule.forRootAsync({
       imports: [ConfigModule],
@@ -44,8 +60,18 @@ import { ThrottlerGuard } from '@nestjs/throttler';
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: getDatabaseConfig,
       inject: [ConfigService],
+      useFactory: (configService: ConfigService) => ({
+        type: 'mariadb',
+        host: configService.get('database.host'),
+        port: configService.get('database.port'),
+        username: configService.get('database.username'),
+        password: configService.get('database.password'),
+        database: configService.get('database.database'),
+        entities: [__dirname + '/**/*.entity{.ts,.js}'],
+        synchronize: configService.get('env.nodeEnv') === 'development',
+        logging: configService.get('env.nodeEnv') === 'development',
+      }),
     }),
     UsersModule,
     AuthModule,

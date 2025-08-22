@@ -11,11 +11,15 @@ import { seedNormRules } from './database/seeds/norm-rules.seed';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
-  const port = configService.get<number>('PORT', 3000);
-  const apiPrefix = configService.get<string>('API_PREFIX', 'api');
-  const corsEnabled = configService.get<boolean>('CORS_ENABLED', true);
-  const corsOrigin = configService.get<string>('CORS_ORIGIN', '*');
-  const allowedOrigins = configService.get<string>('ALLOWED_ORIGINS', 'http://localhost:4200,http://localhost:3000');
+  
+  // Obtener configuración validada
+  const port = configService.get<number>('env.port', 3000);
+  const nodeEnv = configService.get<string>('env.nodeEnv', 'development');
+  const logLevel = configService.get<string>('env.logLevel', 'info');
+  const corsOrigin = configService.get<string>('security.corsOrigin', '*');
+  const swaggerTitle = configService.get<string>('swagger.title', 'Calculadora Eléctrica RD API');
+  const swaggerDescription = configService.get<string>('swagger.description', 'API para cálculos eléctricos según normativas dominicanas');
+  const swaggerVersion = configService.get<string>('swagger.version', '2.0.0');
 
   // Configurar Helmet para seguridad
   app.use(helmet({
@@ -31,7 +35,7 @@ async function bootstrap() {
   }));
 
   // Global prefix for all routes
-  app.setGlobalPrefix(apiPrefix);
+  app.setGlobalPrefix('api');
 
   // Enable validation
   app.useGlobalPipes(
@@ -43,23 +47,19 @@ async function bootstrap() {
   );
 
   // Enable CORS for frontend with improved security
-  if (corsEnabled) {
-    const origins = allowedOrigins.split(',').map(origin => origin.trim());
-    app.enableCors({
-      origin: corsOrigin === '*' ? true : origins,
-      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
-      allowedHeaders: ['Content-Type', 'Authorization', 'x-api-key', 'x-trace-id'],
-      credentials: true,
-      maxAge: 86400, // 24 hours
-    });
-  }
+  app.enableCors({
+    origin: corsOrigin === '*' ? true : corsOrigin,
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'x-api-key', 'x-trace-id'],
+    credentials: true,
+    maxAge: 86400, // 24 hours
+  });
 
   // Global exception filter
   app.useGlobalFilters(new HttpExceptionFilter());
 
-  // Ejecutar seeds si está habilitado
-  const applyMigrationsOnStartup = configService.get<boolean>('APPLY_MIGRATIONS_ON_STARTUP', false);
-  if (applyMigrationsOnStartup) {
+  // Ejecutar seeds solo en desarrollo
+  if (nodeEnv === 'development') {
     try {
       const dataSource = app.get(DataSource);
       await seedNormRules(dataSource);
@@ -70,24 +70,9 @@ async function bootstrap() {
 
   // Configuración de Swagger
   const config = new DocumentBuilder()
-    .setTitle('Calculadora Eléctrica RD - API')
-    .setDescription(
-      `
-      API REST para la Calculadora Eléctrica de República Dominicana
-
-      Esta API proporciona endpoints para:
-      • 📊 Gestión de proyectos eléctricos
-      • ⚡ Cálculos de potencia y circuitos
-      • 📐 Medición de superficies y ambientes
-      • 🔌 Selección de conductores y protecciones
-      • 📦 Lista de materiales y costos
-      • 📄 Generación de reportes en PDF/Excel
-      • 🧮 Motor de reglas normativas (RIE RD/NEC)
-
-      Desarrollada según normas NEC 2020 y R.I.E. (Reglamento de Instalaciones Eléctricas)
-    `,
-    )
-    .setVersion('1.0.0')
+    .setTitle(swaggerTitle)
+    .setDescription(swaggerDescription)
+    .setVersion(swaggerVersion)
     .addTag(
       'Cálculos Eléctricos',
       'Cálculos de instalaciones eléctricas residenciales',
@@ -138,12 +123,14 @@ async function bootstrap() {
   });
 
   await app.listen(port);
-  console.log('🚀 Backend server running on http://localhost:3000');
-  console.log('📖 Swagger UI available at http://localhost:3000/api/docs');
-  console.log('📋 API JSON schema at http://localhost:3000/api/docs-json');
-  console.log('⚡ API endpoints at http://localhost:3000/api');
-  console.log('💾 Database: MariaDb (calculadora-electrica)');
-  console.log('🔒 Security: Helmet + Rate Limiting + CORS enabled');
+  console.log(`🚀 Backend server running on http://localhost:${port}`);
+  console.log(`📖 Swagger UI available at http://localhost:${port}/api/docs`);
+  console.log(`📋 API JSON schema at http://localhost:${port}/api/docs-json`);
+  console.log(`⚡ API endpoints at http://localhost:${port}/api`);
+  console.log(`💾 Database: MariaDb (${configService.get('database.database')})`);
+  console.log(`🔒 Security: Helmet + Rate Limiting + CORS enabled`);
+  console.log(`🌍 Environment: ${nodeEnv.toUpperCase()}`);
+  console.log(`📝 Log Level: ${logLevel.toUpperCase()}`);
 }
 bootstrap().catch((error) => {
   console.error('Error starting application:', error);

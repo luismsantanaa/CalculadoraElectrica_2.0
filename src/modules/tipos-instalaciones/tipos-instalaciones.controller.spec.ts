@@ -3,14 +3,13 @@ import { TiposInstalacionesController } from './tipos-instalaciones.controller';
 import { TiposInstalacionesService } from './tipos-instalaciones.service';
 import { CreateTipoInstalacionDto } from './dtos/create-tipo-instalacion.dto';
 import { UpdateTipoInstalacionDto } from './dtos/update-tipo-instalacion.dto';
-import { PaginateQuery } from 'nestjs-paginate';
-import { ActivoSpecification } from './specifications/activo.specification';
-import { NombreSpecification } from './specifications/nombre.specification';
+import { User, UserRole, UserStatus } from '../users/entities/user.entity';
 
 describe('TiposInstalacionesController', () => {
   let controller: TiposInstalacionesController;
+  let service: TiposInstalacionesService;
 
-  const mockService = {
+  const mockTiposInstalacionesService = {
     create: jest.fn(),
     findAll: jest.fn(),
     findOne: jest.fn(),
@@ -24,14 +23,13 @@ describe('TiposInstalacionesController', () => {
       providers: [
         {
           provide: TiposInstalacionesService,
-          useValue: mockService,
+          useValue: mockTiposInstalacionesService,
         },
       ],
     }).compile();
 
-    controller = module.get<TiposInstalacionesController>(
-      TiposInstalacionesController,
-    );
+    controller = module.get<TiposInstalacionesController>(TiposInstalacionesController);
+    service = module.get<TiposInstalacionesService>(TiposInstalacionesService);
   });
 
   it('should be defined', () => {
@@ -41,127 +39,90 @@ describe('TiposInstalacionesController', () => {
   describe('create', () => {
     it('should create a new tipo instalacion', async () => {
       const createDto: CreateTipoInstalacionDto = {
+        id: '1',
         nombre: 'Test Instalacion',
         descripcion: 'Test Description',
       };
-      const usuario = 'testUser';
-      const expectedTipoInstalacion = {
-        ...createDto,
+
+      const mockUser = {
         id: '1',
-        activo: true,
-        creadoPor: usuario,
+        username: 'testuser',
+        email: 'test@example.com',
+        firstName: 'Test',
+        lastName: 'User',
+        role: UserRole.ADMIN,
+        status: UserStatus.ACTIVO,
+        creationDate: new Date(),
+        updateDate: new Date(),
+        active: true,
+        saltOrRounds: 10,
+        hashedPassword: 'hashedPassword',
+        validatePassword: jest.fn(),
+        hashPassword: jest.fn(),
+        toJSON: jest.fn(),
+      } as User;
+
+      const expectedResult = {
+        id: '1',
+        nombre: 'Test Instalacion',
+        descripcion: 'Test Description',
+        active: true,
+        usrCreate: 'testuser',
+        creationDate: expect.any(Date),
+        updateDate: expect.any(Date),
       };
 
-      mockService.create.mockResolvedValue(expectedTipoInstalacion);
+      mockTiposInstalacionesService.create.mockResolvedValue(expectedResult);
 
-      const result = await controller.create(createDto, usuario);
+      const result = await controller.create(createDto, mockUser);
 
-      expect(result).toEqual(expectedTipoInstalacion);
-      expect(mockService.create).toHaveBeenCalledWith(createDto, usuario);
+      expect(service.create).toHaveBeenCalledWith(createDto, mockUser.username);
+      expect(result).toEqual(expectedResult);
     });
   });
 
   describe('findAll', () => {
-    it('should return paginated results', async () => {
-      const query: PaginateQuery = {
-        page: 1,
-        limit: 10,
-        path: '/tipos-instalaciones',
-      };
-      const mockPaginatedResult = {
-        success: true,
-        message: 'Operación exitosa',
-        data: [
-          {
-            id: '1',
-            nombre: 'Test Instalacion',
-            descripcion: 'Test Description',
-            activo: true,
-          },
-        ],
-        total: 1,
-        meta: {
-          itemsPerPage: 10,
-          totalItems: 1,
-          currentPage: 1,
-          totalPages: 1,
-          sortBy: [['nombre', 'ASC']],
-          searchBy: ['nombre'],
-          search: '',
-          select: [],
+    it('should return all tipos instalacion', async () => {
+      const expectedResult = [
+        {
+          id: '1',
+          nombre: 'Test Instalacion 1',
+          descripcion: 'Test Description 1',
+          active: true,
         },
-      };
-
-      mockService.findAll.mockResolvedValue(mockPaginatedResult);
-
-      const result = await controller.findAll(query);
-
-      expect(result).toEqual(mockPaginatedResult);
-      expect(mockService.findAll).toHaveBeenCalledWith(
-        query,
-        expect.any(ActivoSpecification),
-      );
-    });
-
-    it('should apply nombre specification when provided', async () => {
-      const query: PaginateQuery = {
-        page: 1,
-        limit: 10,
-        path: '/tipos-instalaciones',
-      };
-      const nombre = 'Test';
-      const mockPaginatedResult = {
-        success: true,
-        message: 'Operación exitosa',
-        data: [
-          {
-            id: '1',
-            nombre: 'Test Instalacion',
-            descripcion: 'Test Description',
-            activo: true,
-          },
-        ],
-        total: 1,
-        meta: {
-          itemsPerPage: 10,
-          totalItems: 1,
-          currentPage: 1,
-          totalPages: 1,
-          sortBy: [['nombre', 'ASC']],
-          searchBy: ['nombre'],
-          search: '',
-          select: [],
+        {
+          id: '2',
+          nombre: 'Test Instalacion 2',
+          descripcion: 'Test Description 2',
+          active: true,
         },
-      };
+      ];
 
-      mockService.findAll.mockResolvedValue(mockPaginatedResult);
+      mockTiposInstalacionesService.findAll.mockResolvedValue(expectedResult);
 
-      const result = await controller.findAll(query, nombre);
+      const result = await controller.findAll();
 
-      expect(result).toEqual(mockPaginatedResult);
-      expect(mockService.findAll).toHaveBeenCalledWith(
-        query,
-        expect.any(ActivoSpecification),
-      );
+      expect(service.findAll).toHaveBeenCalled();
+      expect(result).toEqual(expectedResult);
     });
   });
 
   describe('findOne', () => {
     it('should return a tipo instalacion by id', async () => {
       const id = '1';
-      const expectedTipoInstalacion = {
-        id,
+      const expectedResult = {
+        id: '1',
         nombre: 'Test Instalacion',
         descripcion: 'Test Description',
-        activo: true,
+        active: true,
       };
 
-      mockService.findOne.mockResolvedValue(expectedTipoInstalacion);
+      mockTiposInstalacionesService.findOne.mockResolvedValue(expectedResult);
 
       const result = await controller.findOne(id);
 
-      expect(result).toEqual(expectedTipoInstalacion);
-      expect(mockService.findOne).toHaveBeenCalledWith(id);
+      expect(service.findOne).toHaveBeenCalledWith(id);
+      expect(result).toEqual(expectedResult);
     });
   });
 
@@ -170,35 +131,70 @@ describe('TiposInstalacionesController', () => {
       const id = '1';
       const updateDto: UpdateTipoInstalacionDto = {
         nombre: 'Updated Instalacion',
+        descripcion: 'Updated Description',
       };
-      const usuario = 'testUser';
-      const expectedTipoInstalacion = {
-        id,
+
+      const mockUser = {
+        id: '1',
+        username: 'testuser',
+        email: 'test@example.com',
+        firstName: 'Test',
+        lastName: 'User',
+        role: UserRole.ADMIN,
+        status: UserStatus.ACTIVO,
+        creationDate: new Date(),
+        updateDate: new Date(),
+        active: true,
+        saltOrRounds: 10,
+        hashedPassword: 'hashedPassword',
+        validatePassword: jest.fn(),
+        hashPassword: jest.fn(),
+        toJSON: jest.fn(),
+      } as User;
+
+      const expectedResult = {
+        id: '1',
         nombre: 'Updated Instalacion',
-        descripcion: 'Test Description',
-        activo: true,
-        actualizadoPor: usuario,
+        descripcion: 'Updated Description',
+        active: true,
+        usrUpdate: 'testuser',
       };
 
-      mockService.update.mockResolvedValue(expectedTipoInstalacion);
+      mockTiposInstalacionesService.update.mockResolvedValue(expectedResult);
 
-      const result = await controller.update(id, updateDto, usuario);
+      const result = await controller.update(id, updateDto, mockUser);
 
-      expect(result).toEqual(expectedTipoInstalacion);
-      expect(mockService.update).toHaveBeenCalledWith(id, updateDto, usuario);
+      expect(service.update).toHaveBeenCalledWith(id, updateDto, mockUser.username);
+      expect(result).toEqual(expectedResult);
     });
   });
 
   describe('remove', () => {
     it('should remove a tipo instalacion', async () => {
       const id = '1';
-      const usuario = 'testUser';
+      const mockUser = {
+        id: '1',
+        username: 'testuser',
+        email: 'test@example.com',
+        firstName: 'Test',
+        lastName: 'User',
+        role: UserRole.ADMIN,
+        status: UserStatus.ACTIVO,
+        creationDate: new Date(),
+        updateDate: new Date(),
+        active: true,
+        saltOrRounds: 10,
+        hashedPassword: 'hashedPassword',
+        validatePassword: jest.fn(),
+        hashPassword: jest.fn(),
+        toJSON: jest.fn(),
+      } as User;
 
-      mockService.remove.mockResolvedValue(undefined);
+      mockTiposInstalacionesService.remove.mockResolvedValue(undefined);
 
-      await controller.remove(id, usuario);
+      await controller.remove(id, mockUser);
 
-      expect(mockService.remove).toHaveBeenCalledWith(id, usuario);
+      expect(service.remove).toHaveBeenCalledWith(id, mockUser.username);
     });
   });
 });

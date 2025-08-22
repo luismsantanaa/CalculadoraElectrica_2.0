@@ -1,11 +1,7 @@
-import {
-  Entity,
-  Column,
-  BeforeInsert,
-} from 'typeorm';
-import * as bcrypt from 'bcrypt';
+import { Entity, Column, BeforeInsert } from 'typeorm';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { BaseAuditEntity } from '../../../common/entities/base-audit.entity';
+import { HashService, HashResult } from '../../../common/services/hash.service';
 
 export enum UserRole {
   ADMIN = 'admin',
@@ -22,16 +18,20 @@ export enum UserStatus {
 
 export type UserWithoutPassword = Omit<
   User,
-  'password' | 'hashPassword' | 'validatePassword' | 'toJSON' | 'hashedPassword'
+  | 'password'
+  | 'hashPassword'
+  | 'validatePassword'
+  | 'toJSON'
+  | 'hashedPassword'
+  | 'setHashService'
 >;
 
 @Entity('users')
 export class User extends BaseAuditEntity {
-  private readonly saltOrRounds = 10;
+  private hashService: HashService;
 
   @ApiProperty({ description: 'ID único del usuario' })
   // id ya viene de BaseAuditEntity
-
   @ApiProperty({ description: 'Nombre de usuario único' })
   @Column({ unique: true, length: 50 })
   username: string;
@@ -99,25 +99,78 @@ export class User extends BaseAuditEntity {
   // - usrUpdate (antes actualizadoPor)
   // - active (antes activo)
 
+  /**
+   * Inyecta el servicio de hash
+   * Debe ser llamado después de crear la instancia
+   */
+  setHashService(hashService: HashService) {
+    this.hashService = hashService;
+  }
+
   @BeforeInsert()
   async hashPassword() {
-    if (this.password) {
-      this.password = await this.hashedPassword(this.password);
+    if (this.password && this.hashService) {
+      this.password = await this.hashService.hashPassword(this.password);
     }
   }
 
-  async validatePassword(password: string): Promise<boolean> {
-    const isMatch = await bcrypt.compare(password, this.password);
-    return isMatch;
+  /**
+   * Valida la contraseña y retorna información sobre migración
+   * Soporta tanto bcrypt (legacy) como Argon2id
+   */
+  async validatePassword(password: string): Promise<HashResult> {
+    if (!this.hashService) {
+      throw new Error('HashService no está disponible');
+    }
+
+    return await this.hashService.verifyPassword(password, this.password);
   }
 
-  async hashedPassword(password: string) {
-    return await bcrypt.hash(password, this.saltOrRounds);
+  /**
+   * Genera hash usando Argon2id (método recomendado)
+   */
+  async hashedPassword(password: string): Promise<string> {
+    if (!this.hashService) {
+      throw new Error('HashService no está disponible');
+    }
+
+    return await this.hashService.hashPassword(password);
+  }
+
+  /**
+   * Migra la contraseña de bcrypt a Argon2id
+   * Actualiza el hash en la entidad
+   */
+  async migratePassword(password: string): Promise<void> {
+    if (!this.hashService) {
+      throw new Error('HashService no está disponible');
+    }
+
+    if (this.hashService.isBcrypt(this.password)) {
+      this.password = await this.hashService.migrateFromBcrypt(
+        password,
+        this.password,
+      );
+    }
+  }
+
+  /**
+   * Verifica si la contraseña está usando Argon2id
+   */
+  isUsingArgon2id(): boolean {
+    return this.hashService?.isArgon2id(this.password) ?? false;
+  }
+
+  /**
+   * Verifica si la contraseña necesita migración (está usando bcrypt)
+   */
+  needsPasswordMigration(): boolean {
+    return this.hashService?.isBcrypt(this.password) ?? false;
   }
 
   toJSON() {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password, ...result } = this;
+    const { password, hashService, ...result } = this;
     return result;
   }
 }

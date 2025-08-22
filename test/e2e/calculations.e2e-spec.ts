@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { DataSource } from 'typeorm';
 import * as request from 'supertest';
 import { CalculosModule } from '../../src/modules/calculos/calculos.module';
 import { RulesModule } from '../../src/modules/rules/rules.module';
@@ -10,9 +11,12 @@ import { RuleSet } from '../../src/modules/rules/entities/rule-set.entity';
 import { normRulesSeed } from '../../src/modules/rules/seeds/norm-rules.seed';
 import { calculationFixtures } from './fixtures/calculation-payloads';
 import { testConfig } from './test-config';
+import { performanceTester } from './utils/performance-test';
+import { coverageReporter } from './coverage-report';
 
 describe('Calculations E2E Tests', () => {
   let app: INestApplication;
+  let dataSource: DataSource;
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -42,8 +46,10 @@ describe('Calculations E2E Tests', () => {
     );
     await app.init();
 
+    // Obtener DataSource
+    dataSource = app.get<DataSource>(DataSource);
+
     // Seed test data
-    const dataSource = app.get('DataSource');
     const ruleSetRepository = dataSource.getRepository(RuleSet);
     const normRuleRepository = dataSource.getRepository(NormRule);
     
@@ -73,7 +79,6 @@ describe('Calculations E2E Tests', () => {
   afterEach(async () => {
     if (app) {
       // Limpiar datos de test
-      const dataSource = app.get('DataSource');
       const normRuleRepository = dataSource.getRepository(NormRule);
       const ruleSetRepository = dataSource.getRepository(RuleSet);
       

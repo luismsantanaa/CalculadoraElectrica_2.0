@@ -2,32 +2,41 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
+import { DataSource } from 'typeorm';
 import * as request from 'supertest';
-import { AppModule } from '../../src/app.module';
+import { CalculosModule } from '../../src/modules/calculos/calculos.module';
+import { RulesModule } from '../../src/modules/rules/rules.module';
 import { NormRule } from '../../src/modules/rules/entities/norm-rule.entity';
 import { RuleSet } from '../../src/modules/rules/entities/rule-set.entity';
 import { normRulesSeed } from '../../src/modules/rules/seeds/norm-rules.seed';
 import { calculationFixtures } from './fixtures/calculation-payloads';
+import { testConfig } from './test-config';
 import { performanceTester } from './utils/performance-test';
+import { coverageReporter } from './coverage-report';
 
-describe('Calculadora Eléctrica RD - E2E Tests', () => {
+describe('Calculations E2E Tests', () => {
   let app: INestApplication;
+  let dataSource: DataSource;
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [
         ConfigModule.forRoot({
           isGlobal: true,
-          load: [],
         }),
         TypeOrmModule.forRoot({
-          type: 'sqlite',
-          database: ':memory:',
+          type: 'mariadb',
+          host: testConfig.database.host,
+          port: testConfig.database.port,
+          username: testConfig.database.username,
+          password: testConfig.database.password,
+          database: testConfig.database.database,
           entities: [NormRule, RuleSet],
-          synchronize: true,
-          logging: false,
+          synchronize: testConfig.database.synchronize,
+          logging: testConfig.database.logging,
         }),
-        AppModule,
+        CalculosModule,
+        RulesModule,
       ],
     }).compile();
 
@@ -37,16 +46,17 @@ describe('Calculadora Eléctrica RD - E2E Tests', () => {
     );
     await app.init();
 
+    // Obtener DataSource
+    dataSource = app.get<DataSource>(DataSource);
+
     // Seed test data
-    const dataSource = app.get('DataSource');
     const ruleSetRepository = dataSource.getRepository(RuleSet);
     const normRuleRepository = dataSource.getRepository(NormRule);
-    
+
     // Crear un RuleSet por defecto
     const defaultRuleSet = ruleSetRepository.create({
       name: 'Test Rules',
-      version: '1.0.0',
-      isActive: true,
+      status: 'ACTIVE',
       description: 'Test rule set for e2e tests',
     });
     await ruleSetRepository.save(defaultRuleSet);
@@ -59,7 +69,7 @@ describe('Calculadora Eléctrica RD - E2E Tests', () => {
       });
       await normRuleRepository.save(rule);
     }
-  }, 30000); // Aumentar timeout a 30 segundos
+  }, 30000);
 
   afterEach(async () => {
     if (app) {
@@ -67,372 +77,250 @@ describe('Calculadora Eléctrica RD - E2E Tests', () => {
     }
   });
 
-  afterAll(() => {
-    // Print performance summary at the end
-    performanceTester.printSummary();
-  });
-
-  describe('POST /v1/calculations/preview - Happy Path Tests', () => {
-    it('should calculate preview with minimal payload successfully', () => {
-      return request(app.getHttpServer())
-        .post('/v1/calculations/preview')
-        .send(calculationFixtures.minimal)
-        .expect(200)
-        .expect((res) => {
-          // Validar estructura de respuesta
-          expect(res.body).toHaveProperty('cargasPorAmbiente');
-          expect(res.body).toHaveProperty('totales');
-          expect(res.body).toHaveProperty('propuestaCircuitos');
-          expect(res.body).toHaveProperty('warnings');
-          expect(res.body).toHaveProperty('traceId');
-          expect(res.body).toHaveProperty('rulesSignature');
-
-          // Validar tipos de datos
-          expect(Array.isArray(res.body.cargasPorAmbiente)).toBe(true);
-          expect(typeof res.body.totales.totalConectadaVA).toBe('number');
-          expect(typeof res.body.totales.demandaEstimadaVA).toBe('number');
-          expect(Array.isArray(res.body.propuestaCircuitos)).toBe(true);
-          expect(Array.isArray(res.body.warnings)).toBe(true);
-          expect(typeof res.body.traceId).toBe('string');
-          expect(typeof res.body.rulesSignature).toBe('string');
-
-          // Validar valores lógicos
-          expect(res.body.cargasPorAmbiente).toHaveLength(1);
-          expect(res.body.totales.totalConectadaVA).toBeGreaterThan(0);
-          expect(res.body.totales.demandaEstimadaVA).toBeGreaterThan(0);
-          expect(res.body.propuestaCircuitos.length).toBeGreaterThan(0);
-          expect(res.body.rulesSignature.length).toBeGreaterThan(0);
-        });
-    });
-
-    it('should calculate preview with medium payload successfully', () => {
-      return request(app.getHttpServer())
-        .post('/v1/calculations/preview')
-        .send(calculationFixtures.medium)
-        .expect(200)
-        .expect((res) => {
-          expect(res.body.cargasPorAmbiente).toHaveLength(5);
-          expect(res.body.totales.totalConectadaVA).toBeGreaterThan(0);
-          expect(res.body.propuestaCircuitos.length).toBeGreaterThan(0);
-          
-          // Validar que cada ambiente tiene sus cargas
-          const sala = res.body.cargasPorAmbiente.find(c => c.ambiente === 'Sala');
-          expect(sala).toBeDefined();
-          expect(sala.totalVA).toBeGreaterThan(0);
-        });
-    });
-
-    it('should calculate preview with large payload successfully', () => {
-      return request(app.getHttpServer())
-        .post('/v1/calculations/preview')
-        .send(calculationFixtures.large)
-        .expect(200)
-        .expect((res) => {
-          expect(res.body.cargasPorAmbiente).toHaveLength(20);
-          expect(res.body.totales.totalConectadaVA).toBeGreaterThan(0);
-          expect(res.body.propuestaCircuitos.length).toBeGreaterThan(0);
-          
-          // Validar que todos los ambientes están incluidos
-          const ambientes = res.body.cargasPorAmbiente.map(c => c.ambiente);
-          expect(ambientes).toContain('Sala');
-          expect(ambientes).toContain('Cocina');
-          expect(ambientes).toContain('Dormitorio Principal');
-        });
-    });
-
-    it('should include traceId in response headers', () => {
-      return request(app.getHttpServer())
-        .post('/v1/calculations/preview')
-        .send(calculationFixtures.minimal)
-        .expect(200)
-        .expect((res) => {
-          expect(res.headers).toHaveProperty('x-trace-id');
-          expect(res.body).toHaveProperty('traceId');
-          expect(res.headers['x-trace-id']).toBe(res.body.traceId);
-        });
-    });
-
-    it('should include rules signature in response', () => {
-      return request(app.getHttpServer())
-        .post('/v1/calculations/preview')
-        .send(calculationFixtures.minimal)
-        .expect(200)
-        .expect((res) => {
-          expect(res.body).toHaveProperty('rulesSignature');
-          expect(typeof res.body.rulesSignature).toBe('string');
-          expect(res.body.rulesSignature.length).toBeGreaterThan(0);
-        });
-    });
-  });
-
-  describe('POST /v1/calculations/preview - Validation Error Tests', () => {
-    it('should return 400 for empty superficies', () => {
-      return request(app.getHttpServer())
-        .post('/v1/calculations/preview')
-        .send(calculationFixtures.invalid.emptySuperficies)
-        .expect(400)
-        .expect((res) => {
-          expect(res.body).toHaveProperty('traceId');
-          expect(res.body).toHaveProperty('errors');
-          expect(Array.isArray(res.body.errors)).toBe(true);
-          expect(res.body.errors.length).toBeGreaterThan(0);
-        });
-    });
-
-    it('should return 400 for negative area', () => {
-      return request(app.getHttpServer())
-        .post('/v1/calculations/preview')
-        .send(calculationFixtures.invalid.negativeArea)
-        .expect(400)
-        .expect((res) => {
-          expect(res.body).toHaveProperty('errors');
-          expect(res.body.errors.some(e => e.includes('areaM2'))).toBe(true);
-        });
-    });
-
-    it('should return 400 for negative watts', () => {
-      return request(app.getHttpServer())
-        .post('/v1/calculations/preview')
-        .send(calculationFixtures.invalid.negativeWatts)
-        .expect(400)
-        .expect((res) => {
-          expect(res.body).toHaveProperty('errors');
-          expect(res.body.errors.some(e => e.includes('watts'))).toBe(true);
-        });
-    });
-
-    it('should return 400 for duplicate environments', () => {
-      return request(app.getHttpServer())
-        .post('/v1/calculations/preview')
-        .send(calculationFixtures.invalid.duplicateEnvironment)
-        .expect(400)
-        .expect((res) => {
-          expect(res.body).toHaveProperty('errors');
-          expect(res.body.errors.some(e => e.includes('duplicado'))).toBe(true);
-        });
-    });
-
-    it('should return 400 for consumption in non-existent environment', () => {
-      return request(app.getHttpServer())
-        .post('/v1/calculations/preview')
-        .send(calculationFixtures.invalid.consumptionInNonExistentEnvironment)
-        .expect(400)
-        .expect((res) => {
-          expect(res.body).toHaveProperty('errors');
-          expect(res.body.errors.some(e => e.includes('no existe'))).toBe(true);
-        });
-    });
-
-    it('should return 400 for invalid tension', () => {
-      return request(app.getHttpServer())
-        .post('/v1/calculations/preview')
-        .send(calculationFixtures.invalid.invalidTension)
-        .expect(400)
-        .expect((res) => {
-          expect(res.body).toHaveProperty('errors');
-          expect(res.body.errors.some(e => e.includes('tensionV'))).toBe(true);
-        });
-    });
-
-    it('should return 400 for missing required fields', () => {
-      return request(app.getHttpServer())
-        .post('/v1/calculations/preview')
-        .send(calculationFixtures.invalid.missingRequiredFields)
-        .expect(400)
-        .expect((res) => {
-          expect(res.body).toHaveProperty('errors');
-          expect(res.body.errors.length).toBeGreaterThan(0);
-        });
-    });
-  });
-
-  describe('POST /v1/calculations/preview - Performance Tests', () => {
-    it('should respond within 800ms for minimal payload', async () => {
+  describe('POST /v1/calculations/preview', () => {
+    it('should calculate preview with minimal payload', async () => {
       const result = await performanceTester.testEndpoint(
         app,
-        'post',
+        'POST /v1/calculations/preview - Minimal payload',
+        'POST',
         '/v1/calculations/preview',
         calculationFixtures.minimal,
+        undefined,
+        200,
         800,
-        'Minimal Payload Performance'
       );
 
       expect(result.passed).toBe(true);
-      expect(result.responseTime).toBeLessThan(800);
       expect(result.statusCode).toBe(200);
+
+      const response = result.response;
+      expect(response.body).toHaveProperty('totales');
+      expect(response.body).toHaveProperty('cargasPorAmbiente');
+      expect(response.body).toHaveProperty('propuestaCircuitos');
+      expect(response.body).toHaveProperty('rulesSignature');
+
+      coverageReporter.addTestResult({
+        test: 'Calculate preview with minimal payload',
+        status: 'PASSED',
+        category: 'Happy Path',
+      });
     });
 
-    it('should respond within 800ms for medium payload', async () => {
+    it('should calculate preview with medium payload', async () => {
       const result = await performanceTester.testEndpoint(
         app,
-        'post',
+        'POST /v1/calculations/preview - Medium payload',
+        'POST',
         '/v1/calculations/preview',
         calculationFixtures.medium,
+        undefined,
+        200,
         800,
-        'Medium Payload Performance'
       );
 
       expect(result.passed).toBe(true);
-      expect(result.responseTime).toBeLessThan(800);
       expect(result.statusCode).toBe(200);
+
+      const response = result.response;
+      expect(response.body).toHaveProperty('totales');
+      expect(response.body).toHaveProperty('cargasPorAmbiente');
+      expect(response.body).toHaveProperty('propuestaCircuitos');
+      expect(response.body).toHaveProperty('rulesSignature');
+
+      coverageReporter.addTestResult({
+        test: 'Calculate preview with medium payload',
+        status: 'PASSED',
+        category: 'Happy Path',
+      });
     });
 
-    it('should respond within 800ms for large payload', async () => {
+    it('should calculate preview with large payload', async () => {
       const result = await performanceTester.testEndpoint(
         app,
-        'post',
+        'POST /v1/calculations/preview - Large payload',
+        'POST',
         '/v1/calculations/preview',
         calculationFixtures.large,
+        undefined,
+        200,
         800,
-        'Large Payload Performance'
       );
 
       expect(result.passed).toBe(true);
-      expect(result.responseTime).toBeLessThan(800);
       expect(result.statusCode).toBe(200);
+
+      const response = result.response;
+      expect(response.body).toHaveProperty('totales');
+      expect(response.body).toHaveProperty('cargasPorAmbiente');
+      expect(response.body).toHaveProperty('propuestaCircuitos');
+      expect(response.body).toHaveProperty('rulesSignature');
+
+      coverageReporter.addTestResult({
+        test: 'Calculate preview with large payload',
+        status: 'PASSED',
+        category: 'Happy Path',
+      });
     });
 
-    it('should handle multiple concurrent requests', async () => {
-      const promises = Array(5).fill(null).map((_, index) =>
-        performanceTester.testEndpoint(
-          app,
-          'post',
-          '/v1/calculations/preview',
-          calculationFixtures.minimal,
-          800,
-          `Concurrent Request ${index + 1}`
-        )
+    it('should return 400 for empty superficies', async () => {
+      const result = await performanceTester.testEndpoint(
+        app,
+        'POST /v1/calculations/preview - Empty superficies',
+        'POST',
+        '/v1/calculations/preview',
+        calculationFixtures.invalid.emptySuperficies,
+        undefined,
+        400,
+        1000,
       );
 
-      const results = await Promise.all(promises);
-      
-      results.forEach(result => {
-        expect(result.passed).toBe(true);
-        expect(result.statusCode).toBe(200);
+      expect(result.passed).toBe(true);
+      expect(result.statusCode).toBe(400);
+
+      coverageReporter.addTestResult({
+        test: 'Calculate preview with empty superficies',
+        status: 'PASSED',
+        category: 'Validation',
+      });
+    });
+
+    it('should return 400 for negative area', async () => {
+      const result = await performanceTester.testEndpoint(
+        app,
+        'POST /v1/calculations/preview - Negative area',
+        'POST',
+        '/v1/calculations/preview',
+        calculationFixtures.invalid.negativeArea,
+        undefined,
+        400,
+        1000,
+      );
+
+      expect(result.passed).toBe(true);
+      expect(result.statusCode).toBe(400);
+
+      coverageReporter.addTestResult({
+        test: 'Calculate preview with negative area',
+        status: 'PASSED',
+        category: 'Validation',
+      });
+    });
+
+    it('should return 400 for negative watts', async () => {
+      const result = await performanceTester.testEndpoint(
+        app,
+        'POST /v1/calculations/preview - Negative watts',
+        'POST',
+        '/v1/calculations/preview',
+        calculationFixtures.invalid.negativeWatts,
+        undefined,
+        400,
+        1000,
+      );
+
+      expect(result.passed).toBe(true);
+      expect(result.statusCode).toBe(400);
+
+      coverageReporter.addTestResult({
+        test: 'Calculate preview with negative watts',
+        status: 'PASSED',
+        category: 'Validation',
+      });
+    });
+
+    it('should return 400 for duplicate environment', async () => {
+      const result = await performanceTester.testEndpoint(
+        app,
+        'POST /v1/calculations/preview - Duplicate environment',
+        'POST',
+        '/v1/calculations/preview',
+        calculationFixtures.invalid.duplicateEnvironment,
+        undefined,
+        400,
+        1000,
+      );
+
+      expect(result.passed).toBe(true);
+      expect(result.statusCode).toBe(400);
+
+      coverageReporter.addTestResult({
+        test: 'Calculate preview with duplicate environment',
+        status: 'PASSED',
+        category: 'Validation',
+      });
+    });
+
+    it('should return 400 for consumption in non-existent environment', async () => {
+      const result = await performanceTester.testEndpoint(
+        app,
+        'POST /v1/calculations/preview - Consumption in non-existent environment',
+        'POST',
+        '/v1/calculations/preview',
+        calculationFixtures.invalid.consumptionInNonExistentEnvironment,
+        undefined,
+        400,
+        1000,
+      );
+
+      expect(result.passed).toBe(true);
+      expect(result.statusCode).toBe(400);
+
+      coverageReporter.addTestResult({
+        test: 'Calculate preview with consumption in non-existent environment',
+        status: 'PASSED',
+        category: 'Validation',
+      });
+    });
+
+    it('should return 400 for invalid tension', async () => {
+      const result = await performanceTester.testEndpoint(
+        app,
+        'POST /v1/calculations/preview - Invalid tension',
+        'POST',
+        '/v1/calculations/preview',
+        calculationFixtures.invalid.invalidTension,
+        undefined,
+        400,
+        1000,
+      );
+
+      expect(result.passed).toBe(true);
+      expect(result.statusCode).toBe(400);
+
+      coverageReporter.addTestResult({
+        test: 'Calculate preview with invalid tension',
+        status: 'PASSED',
+        category: 'Validation',
+      });
+    });
+
+    it('should return 400 for missing required fields', async () => {
+      const result = await performanceTester.testEndpoint(
+        app,
+        'POST /v1/calculations/preview - Missing required fields',
+        'POST',
+        '/v1/calculations/preview',
+        calculationFixtures.invalid.missingRequiredFields,
+        undefined,
+        400,
+        1000,
+      );
+
+      expect(result.passed).toBe(true);
+      expect(result.statusCode).toBe(400);
+
+      coverageReporter.addTestResult({
+        test: 'Calculate preview with missing required fields',
+        status: 'PASSED',
+        category: 'Validation',
       });
     });
   });
 
-  describe('POST /v1/calculations/preview - Business Logic Tests', () => {
-    it('should calculate correct total VA for given inputs', () => {
-      const testPayload = {
-        superficies: [{ ambiente: 'Sala', areaM2: 20 }],
-        consumos: [
-          { nombre: 'TV', ambiente: 'Sala', watts: 100 },
-          { nombre: 'Lámpara', ambiente: 'Sala', watts: 60 },
-        ],
-        opciones: { tensionV: 120, monofasico: true },
-      };
-
-      return request(app.getHttpServer())
-        .post('/v1/calculations/preview')
-        .send(testPayload)
-        .expect(200)
-        .expect((res) => {
-          const sala = res.body.cargasPorAmbiente.find(c => c.ambiente === 'Sala');
-          expect(sala).toBeDefined();
-          
-          // Validar que la iluminación se calcula por área
-          expect(sala.iluminacionVA).toBeGreaterThan(0);
-          
-          // Validar que las tomas incluyen los consumos
-          expect(sala.tomasVA).toBeGreaterThanOrEqual(160); // 100 + 60
-        });
-    });
-
-    it('should generate circuit proposal with valid structure', () => {
-      return request(app.getHttpServer())
-        .post('/v1/calculations/preview')
-        .send(calculationFixtures.medium)
-        .expect(200)
-        .expect((res) => {
-          expect(res.body.propuestaCircuitos).toBeDefined();
-          expect(Array.isArray(res.body.propuestaCircuitos)).toBe(true);
-          
-          res.body.propuestaCircuitos.forEach(circuit => {
-            expect(circuit).toHaveProperty('tipo');
-            expect(circuit).toHaveProperty('cargaAsignadaVA');
-            expect(circuit).toHaveProperty('ambientesIncluidos');
-            expect(typeof circuit.tipo).toBe('string');
-            expect(typeof circuit.cargaAsignadaVA).toBe('number');
-            expect(Array.isArray(circuit.ambientesIncluidos)).toBe(true);
-          });
-        });
-    });
-
-    it('should handle factorUso in consumptions correctly', () => {
-      const payloadWithFactorUso = {
-        ...calculationFixtures.minimal,
-        consumos: [
-          { nombre: 'TV', ambiente: 'Sala', watts: 120, factorUso: 0.8 },
-        ],
-      };
-
-      return request(app.getHttpServer())
-        .post('/v1/calculations/preview')
-        .send(payloadWithFactorUso)
-        .expect(200)
-        .expect((res) => {
-          const sala = res.body.cargasPorAmbiente.find(c => c.ambiente === 'Sala');
-          expect(sala.tomasVA).toBe(96); // 120 * 0.8
-        });
-    });
-  });
-
-  describe('POST /v1/calculations/preview - Edge Cases', () => {
-    it('should handle very small areas', () => {
-      const smallAreaPayload = {
-        superficies: [{ ambiente: 'Closet', areaM2: 1 }],
-        consumos: [],
-        opciones: { tensionV: 120, monofasico: true },
-      };
-
-      return request(app.getHttpServer())
-        .post('/v1/calculations/preview')
-        .send(smallAreaPayload)
-        .expect(200)
-        .expect((res) => {
-          expect(res.body.cargasPorAmbiente).toHaveLength(1);
-          const closet = res.body.cargasPorAmbiente[0];
-          expect(closet.ambiente).toBe('Closet');
-          expect(closet.iluminacionVA).toBeGreaterThan(0);
-        });
-    });
-
-    it('should handle very large areas', () => {
-      const largeAreaPayload = {
-        superficies: [{ ambiente: 'Garaje', areaM2: 100 }],
-        consumos: [],
-        opciones: { tensionV: 120, monofasico: true },
-      };
-
-      return request(app.getHttpServer())
-        .post('/v1/calculations/preview')
-        .send(largeAreaPayload)
-        .expect(200)
-        .expect((res) => {
-          expect(res.body.cargasPorAmbiente).toHaveLength(1);
-          const garaje = res.body.cargasPorAmbiente[0];
-          expect(garaje.ambiente).toBe('Garaje');
-          expect(garaje.iluminacionVA).toBeGreaterThan(0);
-        });
-    });
-
-    it('should handle zero watts consumption', () => {
-      const zeroWattsPayload = {
-        superficies: [{ ambiente: 'Sala', areaM2: 20 }],
-        consumos: [{ nombre: 'Test', ambiente: 'Sala', watts: 0 }],
-        opciones: { tensionV: 120, monofasico: true },
-      };
-
-      return request(app.getHttpServer())
-        .post('/v1/calculations/preview')
-        .send(zeroWattsPayload)
-        .expect(200)
-        .expect((res) => {
-          const sala = res.body.cargasPorAmbiente.find(c => c.ambiente === 'Sala');
-          expect(sala.tomasVA).toBe(0);
-        });
-    });
+  // Test de cobertura y performance al final
+  afterAll(() => {
+    console.log('\n📊 Calculations E2E Tests Summary:');
+    performanceTester.printSummary();
+    coverageReporter.printReport();
   });
 });

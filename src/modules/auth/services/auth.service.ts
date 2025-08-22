@@ -1,11 +1,11 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from '../../users/users.service';
 import { RegisterDto } from '../dtos/register.dto';
 import { User, UserRole } from '../../users/entities/user.entity';
 import { AuditService } from '../../../common/services/audit.service';
 import { AuditAction } from '../../../common/types/audit.types';
-import * as bcrypt from 'bcrypt';
+import { HashService } from '../../../common/services/hash.service';
 
 type UserResponse = Pick<
   User,
@@ -26,10 +26,13 @@ type UserResponse = Pick<
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(AuthService.name);
+
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
     private auditService: AuditService,
+    private hashService: HashService,
   ) {}
 
   async validateUser(
@@ -41,7 +44,70 @@ export class AuthService {
   ): Promise<UserResponse | null> {
     const user = await this.usersService.findByEmail(email);
 
-    if (user && (await user.validatePassword(password))) {
+    if (!user) {
+      // Registrar intento de login fallido - usuario no encontrado
+      await this.auditService.log({
+        userId: undefined,
+        action: AuditAction.LOGIN_FAILED,
+        ip,
+        userAgent,
+        traceId,
+        detail: { email, reason: 'user_not_found' },
+      });
+      return null;
+    }
+
+    // Validar contraseña usando el nuevo sistema
+    const passwordValidation = await user.validatePassword(password);
+
+    if (passwordValidation.hash) {
+      // Contraseña válida - verificar si necesita migración
+      if (passwordValidation.needsMigration) {
+        this.logger.log(
+          `Migrando contraseña de bcrypt a Argon2id para usuario: ${email}`,
+        );
+
+        try {
+          // Migración silenciosa: actualizar hash a Argon2id
+          await this.usersService.updatePasswordWithMigration(user, password);
+
+          // Auditoría de migración exitosa
+          await this.auditService.log({
+            userId: user.id,
+            action: AuditAction.PASSWORD_CHANGE,
+            ip,
+            userAgent,
+            traceId,
+            detail: {
+              email: user.email,
+              reason: 'bcrypt_to_argon2id_migration',
+              success: true,
+            },
+          });
+
+          this.logger.log(
+            `Migración completada exitosamente para usuario: ${email}`,
+          );
+        } catch (error) {
+          this.logger.error(`Error en migración para usuario ${email}:`, error);
+
+          // Auditoría de migración fallida
+          await this.auditService.log({
+            userId: user.id,
+            action: AuditAction.PASSWORD_CHANGE,
+            ip,
+            userAgent,
+            traceId,
+            detail: {
+              email: user.email,
+              reason: 'bcrypt_to_argon2id_migration',
+              success: false,
+              error: error.message,
+            },
+          });
+        }
+      }
+
       // Registrar login exitoso
       await this.auditService.log({
         userId: user.id,
@@ -49,21 +115,25 @@ export class AuthService {
         ip,
         userAgent,
         traceId,
-        detail: { email: user.email },
+        detail: {
+          email: user.email,
+          hashType: passwordValidation.type,
+          migrated: passwordValidation.needsMigration,
+        },
       });
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password: _, ...result } = user;
       return result as UserResponse;
     } else {
-      // Registrar intento de login fallido
+      // Contraseña inválida
       await this.auditService.log({
-        userId: user?.id,
+        userId: user.id,
         action: AuditAction.LOGIN_FAILED,
         ip,
         userAgent,
         traceId,
-        detail: { email, reason: user ? 'invalid_password' : 'user_not_found' },
+        detail: { email, reason: 'invalid_password' },
       });
     }
 
@@ -93,12 +163,19 @@ export class AuthService {
       );
     }
 
-    const hashedPassword = await bcrypt.hash(registerDto.password, 10);
+    // Usar Argon2id para nuevos registros
+    const hashedPassword = await this.hashService.hashPassword(
+      registerDto.password,
+    );
     const newUser = await this.usersService.create({
       ...registerDto,
       password: hashedPassword,
       role: UserRole.CLIENTE,
     });
+
+    this.logger.log(
+      `Nuevo usuario registrado con Argon2id: ${registerDto.email}`,
+    );
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { password: _, ...result } = newUser;

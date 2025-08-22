@@ -3,6 +3,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { UsersService } from './users.service';
 import { User, UserRole, UserStatus } from './entities/user.entity';
 import { ConflictException, NotFoundException } from '@nestjs/common';
+import { HashService } from '../../common/services/hash.service';
 import { Repository, UpdateResult } from 'typeorm';
 
 describe('UsersService', () => {
@@ -22,10 +23,15 @@ describe('UsersService', () => {
     empresa: 'TestCorp',
     cedula: '1234567890',
     ultimoAcceso: new Date(),
-    fechaCreacion: new Date(),
-    fechaActualizacion: new Date(),
-    hashPassword: jest.fn(),
+    creationDate: new Date(),
+    updateDate: new Date(),
+    active: true,
+    setHashService: jest.fn(),
     validatePassword: jest.fn(),
+    hashedPassword: jest.fn(),
+    migratePassword: jest.fn(),
+    isUsingArgon2id: jest.fn(),
+    needsPasswordMigration: jest.fn(),
     toJSON: jest.fn(),
   } as unknown as User;
 
@@ -42,6 +48,18 @@ describe('UsersService', () => {
             update: jest.fn(),
             remove: jest.fn(),
             find: jest.fn(),
+          },
+        },
+        {
+          provide: HashService,
+          useValue: {
+            hashPassword: jest.fn(),
+            verifyPassword: jest.fn(),
+            detectHashType: jest.fn(),
+            isArgon2id: jest.fn(),
+            isBcrypt: jest.fn(),
+            migrateFromBcrypt: jest.fn(),
+            getArgon2Config: jest.fn(),
           },
         },
       ],
