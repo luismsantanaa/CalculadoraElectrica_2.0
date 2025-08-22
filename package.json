@@ -23,6 +23,8 @@
     "test:e2e:cov": "jest --config ./test/jest-e2e.json --coverage",
     "test:calculations": "jest --testPathPattern=calculations",
     "test:calculations:e2e": "jest --config ./test/jest-e2e.json --testPathPattern=calculations.e2e-spec.ts",
+    "test:projects": "jest --testPathPattern=projects",
+    "test:projects:e2e": "jest --config ./test/jest-e2e.json --testPathPattern=projects.e2e-spec.ts",
     "test:performance": "jest --testPathPattern=performance",
     "test:coverage": "jest --coverage --coverageReporters=text --coverageReporters=lcov --coverageReporters=html",
     "setup:test-db": "node scripts/setup-test-db.js",

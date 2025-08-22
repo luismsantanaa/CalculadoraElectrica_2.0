@@ -19,15 +19,18 @@ Este documento describe la estrategia de testing implementada para la **Calculad
 test/
 ├── e2e/                          # Tests end-to-end
 │   ├── fixtures/                 # Datos de prueba
-│   │   └── calculation-payloads.ts
+│   │   ├── calculation-payloads.ts
+│   │   └── project-payloads.ts
 │   ├── utils/                    # Utilidades de testing
 │   │   ├── performance-test.ts
 │   │   └── coverage-report.ts
 │   ├── calculations.e2e-spec.ts  # Tests e2e de cálculos
+│   ├── projects.e2e-spec.ts      # Tests e2e de proyectos
 │   ├── test-config.ts           # Configuración de test
 │   ├── jest-e2e.json           # Configuración Jest e2e
 │   └── jest-e2e.setup.ts       # Setup de tests e2e
-├── calculations.spec.ts         # Tests unitarios
+├── calculations.spec.ts         # Tests unitarios de cálculos
+├── projects.spec.ts             # Tests unitarios de proyectos
 └── scripts/
     └── setup-test-db.js        # Script de configuración DB
 ```
@@ -41,6 +44,9 @@ npm test
 
 # Tests específicos de cálculos
 npm run test:calculations
+
+# Tests específicos de proyectos
+npm run test:projects
 
 # Tests con coverage
 npm run test:cov
@@ -56,6 +62,9 @@ npm run test:e2e
 
 # Tests e2e específicos de cálculos
 npm run test:calculations:e2e
+
+# Tests e2e específicos de proyectos
+npm run test:projects:e2e
 
 # Tests e2e con coverage
 npm run test:e2e:cov
@@ -102,6 +111,34 @@ npm run test:coverage
 - Ambientes duplicados
 - Consumos en ambientes inexistentes
 
+### **Payloads de Proyectos**
+
+#### **1. Proyectos Válidos**
+```typescript
+{
+  projectName: 'Proyecto Test',
+  description: 'Descripción del proyecto',
+  superficies: [{ ambiente: 'Sala', areaM2: 18.5 }],
+  consumos: [{ nombre: 'Televisor', ambiente: 'Sala', watts: 120 }],
+  opciones: { tensionV: 120, monofasico: true },
+  computeNow: true
+}
+```
+
+#### **2. Proyectos Sin Cálculo**
+- Proyectos creados sin ejecutar cálculo inicial
+- Para cálculos posteriores
+
+#### **3. Proyectos Inválidos**
+- Nombres vacíos o faltantes
+- Datos de cálculo inválidos
+- Estructuras incorrectas
+
+#### **4. Datos de Versiones**
+- Múltiples versiones con cambios incrementales
+- Comparación de versiones
+- Validación de diferencias
+
 ## 🧪 **Tipos de Tests**
 
 ### **1. Tests de Validación**
@@ -124,9 +161,17 @@ npm run test:coverage
 
 ### **4. Tests E2E**
 - ✅ Flujo completo de cálculos
+- ✅ Flujo completo de proyectos
 - ✅ Integración con base de datos
 - ✅ Headers de respuesta
 - ✅ Manejo de errores
+
+### **5. Tests de Proyectos**
+- ✅ CRUD completo de proyectos
+- ✅ Creación y gestión de versiones
+- ✅ Exportación de proyectos
+- ✅ Validación de datos de entrada
+- ✅ Manejo de estados (ACTIVE/ARCHIVED)
 
 ## 📈 **Métricas y Reportes**
 
@@ -141,9 +186,9 @@ npm run test:coverage
 - **Concurrencia**: 5 requests simultáneos
 
 ### **Calidad**
-- **Tests Unitarios**: 10+ tests
-- **Tests E2E**: 8+ tests
-- **Fixtures**: 4 categorías principales
+- **Tests Unitarios**: 24+ tests (10 cálculos + 14 proyectos)
+- **Tests E2E**: 16+ tests (8 cálculos + 8 proyectos)
+- **Fixtures**: 8 categorías principales
 
 ## 🔧 **Configuración**
 
@@ -219,7 +264,7 @@ jest --config ./test/jest-e2e.json --testTimeout=60000
 ### **Corto Plazo**
 - [ ] Configurar base de datos de test separada
 - [ ] Implementar tests de autenticación
-- [ ] Agregar tests de proyectos
+- [ ] Agregar tests de reglas administrativas
 - [ ] Optimizar performance tests
 
 ### **Mediano Plazo**
@@ -236,7 +281,7 @@ jest --config ./test/jest-e2e.json --testTimeout=60000
 
 ---
 
-**📊 Última Actualización**: Implementación HU-QA-01 completada
-**🎯 Cobertura Actual**: 10 tests unitarios + 8 tests e2e
+**📊 Última Actualización**: Implementación HU-QA-02 completada
+**🎯 Cobertura Actual**: 24 tests unitarios + 16 tests e2e
 **⚡ Performance**: < 800ms objetivo cumplido
 **🔧 Estado**: Funcional y documentado
