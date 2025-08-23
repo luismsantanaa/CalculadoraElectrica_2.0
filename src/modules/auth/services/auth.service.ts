@@ -1,5 +1,6 @@
 import { Injectable, UnauthorizedException, Logger } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { JwtRs256Service } from '../../jwks/services/jwt-rs256.service';
 import { UsersService } from '../../users/users.service';
 import { RegisterDto } from '../dtos/register.dto';
 import { User, UserRole } from '../../users/entities/user.entity';
@@ -31,6 +32,7 @@ export class AuthService {
   constructor(
     private usersService: UsersService,
     private jwtService: JwtService,
+    private jwtRs256Service: JwtRs256Service,
     private auditService: AuditService,
     private hashService: HashService,
   ) {}
@@ -140,10 +142,14 @@ export class AuthService {
     return null;
   }
 
-  login(user: UserResponse) {
+  async login(user: UserResponse) {
     const payload = { email: user.email, sub: user.id, role: user.role };
+    
+    // Usar JwtService estándar para compatibilidad con JwtStrategy
+    const access_token = this.jwtService.sign(payload);
+    
     return {
-      access_token: this.jwtService.sign(payload),
+      access_token,
       user: {
         id: user.id,
         email: user.email,

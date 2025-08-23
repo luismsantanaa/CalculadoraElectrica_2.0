@@ -24,6 +24,7 @@ import { AmbienteModule } from './modules/ambientes/ambiente.module';
 import { CargasModule } from './modules/cargas/cargas.module';
 import { ProjectsModule } from './modules/projects/projects.module';
 import { RulesAdminModule } from './modules/rules-admin/rules-admin.module';
+import { JwksModule } from './modules/jwks/jwks.module';
 import { CommonModule } from './common/common.module';
 import { APP_INTERCEPTOR, APP_FILTER, APP_GUARD } from '@nestjs/core';
 import { TransformInterceptor } from './common/interceptors/transform.interceptor';
@@ -84,6 +85,7 @@ import { ThrottlerGuard } from '@nestjs/throttler';
     CargasModule,
     ProjectsModule,
     RulesAdminModule,
+    JwksModule,
     CommonModule,
   ],
   controllers: [AppController],

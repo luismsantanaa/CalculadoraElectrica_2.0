@@ -6,6 +6,7 @@ import { AuthService } from './services/auth.service';
 import { AuthController } from './controllers/auth.controller';
 import { UsersModule } from '../users/users.module';
 import { CommonModule } from '../../common/common.module';
+import { JwksModule } from '../jwks/jwks.module';
 import { JwtStrategy } from '../../common/strategies/jwt.strategy';
 import { LocalStrategy } from '../../common/strategies/local.strategy';
 
@@ -14,11 +15,12 @@ import { LocalStrategy } from '../../common/strategies/local.strategy';
     UsersModule,
     PassportModule,
     CommonModule,
+    JwksModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
-        secret: configService.get<string>('jwt.secret'),
-        signOptions: { expiresIn: configService.get<string>('jwt.expiresIn') },
+        secret: configService.get<string>('JWT_SECRET'),
+        signOptions: { expiresIn: configService.get<string>('JWT_EXPIRES_IN', '900s') },
       }),
       inject: [ConfigService],
     }),
