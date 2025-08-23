@@ -41,6 +41,21 @@ export const swaggerConfig = registerAs('swagger', () => ({
   version: process.env.SWAGGER_VERSION || '2.0.0',
 }));
 
+export const healthConfig = registerAs('health', () => ({
+  diskPath: process.env.HEALTH_DISK_PATH || '/tmp',
+  diskMinBytes: parseInt(process.env.HEALTH_DISK_MIN_BYTES || '104857600', 10), // 100 MB default
+}));
+
+export const metricsConfig = registerAs('metrics', () => ({
+  enabled: process.env.METRICS_ENABLED === 'true',
+  token: process.env.METRICS_TOKEN || '',
+}));
+
+export const loggerConfig = registerAs('logger', () => ({
+  level: process.env.LOG_LEVEL || 'info',
+  requestIdHeader: process.env.REQUEST_ID_HEADER || 'X-Request-Id',
+}));
+
 // Configuración específica por ambiente
 export const getEnvironmentConfig = () => {
   const nodeEnv = process.env.NODE_ENV || Environment.Development;

@@ -4,11 +4,17 @@ import {
   Body,
   UseGuards,
   Get,
+  Delete,
+  Param,
   UnauthorizedException,
   Request,
   Ip,
+  Res,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { Throttle } from '@nestjs/throttler';
+import { Response } from 'express';
 import { AuthService } from '../services/auth.service';
 import { JwtAuthGuard } from '../../../common/guards/jwt-auth.guard';
 import {
@@ -19,6 +25,7 @@ import {
 } from '@nestjs/swagger';
 import { LoginDto } from '../dtos/login.dto';
 import { RegisterDto } from '../dtos/register.dto';
+import { RefreshTokenDto } from '../dtos/refresh.dto';
 import { User } from '../../users/entities/user.entity';
 
 type UserResponse = Pick<
@@ -88,6 +95,7 @@ export class AuthController {
     @Body() loginDto: LoginDto,
     @Ip() ip: string,
     @Request() req: any,
+    @Res({ passthrough: true }) res: Response,
   ) {
     const userAgent = req.headers['user-agent'] || 'unknown';
     const traceId = req.headers['x-trace-id'] || 'unknown';
@@ -99,10 +107,128 @@ export class AuthController {
       userAgent,
       traceId,
     );
+    
     if (!user) {
       throw new UnauthorizedException('Credenciales inválidas');
     }
-    return this.authService.login(user);
+    
+    const result = await this.authService.login(user, ip, userAgent);
+    
+    // Configurar cookie HttpOnly si está habilitado
+    const cookieEnabled = process.env.REFRESH_COOKIE_ENABLED === 'true';
+    if (cookieEnabled) {
+      res.cookie('refresh_token', result.refresh_token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 30 * 24 * 60 * 60 * 1000, // 30 días
+      });
+    }
+    
+    return result;
+  }
+
+  @Post('refresh')
+  @Throttle({ default: { ttl: 300, limit: 10 } }) // 10 intentos por 5 minutos
+  @ApiOperation({ summary: 'Renovar tokens de acceso' })
+  @ApiResponse({
+    status: 200,
+    description: 'Tokens renovados exitosamente',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'Refresh token inválido o expirado',
+  })
+  @ApiResponse({
+    status: 429,
+    description: 'Demasiados intentos de renovación',
+  })
+  async refresh(
+    @Body() refreshDto: RefreshTokenDto,
+    @Ip() ip: string,
+    @Request() req: any,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const userAgent = req.headers['user-agent'] || 'unknown';
+    
+    const result = await this.authService.refresh(refreshDto.refreshToken, ip, userAgent);
+    
+    // Configurar cookie HttpOnly si está habilitado
+    const cookieEnabled = process.env.REFRESH_COOKIE_ENABLED === 'true';
+    if (cookieEnabled) {
+      res.cookie('refresh_token', result.refresh_token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax',
+        maxAge: 30 * 24 * 60 * 60 * 1000, // 30 días
+      });
+    }
+    
+    return result;
+  }
+
+  @Post('logout')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiOperation({ summary: 'Cerrar sesión' })
+  @ApiResponse({
+    status: 204,
+    description: 'Sesión cerrada exitosamente',
+  })
+  async logout(
+    @Body() refreshDto: RefreshTokenDto,
+    @Ip() ip: string,
+    @Request() req: any,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const userAgent = req.headers['user-agent'] || 'unknown';
+    
+    await this.authService.logout(refreshDto.refreshToken, ip, userAgent);
+    
+    // Limpiar cookie si está habilitado
+    const cookieEnabled = process.env.REFRESH_COOKIE_ENABLED === 'true';
+    if (cookieEnabled) {
+      res.clearCookie('refresh_token');
+    }
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('sessions')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Obtener sesiones activas del usuario' })
+  @ApiResponse({
+    status: 200,
+    description: 'Sesiones obtenidas exitosamente',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'No autorizado',
+  })
+  async getSessions(@Request() req: { user: UserResponse }) {
+    return this.authService.getUserSessions(req.user.id);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Delete('sessions/:sessionId')
+  @HttpCode(HttpStatus.NO_CONTENT)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Revocar una sesión específica' })
+  @ApiResponse({
+    status: 204,
+    description: 'Sesión revocada exitosamente',
+  })
+  @ApiResponse({
+    status: 401,
+    description: 'No autorizado',
+  })
+  @ApiResponse({
+    status: 404,
+    description: 'Sesión no encontrada',
+  })
+  async revokeSession(
+    @Param('sessionId') sessionId: string,
+    @Request() req: { user: UserResponse },
+  ) {
+    await this.authService.revokeSession(sessionId, req.user.id);
   }
 
   @UseGuards(JwtAuthGuard)

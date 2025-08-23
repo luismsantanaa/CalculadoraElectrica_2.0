@@ -5,6 +5,7 @@ export enum Environment {
   Development = 'development',
   Staging = 'staging',
   Production = 'production',
+  Test = 'test',
 }
 
 export enum LogLevel {

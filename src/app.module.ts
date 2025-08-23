@@ -9,12 +9,16 @@ import {
   securityConfig,
   rateLimitConfig,
   swaggerConfig,
+  healthConfig,
+  metricsConfig,
+  loggerConfig,
 } from './config/env.config';
 import { validate } from './config/env.validation';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './modules/users/users.module';
 import { AuthModule } from './modules/auth/auth.module';
+import { HealthModule } from './modules/health/health.module';
 import { TiposInstalacionesModule } from './modules/tipos-instalaciones/tipos-instalaciones.module';
 import { TiposAmbientesModule } from './modules/tipos-ambientes/tipos-ambientes.module';
 import { TiposArtefactosModule } from './modules/tipos-artefactos/tipos-artefactos.module';
@@ -32,6 +36,11 @@ import { ErrorInterceptor } from './common/interceptors/error.interceptor';
 import { TraceIdInterceptor } from './common/interceptors/trace-id.interceptor';
 import { HttpExceptionFilter } from './common/filters/http-exception.filter';
 import { ThrottlerGuard } from '@nestjs/throttler';
+import { MetricsModule } from './modules/metrics/metrics.module';
+import { MetricsInterceptor } from './common/interceptors/metrics.interceptor';
+import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
+import { RequestIdMiddleware } from './common/middleware/request-id.middleware';
+import { LoggerModule } from 'nestjs-pino';
 
 @Module({
   imports: [
@@ -44,6 +53,9 @@ import { ThrottlerGuard } from '@nestjs/throttler';
         securityConfig,
         rateLimitConfig,
         swaggerConfig,
+        healthConfig,
+        metricsConfig,
+        loggerConfig,
       ],
       validate,
     }),
@@ -76,6 +88,7 @@ import { ThrottlerGuard } from '@nestjs/throttler';
     }),
     UsersModule,
     AuthModule,
+    HealthModule,
     TiposInstalacionesModule,
     TiposAmbientesModule,
     TiposArtefactosModule,
@@ -87,6 +100,12 @@ import { ThrottlerGuard } from '@nestjs/throttler';
     RulesAdminModule,
     JwksModule,
     CommonModule,
+    MetricsModule,
+    LoggerModule.forRoot({
+      pinoHttp: {
+        level: 'silent',
+      },
+    }),
   ],
   controllers: [AppController],
   providers: [
@@ -104,6 +123,14 @@ import { ThrottlerGuard } from '@nestjs/throttler';
       useClass: TraceIdInterceptor,
     },
     {
+      provide: APP_INTERCEPTOR,
+      useClass: MetricsInterceptor,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LoggingInterceptor,
+    },
+    {
       provide: APP_FILTER,
       useClass: HttpExceptionFilter,
     },
@@ -111,6 +138,7 @@ import { ThrottlerGuard } from '@nestjs/throttler';
       provide: APP_GUARD,
       useClass: ThrottlerGuard,
     },
+    RequestIdMiddleware,
   ],
 })
 export class AppModule {}
