@@ -2,11 +2,11 @@
 
 ## 🎯 RESUMEN GENERAL
 
-**Estado:** FUNCIONAL - Sprint 1 completado al 100% + Sprint 2 en progreso con 6/7 historias implementadas y funcionales
+**Estado:** FUNCIONAL - Sprint 1 completado al 100% + Sprint 2 completado al 100% + Sprint 3 Frontend iniciado
 
-**Última Actualización:** 23 de Agosto 2025
+**Última Actualización:** 24 de Agosto 2025
 
-**Contexto del Proyecto:** Backend para cálculos eléctricos residenciales, comerciales e industriales según normativas NEC 2023 y RIE RD, con API RESTful completa, documentación Swagger, seguridad avanzada y observabilidad funcional.
+**Contexto del Proyecto:** Sistema completo para cálculos eléctricos residenciales, comerciales e industriales según normativas NEC 2023 y RIE RD. Backend con API RESTful completa, documentación Swagger, seguridad avanzada y observabilidad funcional. Frontend Angular 20 con template moderno y arquitectura monorepo.
 
 ## 🚀 FUNCIONALIDADES IMPLEMENTADAS
 
@@ -22,6 +22,17 @@
 - **Health Checks:** Liveness y readiness probes con Terminus
 - **Session Management:** Refresh tokens con rotación automática
 
+### ✅ Frontend Angular (Sprint 3 - Fase Inicial Completada)
+
+- **Framework:** Angular 20 con Standalone Components
+- **Template:** Datta Able (Lite) - Limpio y configurado
+- **Arquitectura:** Monorepo con backend y frontend
+- **Routing:** Lazy loading configurado
+- **Proxy:** Configuración para desarrollo (`/api` → `http://localhost:3000`)
+- **CI/CD:** Pipeline adaptado para monorepo
+- **Estructura:** Features modulares preparadas
+- **Estado:** Build exitoso, servidor funcional
+
 ### ✅ Testing (100% Completado)
 
 - **Unit Tests:** Jest con cobertura 44.02%
@@ -29,10 +40,13 @@
 - **Coverage:** Umbral realista de 40% (statements/lines), 30% (functions), 15% (branches)
 - **Estado:** 186 tests pasando (27 suites)
 
-### ✅ CI/CD Pipeline (100% Implementado)
+### ✅ CI/CD Pipeline (100% Implementado - Monorepo)
 
-- **GitHub Actions:** Matrices Node LTS (18.x, 20.x)
+- **GitHub Actions:** Matrices Node LTS (18.x, 20.x) para backend y frontend
 - **Jobs:** Linting, Unit Tests, E2E Tests, Build, Coverage Check
+- **Monorepo Support:** Jobs condicionales con `working-directory`
+- **Backend Jobs:** `backend-test`, `backend-quick-check`
+- **Frontend Jobs:** `frontend-test`, `frontend-quick-check` (condicionales)
 - **Optimizaciones:** Dependency caching, parallel execution
 - **Gates:** Cobertura mínima 40%, build exitoso, tests pasando
 - **Badges:** Status y Code Coverage automáticos
@@ -64,9 +78,44 @@
 - **Terminus Integration:** Framework de health checks de NestJS
 - **Readiness Probes:** Verificación de disponibilidad del servicio
 
-## 🎯 SPRINT 2 - PROGRESO ACTUAL (6/7 HISTORIAS COMPLETADAS)
+## 🎯 SPRINT 2 - COMPLETADO (7/7 HISTORIAS COMPLETADAS)
 
-### ✅ CE-01: Motor de Cálculo de Cargas por Ambiente (100% Completado)
+## 🚀 SPRINT 3 - FRONTEND ANGULAR (FASE INICIAL COMPLETADA)
+
+### ✅ FE-01: Configuración Monorepo y CI/CD (100% Completado)
+
+- **Estado:** Implementado y funcional
+- **Funcionalidad:** Migración a arquitectura monorepo
+- **Características:**
+  - Repositorio Git movido a la raíz del proyecto
+  - `.gitignore` actualizado para monorepo
+  - CI/CD workflows adaptados con `working-directory`
+  - Jobs condicionales para frontend y backend
+  - Caching optimizado para ambos proyectos
+
+### ✅ FE-02: Setup Angular 20 con Template Datta Able (100% Completado)
+
+- **Estado:** Implementado y funcional
+- **Funcionalidad:** Frontend Angular 20 con template moderno
+- **Características:**
+  - Angular 20 con Standalone Components
+  - Template Datta Able (Lite) integrado y limpio
+  - Configuración de proxy para desarrollo
+  - Routing con lazy loading configurado
+  - Build exitoso y servidor funcional
+
+### ✅ FE-03: Estructura de Features y Componentes Base (100% Completado)
+
+- **Estado:** Implementado y funcional
+- **Funcionalidad:** Arquitectura modular preparada para Sprint 3
+- **Características:**
+  - Feature `calc` con estructura completa
+  - Feature `auth` con páginas básicas (login/register)
+  - Componentes base creados (rooms-form, loads-form, results-view)
+  - Servicios preparados (CalcApiService)
+  - Schemas JSON copiados del backend
+
+### ✅ SPRINT 2 BACKEND - CE-01: Motor de Cálculo de Cargas por Ambiente (100% Completado)
 
 - **Estado:** Implementado y funcional
 - **Endpoint:** `POST /api/calc/rooms/preview`
@@ -170,14 +219,24 @@
 - **Endpoints API:** 35+ endpoints documentados
 - **Métricas Prometheus:** 15+ métricas automáticas y personalizadas
 
-### Sprint 2 - Funcionalidades de Cálculo
+### Sprint 2 - Funcionalidades de Cálculo (Backend)
 
-- **Historias Completadas:** 6/7 (85.7%)
+- **Historias Completadas:** 7/7 (100%)
 - **Endpoints de Cálculo:** 6 endpoints principales
 - **Tests de Cálculo:** 67 tests pasando
 - **Servicios de Cálculo:** 6 servicios implementados
 - **Base de Datos:** 6 tablas de datos normativos
 - **Documentación:** OpenAPI completa
+
+### Sprint 3 - Frontend Angular (Fase Inicial)
+
+- **Historias Completadas:** 3/3 (100% Fase Inicial)
+- **Monorepo:** Configurado y funcional
+- **Template:** Datta Able integrado y limpio
+- **Componentes:** Estructura base implementada
+- **CI/CD:** Pipeline adaptado para monorepo
+- **Build:** Exitoso sin errores
+- **Servidor:** Funcional en desarrollo
 
 ### Pipeline CI/CD
 
@@ -449,47 +508,62 @@ Content-Type: application/json
 ### ✅ Completado
 
 - [x] **Sprint 1 Completo** - Todas las historias del Sprint 1 implementadas
-- [x] **Sprint 2 - 6/7 Historias** - Motor de cálculos eléctricos funcional
+- [x] **Sprint 2 Completo** - Motor de cálculos eléctricos funcional (7/7 historias)
+- [x] **Sprint 3 Fase Inicial** - Frontend Angular 20 con monorepo (3/3 historias)
 - [x] **Base de Datos Sincronizada** - Migraciones y seeds completados
 - [x] **Tests Funcionales** - 67 tests de cálculo pasando
 - [x] **Documentación API** - Swagger completo y actualizado
+- [x] **Monorepo CI/CD** - Pipeline adaptado para backend y frontend
 
 ### 🔄 En Progreso
 
-- [ ] **Optimización de E2E Tests** - Resolver problemas de configuración de base de datos
-- [ ] **Performance Testing** - Optimización de consultas y rendimiento
+- [ ] **Sprint 3 Frontend Completo** - Implementar formularios y integración con backend
+- [ ] **Interceptor JWT** - Configurar autenticación en frontend
+- [ ] **Validación AJV** - Implementar validación client-side
 
 ### 📅 Pendiente
 
-- [ ] **Sprint 3** - Funcionalidades avanzadas y optimizaciones
+- [ ] **Sprint 3 Avanzado** - Funcionalidades completas de calculadora
 - [ ] **Dashboards Grafana** - Visualización avanzada de métricas
 - [ ] **APM Integration** - Monitoreo de performance avanzado
 - [ ] **Cache Implementation** - Optimización de consultas frecuentes
+- [ ] **Performance Testing** - Optimización de consultas y rendimiento
 
 ## 📚 DOCUMENTACIÓN Y RECURSOS
 
 ### Archivos Clave
 
 - **ESTADO_PROYECTO.md:** Este archivo con estado completo del proyecto
-- **UserHistory-Electridom/:** Carpeta con historias de usuario y especificaciones
-- **src/modules/calculos/:** Módulo principal de cálculos eléctricos
-- **src/database/:** Migraciones, seeds y configuración de base de datos
-- **test/e2e/:** Pruebas end-to-end de la API
+- **UserHistories/:** Carpeta con historias de usuario y especificaciones
+- **calculadora-electrica-backend/src/modules/calculos/:** Módulo principal de cálculos eléctricos
+- **calculadora-electrica-backend/src/database/:** Migraciones, seeds y configuración de base de datos
+- **calculadora-electrica-backend/test/e2e/:** Pruebas end-to-end de la API
+- **calculadora-electrica-frontend/src/app/features/:** Features modulares del frontend
+- **calculadora-electrica-frontend/proxy.conf.json:** Configuración de proxy para desarrollo
 
 ### Scripts de Utilidad
 
+**Backend (calculadora-electrica-backend/):**
 - **npm run migration:run:** Ejecutar migraciones
 - **npm run seed:** Ejecutar seeds de datos
 - **npm run test:unit:** Ejecutar pruebas unitarias
 - **npm run test:e2e:** Ejecutar pruebas end-to-end
 - **npm run start:dev:** Iniciar servidor en modo desarrollo
 
+**Frontend (calculadora-electrica-frontend/):**
+- **npm start:** Iniciar servidor de desarrollo con proxy
+- **npm run build:** Build de producción
+- **npm run test:** Ejecutar pruebas unitarias
+- **npm run lint:** Linting del código
+
 ### Endpoints de Verificación
 
-- **http://localhost:3000/api/docs:** Documentación Swagger
-- **http://localhost:3000/api/health:** Health checks
-- **http://localhost:3000/api/metrics:** Métricas Prometheus
+- **http://localhost:3000/api/docs:** Documentación Swagger (Backend)
+- **http://localhost:3000/api/health:** Health checks (Backend)
+- **http://localhost:3000/api/metrics:** Métricas Prometheus (Backend)
+- **http://localhost:4200:** Aplicación Angular (Frontend)
+- **http://localhost:4200/calc:** Página principal de calculadora
 
 ---
 
-**🎉 SPRINT 1 COMPLETADO AL 100% + SPRINT 2 AL 85.7% - PROYECTO FUNCIONAL Y OPERATIVO CON MOTOR DE CÁLCULOS ELÉCTRICOS COMPLETO, SEGURIDAD AVANZADA, OBSERVABILIDAD FUNCIONAL Y DOCUMENTACIÓN COMPLETA**
+**🎉 SPRINT 1 COMPLETADO AL 100% + SPRINT 2 COMPLETADO AL 100% + SPRINT 3 FRONTEND FASE INICIAL COMPLETADA - PROYECTO FUNCIONAL CON MONOREPO, BACKEND COMPLETO Y FRONTEND ANGULAR 20 INICIADO**
