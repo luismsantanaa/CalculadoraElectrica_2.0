@@ -33,7 +33,7 @@ RUN npm ci --omit=dev && npm cache clean --force
 # Copy built application
 COPY --from=builder --chown=nestjs:nodejs /app/dist ./dist
 # Copy TypeORM config for migrations
-COPY --from=builder --chown=nestjs:nodejs /app/typeorm.config.ts ./typeorm.config.ts
+COPY --from=builder --chown=nestjs:nodejs /app/src/config/typeorm.config.ts ./typeorm.config.ts
 
 # Switch to non-root user
 USER nestjs

@@ -4,12 +4,44 @@ export class CreateAuditLogsTable1755816294829 implements MigrationInterface {
     name = 'CreateAuditLogsTable1755816294829'
 
     public async up(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query(`ALTER TABLE \`tipos_artefactos\` DROP FOREIGN KEY \`FK_46d19cb1f926335efbe76890a46\``);
-        await queryRunner.query(`ALTER TABLE \`tipos_ambientes\` DROP FOREIGN KEY \`FK_34de0aa2c907e3c253d842d5148\``);
-        await queryRunner.query(`ALTER TABLE \`project_versions\` DROP FOREIGN KEY \`FK_e03248bd62e51cc0dcf7c9712d1\``);
-        await queryRunner.query(`ALTER TABLE \`cargas\` DROP FOREIGN KEY \`FK_2fd25202f4542073677c451d9bd\``);
-        await queryRunner.query(`DROP INDEX \`IDX_0729c51a1033ffa5307d800351\` ON \`project_versions\``);
-        await queryRunner.query(`CREATE TABLE \`audit_logs\` (\`id\` uuid NOT NULL, \`userId\` uuid NULL, \`action\` varchar(64) NOT NULL, \`ip\` varchar(64) NULL, \`userAgent\` varchar(256) NULL, \`detail\` text NULL, \`traceId\` varchar(64) NULL, \`createdAt\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), INDEX \`IDX_8873ff53e998ead3c10a6b213b\` (\`traceId\`), INDEX \`IDX_0ec936941eb8556fcd7a1f0eae\` (\`action\`, \`createdAt\`), INDEX \`IDX_99e589da8f9e9326ee0d01a028\` (\`userId\`, \`createdAt\`), PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
+        // Eliminar foreign keys de forma segura
+        try {
+            await queryRunner.query(`ALTER TABLE \`tipos_artefactos\` DROP FOREIGN KEY \`FK_46d19cb1f926335efbe76890a46\``);
+        } catch (error) {
+            console.log('Foreign key FK_46d19cb1f926335efbe76890a46 no existe, continuando...');
+        }
+        
+        try {
+            await queryRunner.query(`ALTER TABLE \`tipos_ambientes\` DROP FOREIGN KEY \`FK_34de0aa2c907e3c253d842d5148\``);
+        } catch (error) {
+            console.log('Foreign key FK_34de0aa2c907e3c253d842d5148 no existe, continuando...');
+        }
+        
+        try {
+            await queryRunner.query(`ALTER TABLE \`project_versions\` DROP FOREIGN KEY \`FK_e03248bd62e51cc0dcf7c9712d1\``);
+        } catch (error) {
+            console.log('Foreign key FK_e03248bd62e51cc0dcf7c9712d1 no existe, continuando...');
+        }
+        
+        try {
+            await queryRunner.query(`ALTER TABLE \`cargas\` DROP FOREIGN KEY \`FK_2fd25202f4542073677c451d9bd\``);
+        } catch (error) {
+            console.log('Foreign key FK_2fd25202f4542073677c451d9bd no existe, continuando...');
+        }
+
+        // Eliminar índices de forma segura
+        try {
+            await queryRunner.query(`DROP INDEX \`IDX_0729c51a1033ffa5307d800351\` ON \`project_versions\``);
+        } catch (error) {
+            console.log('Índice IDX_0729c51a1033ffa5307d800351 no existe, continuando...');
+        }
+
+        // Crear tabla audit_logs si no existe
+        try {
+            await queryRunner.query(`CREATE TABLE \`audit_logs\` (\`id\` uuid NOT NULL, \`userId\` uuid NULL, \`action\` varchar(64) NOT NULL, \`ip\` varchar(64) NULL, \`userAgent\` varchar(256) NULL, \`detail\` text NULL, \`traceId\` varchar(64) NULL, \`createdAt\` datetime(6) NOT NULL DEFAULT CURRENT_TIMESTAMP(6), INDEX \`IDX_8873ff53e998ead3c10a6b213b\` (\`traceId\`), INDEX \`IDX_0ec936941eb8556fcd7a1f0eae\` (\`action\`, \`createdAt\`), INDEX \`IDX_99e589da8f9e9326ee0d01a028\` (\`userId\`, \`createdAt\`), PRIMARY KEY (\`id\`)) ENGINE=InnoDB`);
+        } catch (error) {
+            console.log('Tabla audit_logs ya existe, continuando...');
+        }
         await queryRunner.query(`ALTER TABLE \`tipos_instalaciones\` DROP COLUMN \`activo\``);
         await queryRunner.query(`ALTER TABLE \`tipos_instalaciones\` DROP COLUMN \`fechaCreacion\``);
         await queryRunner.query(`ALTER TABLE \`tipos_instalaciones\` DROP COLUMN \`creado_por\``);

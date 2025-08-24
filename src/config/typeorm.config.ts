@@ -18,5 +18,9 @@ export default new DataSource({
   logging: process.env.DB_LOGGING === 'true',
   extra: {
     charset: 'utf8mb4_unicode_ci',
+    connectionLimit: 10,
+    acquireTimeout: 60000,
+    timeout: 60000,
+    reconnect: true,
   },
 });

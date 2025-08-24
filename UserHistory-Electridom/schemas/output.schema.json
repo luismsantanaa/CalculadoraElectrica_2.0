@@ -1,0 +1,625 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Calculadora Electrica RD - Output",
+  "type": "object",
+  "definitions": {
+    "RoomsResponse": {
+      "type": "object",
+      "required": ["ambientes", "totales", "metadata"],
+      "properties": {
+        "ambientes": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["nombre", "area_m2", "carga_va", "corriente_a"],
+            "properties": {
+              "nombre": {
+                "type": "string",
+                "description": "Nombre del ambiente"
+              },
+              "area_m2": {
+                "type": "number",
+                "description": "Área del ambiente en metros cuadrados"
+              },
+              "carga_va": {
+                "type": "number",
+                "description": "Carga calculada en voltiamperios"
+              },
+              "fp": {
+                "type": "number",
+                "description": "Factor de potencia aplicado"
+              },
+              "corriente_a": {
+                "type": "number",
+                "description": "Corriente calculada en amperios"
+              },
+              "observaciones": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                },
+                "description": "Observaciones y recomendaciones"
+              }
+            }
+          }
+        },
+        "totales": {
+          "type": "object",
+          "required": ["carga_total_va", "carga_diversificada_va", "corriente_total_a", "tension_v", "phases"],
+          "properties": {
+            "carga_total_va": {
+              "type": "number",
+              "description": "Carga total en voltiamperios"
+            },
+            "carga_diversificada_va": {
+              "type": "number",
+              "description": "Carga diversificada en voltiamperios"
+            },
+            "corriente_total_a": {
+              "type": "number",
+              "description": "Corriente total en amperios"
+            },
+            "tension_v": {
+              "type": "number",
+              "description": "Tensión del sistema en voltios"
+            },
+            "phases": {
+              "type": "integer",
+              "description": "Número de fases"
+            }
+          }
+        },
+        "metadata": {
+          "type": "object",
+          "required": ["calculation_date", "norms_version", "system_version"],
+          "properties": {
+            "calculation_date": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Fecha y hora del cálculo"
+            },
+            "norms_version": {
+              "type": "string",
+              "description": "Versión de las normas aplicadas"
+            },
+            "system_version": {
+              "type": "string",
+              "description": "Versión del sistema"
+            }
+          }
+        }
+      }
+    },
+    "DemandResponse": {
+      "type": "object",
+      "required": ["cargas_diversificadas", "totales_diversificados", "metadata"],
+      "properties": {
+        "cargas_diversificadas": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["categoria", "carga_original_va", "factor_demanda", "carga_diversificada_va"],
+            "properties": {
+              "categoria": {
+                "type": "string",
+                "description": "Categoría de carga"
+              },
+              "carga_original_va": {
+                "type": "number",
+                "description": "Carga original en voltiamperios"
+              },
+              "factor_demanda": {
+                "type": "number",
+                "description": "Factor de demanda aplicado"
+              },
+              "carga_diversificada_va": {
+                "type": "number",
+                "description": "Carga diversificada en voltiamperios"
+              }
+            }
+          }
+        },
+        "totales_diversificados": {
+          "type": "object",
+          "required": ["carga_total_original_va", "carga_total_diversificada_va", "factor_diversificacion_efectivo", "corriente_total_diversificada_a", "ahorro_carga_va", "porcentaje_ahorro", "tension_v", "phases"],
+          "properties": {
+            "carga_total_original_va": {
+              "type": "number",
+              "description": "Carga total original"
+            },
+            "carga_total_diversificada_va": {
+              "type": "number",
+              "description": "Carga total diversificada"
+            },
+            "factor_diversificacion_efectivo": {
+              "type": "number",
+              "description": "Factor de diversificación efectivo"
+            },
+            "corriente_total_diversificada_a": {
+              "type": "number",
+              "description": "Corriente total diversificada"
+            },
+            "ahorro_carga_va": {
+              "type": "number",
+              "description": "Ahorro de carga en voltiamperios"
+            },
+            "porcentaje_ahorro": {
+              "type": "number",
+              "description": "Porcentaje de ahorro"
+            },
+            "tension_v": {
+              "type": "number",
+              "description": "Tensión del sistema"
+            },
+            "phases": {
+              "type": "integer",
+              "description": "Número de fases"
+            }
+          }
+        },
+        "metadata": {
+          "type": "object",
+          "required": ["calculation_date", "norms_version", "system_version"],
+          "properties": {
+            "calculation_date": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "norms_version": {
+              "type": "string"
+            },
+            "system_version": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "CircuitsResponse": {
+      "type": "object",
+      "required": ["circuitos_ramales", "resumen", "metadata"],
+      "properties": {
+        "circuitos_ramales": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id_circuito", "nombre", "corriente_total_a", "carga_total_va", "conductor", "breaker", "utilizacion_pct"],
+            "properties": {
+              "id_circuito": {
+                "type": "string",
+                "description": "Identificador del circuito"
+              },
+              "nombre": {
+                "type": "string",
+                "description": "Nombre del circuito"
+              },
+              "corriente_total_a": {
+                "type": "number",
+                "description": "Corriente total del circuito"
+              },
+              "carga_total_va": {
+                "type": "number",
+                "description": "Carga total del circuito"
+              },
+              "conductor": {
+                "type": "object",
+                "required": ["seccion_mm2", "calibre_awg", "ampacidad_a"],
+                "properties": {
+                  "seccion_mm2": {
+                    "type": "number",
+                    "description": "Sección del conductor en mm²"
+                  },
+                  "calibre_awg": {
+                    "type": "string",
+                    "description": "Calibre AWG del conductor"
+                  },
+                  "ampacidad_a": {
+                    "type": "number",
+                    "description": "Ampacidad del conductor"
+                  }
+                }
+              },
+              "breaker": {
+                "type": "object",
+                "required": ["amp", "poles", "tipo"],
+                "properties": {
+                  "amp": {
+                    "type": "number",
+                    "description": "Amperaje del breaker"
+                  },
+                  "poles": {
+                    "type": "integer",
+                    "description": "Número de polos"
+                  },
+                  "tipo": {
+                    "type": "string",
+                    "description": "Tipo de breaker"
+                  }
+                }
+              },
+              "utilizacion_pct": {
+                "type": "number",
+                "description": "Porcentaje de utilización del circuito"
+              }
+            }
+          }
+        },
+        "resumen": {
+          "type": "object",
+          "required": ["total_circuitos", "carga_total_va", "corriente_total_a", "utilizacion_promedio_pct", "circuitos_monofasicos", "circuitos_trifasicos", "calibre_minimo_awg", "calibre_maximo_awg"],
+          "properties": {
+            "total_circuitos": {
+              "type": "integer",
+              "description": "Total de circuitos dimensionados"
+            },
+            "carga_total_va": {
+              "type": "number",
+              "description": "Carga total en voltiamperios"
+            },
+            "corriente_total_a": {
+              "type": "number",
+              "description": "Corriente total en amperios"
+            },
+            "utilizacion_promedio_pct": {
+              "type": "number",
+              "description": "Utilización promedio en porcentaje"
+            },
+            "circuitos_monofasicos": {
+              "type": "integer",
+              "description": "Número de circuitos monofásicos"
+            },
+            "circuitos_trifasicos": {
+              "type": "integer",
+              "description": "Número de circuitos trifásicos"
+            },
+            "calibre_minimo_awg": {
+              "type": "integer",
+              "description": "Calibre mínimo AWG utilizado"
+            },
+            "calibre_maximo_awg": {
+              "type": "integer",
+              "description": "Calibre máximo AWG utilizado"
+            }
+          }
+        },
+        "metadata": {
+          "type": "object",
+          "required": ["calculation_date", "norms_version", "system_version"],
+          "properties": {
+            "calculation_date": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "norms_version": {
+              "type": "string"
+            },
+            "system_version": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "FeederResponse": {
+      "type": "object",
+      "required": ["circuitos_analisis", "alimentador", "resumen", "metadata"],
+      "properties": {
+        "circuitos_analisis": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["id_circuito", "longitud_m", "caida_tension_ramal_pct", "estado"],
+            "properties": {
+              "id_circuito": {
+                "type": "string",
+                "description": "Identificador del circuito"
+              },
+              "longitud_m": {
+                "type": "number",
+                "description": "Longitud del circuito en metros"
+              },
+              "caida_tension_ramal_pct": {
+                "type": "number",
+                "description": "Caída de tensión del ramal en porcentaje"
+              },
+              "estado": {
+                "type": "string",
+                "enum": ["OK", "WARNING", "ERROR"],
+                "description": "Estado del circuito"
+              }
+            }
+          }
+        },
+        "alimentador": {
+          "type": "object",
+          "required": ["material", "seccion_mm2", "longitud_m", "caida_tension_total_max_pct"],
+          "properties": {
+            "material": {
+              "type": "string",
+              "enum": ["Cu", "Al"],
+              "description": "Material del conductor"
+            },
+            "seccion_mm2": {
+              "type": "number",
+              "description": "Sección del conductor en mm²"
+            },
+            "longitud_m": {
+              "type": "number",
+              "description": "Longitud del alimentador en metros"
+            },
+            "caida_tension_total_max_pct": {
+              "type": "number",
+              "description": "Caída de tensión total máxima en porcentaje"
+            }
+          }
+        },
+        "resumen": {
+          "type": "object",
+          "required": ["tension_nominal_v", "phases", "limite_caida_ramal_pct", "limite_caida_total_pct", "caida_total_maxima_pct", "circuitos_fuera_limite", "estado_general", "calibre_minimo_recomendado_mm2"],
+          "properties": {
+            "tension_nominal_v": {
+              "type": "number",
+              "description": "Tensión nominal del sistema"
+            },
+            "phases": {
+              "type": "integer",
+              "description": "Número de fases"
+            },
+            "limite_caida_ramal_pct": {
+              "type": "number",
+              "description": "Límite de caída por ramal"
+            },
+            "limite_caida_total_pct": {
+              "type": "number",
+              "description": "Límite de caída total"
+            },
+            "caida_total_maxima_pct": {
+              "type": "number",
+              "description": "Caída total máxima calculada"
+            },
+            "circuitos_fuera_limite": {
+              "type": "integer",
+              "description": "Número de circuitos fuera de límite"
+            },
+            "estado_general": {
+              "type": "string",
+              "enum": ["OK", "WARNING", "ERROR"],
+              "description": "Estado general del sistema"
+            },
+            "calibre_minimo_recomendado_mm2": {
+              "type": "number",
+              "description": "Calibre mínimo recomendado en mm²"
+            }
+          }
+        },
+        "metadata": {
+          "type": "object",
+          "required": ["calculation_date", "norms_version", "system_version"],
+          "properties": {
+            "calculation_date": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "norms_version": {
+              "type": "string"
+            },
+            "system_version": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "GroundingResponse": {
+      "type": "object",
+      "required": ["conductor_proteccion", "conductor_tierra", "sistema_tierra", "resumen", "metadata"],
+      "properties": {
+        "conductor_proteccion": {
+          "type": "object",
+          "required": ["seccion_mm2", "calibre_awg", "material", "norma_aplicable"],
+          "properties": {
+            "seccion_mm2": {
+              "type": "number",
+              "description": "Sección del conductor de protección en mm²"
+            },
+            "calibre_awg": {
+              "type": "string",
+              "description": "Calibre AWG del conductor de protección"
+            },
+            "material": {
+              "type": "string",
+              "enum": ["Cu", "Al"],
+              "description": "Material del conductor"
+            },
+            "norma_aplicable": {
+              "type": "string",
+              "description": "Norma aplicable para el dimensionamiento"
+            }
+          }
+        },
+        "conductor_tierra": {
+          "type": "object",
+          "required": ["seccion_mm2", "calibre_awg", "material", "norma_aplicable"],
+          "properties": {
+            "seccion_mm2": {
+              "type": "number",
+              "description": "Sección del conductor de tierra en mm²"
+            },
+            "calibre_awg": {
+              "type": "string",
+              "description": "Calibre AWG del conductor de tierra"
+            },
+            "material": {
+              "type": "string",
+              "enum": ["Cu", "Al"],
+              "description": "Material del conductor"
+            },
+            "norma_aplicable": {
+              "type": "string",
+              "description": "Norma aplicable para el dimensionamiento"
+            }
+          }
+        },
+        "sistema_tierra": {
+          "type": "object",
+          "required": ["tipo_sistema", "numero_electrodos", "resistencia_maxima_ohm"],
+          "properties": {
+            "tipo_sistema": {
+              "type": "string",
+              "enum": ["TN-S", "TN-C-S", "TT", "IT"],
+              "description": "Tipo de sistema de tierra"
+            },
+            "numero_electrodos": {
+              "type": "integer",
+              "description": "Número de electrodos requeridos"
+            },
+            "resistencia_maxima_ohm": {
+              "type": "number",
+              "description": "Resistencia máxima en ohmios"
+            }
+          }
+        },
+        "resumen": {
+          "type": "object",
+          "required": ["main_breaker_amp", "tipo_instalacion", "tipo_sistema_tierra", "egc_mm2", "gec_mm2", "resistencia_maxima_ohm", "estado", "cumplimiento_normas"],
+          "properties": {
+            "main_breaker_amp": {
+              "type": "number",
+              "description": "Amperaje del breaker principal"
+            },
+            "tipo_instalacion": {
+              "type": "string",
+              "enum": ["residencial", "comercial", "industrial"],
+              "description": "Tipo de instalación"
+            },
+            "tipo_sistema_tierra": {
+              "type": "string",
+              "enum": ["TN-S", "TN-C-S", "TT", "IT"],
+              "description": "Tipo de sistema de tierra"
+            },
+            "egc_mm2": {
+              "type": "number",
+              "description": "Sección del EGC en mm²"
+            },
+            "gec_mm2": {
+              "type": "number",
+              "description": "Sección del GEC en mm²"
+            },
+            "resistencia_maxima_ohm": {
+              "type": "number",
+              "description": "Resistencia máxima en ohmios"
+            },
+            "estado": {
+              "type": "string",
+              "enum": ["ESTÁNDAR", "ESTRICTO", "CRÍTICO"],
+              "description": "Estado del sistema de tierra"
+            },
+            "cumplimiento_normas": {
+              "type": "string",
+              "description": "Normas de cumplimiento aplicadas"
+            }
+          }
+        },
+        "metadata": {
+          "type": "object",
+          "required": ["calculation_date", "norms_version", "system_version"],
+          "properties": {
+            "calculation_date": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "norms_version": {
+              "type": "string"
+            },
+            "system_version": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "ReportResponse": {
+      "type": "object",
+      "required": ["pdfBase64", "excelBase64", "metadata", "message"],
+      "properties": {
+        "pdfBase64": {
+          "type": "string",
+          "description": "Archivo PDF codificado en base64"
+        },
+        "excelBase64": {
+          "type": "string",
+          "description": "Archivo Excel codificado en base64"
+        },
+        "metadata": {
+          "type": "object",
+          "required": ["pdfHash", "excelHash", "calculationDate", "normsVersion", "systemVersion", "installationType", "electricalSystem", "totalCurrent", "totalLoad", "circuitCount", "generalStatus", "observations"],
+          "properties": {
+            "pdfHash": {
+              "type": "string",
+              "description": "Hash MD5 del archivo PDF"
+            },
+            "excelHash": {
+              "type": "string",
+              "description": "Hash MD5 del archivo Excel"
+            },
+            "calculationDate": {
+              "type": "string",
+              "format": "date-time",
+              "description": "Fecha de generación del reporte"
+            },
+            "normsVersion": {
+              "type": "string",
+              "description": "Versión de las normas aplicadas"
+            },
+            "systemVersion": {
+              "type": "string",
+              "description": "Versión del sistema"
+            },
+            "installationType": {
+              "type": "string",
+              "enum": ["residencial", "comercial", "industrial"],
+              "description": "Tipo de instalación"
+            },
+            "electricalSystem": {
+              "type": "string",
+              "description": "Descripción del sistema eléctrico"
+            },
+            "totalCurrent": {
+              "type": "number",
+              "description": "Corriente total del sistema"
+            },
+            "totalLoad": {
+              "type": "number",
+              "description": "Carga total del sistema"
+            },
+            "circuitCount": {
+              "type": "integer",
+              "description": "Número de circuitos"
+            },
+            "generalStatus": {
+              "type": "string",
+              "enum": ["OK", "WARNING", "ERROR"],
+              "description": "Estado general del sistema"
+            },
+            "observations": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "description": "Observaciones y recomendaciones"
+            }
+          }
+        },
+        "message": {
+          "type": "string",
+          "description": "Mensaje de confirmación"
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "$ref": "#/definitions/RoomsResponse"
+    }
+  ]
+}

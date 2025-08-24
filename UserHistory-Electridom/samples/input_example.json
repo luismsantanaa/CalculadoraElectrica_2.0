@@ -1,0 +1,61 @@
+{
+  "system": {
+    "voltage": 120,
+    "phases": 1,
+    "frequency": 60
+  },
+  "superficies": [
+    {
+      "nombre": "Sala",
+      "area_m2": 18
+    },
+    {
+      "nombre": "Cocina",
+      "area_m2": 12
+    },
+    {
+      "nombre": "Habitaci\u00f3n 1",
+      "area_m2": 12
+    },
+    {
+      "nombre": "Ba\u00f1o",
+      "area_m2": 5
+    }
+  ],
+  "consumos": [
+    {
+      "nombre": "Nevera",
+      "ambiente": "Cocina",
+      "potencia_w": 200,
+      "tipo": "electrodomestico",
+      "fp": 0.95
+    },
+    {
+      "nombre": "Microondas",
+      "ambiente": "Cocina",
+      "potencia_w": 1200,
+      "tipo": "electrodomestico",
+      "fp": 0.95
+    },
+    {
+      "nombre": "TV",
+      "ambiente": "Sala",
+      "potencia_w": 140,
+      "tipo": "electrodomestico"
+    },
+    {
+      "nombre": "A/C 12k BTU",
+      "ambiente": "Habitaci\u00f3n 1",
+      "potencia_w": 1100,
+      "tipo": "climatizacion",
+      "fp": 0.9
+    },
+    {
+      "nombre": "Lavadora",
+      "ambiente": "Ba\u00f1o",
+      "potencia_w": 500,
+      "tipo": "electrodomestico",
+      "fp": 0.9
+    }
+  ]
+}
