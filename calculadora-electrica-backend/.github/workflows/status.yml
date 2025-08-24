@@ -1,0 +1,40 @@
+name: Status Check
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  quick-check:
+    name: Quick Status Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run linting
+        run: npm run lint
+
+      - name: Run unit tests (no coverage)
+        run: npm run test:unit
+
+      - name: Build application
+        run: npm run build
+
+      - name: Update status badge
+        run: |
+          echo "✅ All checks passed!"
+          echo "Build Status: SUCCESS"
+          echo "Last Updated: $(date -u +'%Y-%m-%d %H:%M:%S UTC')"

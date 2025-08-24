@@ -1,4 +1,4 @@
-name: Status Check
+name: Status Check - Monorepo
 
 on:
   push:
@@ -7,8 +7,8 @@ on:
     branches: [main, develop]
 
 jobs:
-  quick-check:
-    name: Quick Status Check
+  backend-quick-check:
+    name: Backend Quick Status Check
     runs-on: ubuntu-latest
 
     steps:
@@ -20,21 +20,64 @@ jobs:
         with:
           node-version: '20.x'
           cache: 'npm'
+          cache-dependency-path: calculadora-electrica-backend/package-lock.json
 
-      - name: Install dependencies
+      - name: Install backend dependencies
+        working-directory: calculadora-electrica-backend
         run: npm ci
 
-      - name: Run linting
+      - name: Run backend linting
+        working-directory: calculadora-electrica-backend
         run: npm run lint
 
-      - name: Run unit tests (no coverage)
+      - name: Run backend unit tests (no coverage)
+        working-directory: calculadora-electrica-backend
         run: npm run test:unit
 
-      - name: Build application
+      - name: Build backend application
+        working-directory: calculadora-electrica-backend
         run: npm run build
 
-      - name: Update status badge
+      - name: Update backend status badge
         run: |
-          echo "✅ All checks passed!"
-          echo "Build Status: SUCCESS"
+          echo "✅ Backend checks passed!"
+          echo "Backend Build Status: SUCCESS"
+          echo "Last Updated: $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
+
+  frontend-quick-check:
+    name: Frontend Quick Status Check
+    runs-on: ubuntu-latest
+    if: hashFiles('calculadora-electrica-frontend/package.json') != ''
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+          cache-dependency-path: calculadora-electrica-frontend/package-lock.json
+
+      - name: Install frontend dependencies
+        working-directory: calculadora-electrica-frontend
+        run: npm ci
+
+      - name: Run frontend linting
+        working-directory: calculadora-electrica-frontend
+        run: npm run lint
+
+      - name: Run frontend tests
+        working-directory: calculadora-electrica-frontend
+        run: npm run test
+
+      - name: Build frontend application
+        working-directory: calculadora-electrica-frontend
+        run: npm run build
+
+      - name: Update frontend status badge
+        run: |
+          echo "✅ Frontend checks passed!"
+          echo "Frontend Build Status: SUCCESS"
           echo "Last Updated: $(date -u +'%Y-%m-%d %H:%M:%S UTC')"
